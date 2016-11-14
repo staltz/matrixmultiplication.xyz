@@ -4,8 +4,14 @@ import {makeDOMDriver, div, h1, VNode} from '@cycle/dom';
 import {DOMSource} from '@cycle/dom/xstream-typings';
 import MatrixValues from './MatrixValues';
 import Calculator from './Calculator/index';
-import styles from './styles';
-import onionify, {StateSource} from './utils/onionify';
+import {style, cssRule} from 'typestyle';
+import onionify, {StateSource} from 'cycle-onionify';
+
+cssRule('body', {
+  margin: 0,
+  fontFamily: '"Source Sans Pro", serif',
+  fontWeight: 400,
+});
 
 export type Sources = {
   DOM: DOMSource,
@@ -18,19 +24,19 @@ export type Sinks = {
 }
 
 function view(calculatorVDom: Stream<VNode>): Stream<VNode> {
-  let titleClassName = styles.registerStyle({
-    'position': 'absolute',
-    'top': 0,
-    'left': 0,
-    'right': 0,
-    'font-family': '"Vesper Libre", serif',
-    'font-weight': '400',
-    'text-align': 'center',
-    'margin': 0,
-    'padding-top': '1.5rem',
-    'padding-bottom': '3rem',
-    'z-index': 10,
-    'background-image':
+  let titleClassName = style({
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    fontFamily: '"Vesper Libre", serif',
+    fontWeight: 400,
+    textAlign: 'center',
+    margin: 0,
+    paddingTop: '1.5rem',
+    paddingBottom: '3rem',
+    zIndex: 10,
+    backgroundImage:
       'linear-gradient(to bottom, ' +
         'white 0, ' +
         'rgba(255,255,255,0.9) 60%, ' +
@@ -58,4 +64,3 @@ function main(sources: Sources): Sinks {
 run(onionify(main), {
   DOM: makeDOMDriver('#main-container')
 });
-styles.inject();

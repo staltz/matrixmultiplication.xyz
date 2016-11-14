@@ -1,25 +1,8 @@
 import xs, {Stream, MemoryStream} from 'xstream';
 import * as Immutable from 'immutable';
 import MatrixValues from '../MatrixValues';
-import {MatrixID} from './index';
-
-export interface Action {
-  type: 'RESIZE' | 'START_MULTIPLY';
-  payload: any;
-}
-
-export interface ResizeAction {
-  target: MatrixID;
-  resizeParam: {
-    direction: 'row' | 'column';
-    amount: number;
-  };
-}
-
-export interface MatrixState {
-  values: MatrixValues;
-  editable: boolean;
-}
+import {ResizeAction, Action} from './intent';
+import {State as MatrixState} from '../Matrix/index';
 
 export interface State {
   matrixA: MatrixState;
@@ -27,25 +10,29 @@ export interface State {
   step: number;
 }
 
+export type MatrixID = 'A' | 'B';
+
 export type Reducer = (oldState: State) => State;
 
 let defaultState: State = {
   matrixA: {
     values: MatrixValues.ofDimensions(4, 2),
     editable: true,
+    id: 'A',
   },
   matrixB: {
     values: MatrixValues.ofDimensions(2, 3),
     editable: true,
+    id: 'B',
   },
   step: 0,
 };
 
-const initReducer$ = xs.of(function initReducer(oldState: State) {
-  if (oldState.matrixA && oldState.matrixB && typeof oldState.step === 'number') {
-    return oldState;
-  } else {
+const initReducer$ = xs.of(function initReducer(prevState: State) {
+  if (!prevState) {
     return defaultState;
+  } else {
+    return prevState;
   }
 });
 
@@ -77,21 +64,23 @@ function resizeReducer$(action$: Stream<Action>): Stream<Reducer> {
 function startMultiplyReducer$(action$: Stream<Action>): Stream<Reducer> {
   return action$
     .filter(a => a.type === 'START_MULTIPLY')
-    .map(action => function startMultiplyReducer(oldState: State): State {
-      if (oldState.step === 0) {
+    .map(action => function startMultiplyReducer(prevState: State): State {
+      if (prevState.step === 0) {
         return {
           step: 1,
           matrixA: {
             editable: false,
-            values: oldState.matrixA.values,
+            values: prevState.matrixA.values,
+            id: prevState.matrixA.id,
           },
           matrixB: {
             editable: false,
-            values: oldState.matrixB.values,
+            values: prevState.matrixB.values,
+            id: prevState.matrixB.id,
           },
         };
       } else {
-        return oldState;
+        return prevState;
       }
     });
 }

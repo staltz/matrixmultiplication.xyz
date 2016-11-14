@@ -1,7 +1,20 @@
 import xs, {Stream, MemoryStream} from 'xstream';
 import {DOMSource} from '@cycle/dom/xstream-typings';
 import Matrix from '../Matrix/index';
-import {ResizeAction, Action} from './model';
+import {MatrixID} from './model';
+
+export interface Action {
+  type: 'RESIZE' | 'START_MULTIPLY';
+  payload: any;
+}
+
+export interface ResizeAction {
+  target: MatrixID;
+  resizeParam: {
+    direction: 'row' | 'column';
+    amount: number;
+  };
+}
 
 function resizeIntent(domSource: DOMSource): Stream<ResizeAction> {
   let decreaseRowA$ = domSource.select('.decreaseRowA').events('click')

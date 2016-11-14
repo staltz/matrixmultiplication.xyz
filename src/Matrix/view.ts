@@ -3,8 +3,13 @@ import {div, span, input, ul, li, VNode} from '@cycle/dom';
 import styles from './styles';
 import {State} from './model';
 
-let leftBracket = div(`.${styles.leftBracket}`);
-let rightBracket = div(`.${styles.rightBracket}`);
+function renderLeftBracket(state: State): VNode {
+  return div(`.${styles.leftBracket}`, {key: `leftBracket${state.id}`});
+}
+
+function renderRightBracket(state: State): VNode {
+  return div(`.${styles.rightBracket}`, {key: `rightBracket${state.id}`});
+}
 
 function renderAllCells(state: State): Array<VNode> {
   console['table'](state.values.rows.map((row, i) => row.map((cell, j) => `row${i} col${j}`)));
@@ -13,6 +18,7 @@ function renderAllCells(state: State): Array<VNode> {
       li({key: `col${j}`}, [
         state.editable ?
           input(`.${styles.cell}.cell`, {
+            key: `cell${i}-${j}`,
             attrs: {
               type: 'text', 'data-row': i, 'data-col': j, value: cellValue,
             },
@@ -25,10 +31,10 @@ function renderAllCells(state: State): Array<VNode> {
 
 export default function view(state$: MemoryStream<State>): MemoryStream<VNode> {
   return state$.map(state =>
-    div(`.${styles.matrix}`, [
-      leftBracket,
+    div(`.${styles.matrix}`, {key: state.id}, [
+      renderLeftBracket(state),
       ...renderAllCells(state),
-      rightBracket,
+      renderRightBracket(state),
     ])
   );
 }

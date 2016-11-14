@@ -4,10 +4,9 @@ import concat from 'xstream/extra/concat';
 import tween from 'xstream/extra/tween';
 import {div, span, table, tr, td, button, VNode} from '@cycle/dom';
 import objectExtend from '../utils/object-extend';
-import {MatrixID} from './index';
 import styles from './styles';
 import select from 'snabbdom-selector';
-import {State} from './model';
+import {State, MatrixID} from './model';
 
 function renderRowsResizer(id: MatrixID): VNode {
   return div(`.${styles.rowsResizer}`, [

@@ -7,7 +7,7 @@ import Matrix from '../Matrix/index';
 import intent from './intent';
 import model, {State, Reducer} from './model';
 import view from './view';
-import {StateSource} from '../utils/onionify';
+import {StateSource} from 'cycle-onionify';
 
 export interface Sources {
   DOM: DOMSource;
@@ -19,7 +19,6 @@ export interface Sinks {
   onion: Stream<Reducer>;
 }
 
-export type MatrixID = 'A' | 'B';
 
 export default function Calculator(sources: Sources): Sinks {
   let matrixASinks = isolate(Matrix, 'matrixA')(<any> sources);
