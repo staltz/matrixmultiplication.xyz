@@ -6,8 +6,8 @@ cssRule('body', {
   fontWeight: 400,
 });
 
-export default {
-  title: style({
+namespace Styles {
+  export const title = style({
     position: 'absolute',
     top: 0,
     left: 0,
@@ -24,5 +24,7 @@ export default {
         'white 0, ' +
         'rgba(255,255,255,0.9) 60%, ' +
         'transparent 100%)',
-  }),
+  });
 };
+
+export default Styles;

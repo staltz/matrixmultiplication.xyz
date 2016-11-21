@@ -1,81 +1,82 @@
 import {style} from 'typestyle';
 
-const insetBoxShadow = {
-  'box-shadow': 'inset 0px 1px 2px 0px rgba(0,0,0,0.5)',
-};
+namespace Styles {
+  const insetBoxShadow = {
+    'box-shadow': 'inset 0px 1px 2px 0px rgba(0,0,0,0.5)',
+  };
 
-const matrixBorderWidth = '2px';
-const matrixBorderIngress = '9px';
-const matrixBorderColor = 'black';
+  export const matrixBracketWidth = 2;
+  export const matrixBracketWidthPx = `${matrixBracketWidth}px`;
+  export const matrixBracketIngress = '9px';
+  export const matrixBracketColor = 'black';
 
-export default {
-  matrix: style({
+  export const matrix = style({
     position: 'relative',
-    padding: matrixBorderWidth,
-  }),
+    padding: matrixBracketWidth,
+  });
 
-  leftBracket: style({
+  export const leftBracket = style({
     position: 'absolute',
     left: 0,
     bottom: 0,
     top: 0,
-    width: matrixBorderWidth,
-    backgroundColor: matrixBorderColor,
+    width: matrixBracketWidth,
+    backgroundColor: matrixBracketColor,
     '&::before': {
       content: `''`,
-      backgroundColor: matrixBorderColor,
+      backgroundColor: matrixBracketColor,
       position: 'absolute',
       top: 0,
       left: 0,
-      height: matrixBorderWidth,
-      width: matrixBorderIngress,
+      height: matrixBracketWidth,
+      width: matrixBracketIngress,
     },
     '&::after': {
       content: `''`,
-      backgroundColor: matrixBorderColor,
+      backgroundColor: matrixBracketColor,
       position: 'absolute',
       bottom: 0,
       left: 0,
-      height: matrixBorderWidth,
-      width: matrixBorderIngress,
+      height: matrixBracketWidth,
+      width: matrixBracketIngress,
     },
-  }),
+  });
 
-  rightBracket: style({
+  export const rightBracket = style({
     position: 'absolute',
     right: 0,
     bottom: 0,
     top: 0,
-    width: matrixBorderWidth,
-    backgroundColor: matrixBorderColor,
+    width: matrixBracketWidth,
+    backgroundColor: matrixBracketColor,
     '&::before': {
       content: `''`,
-      backgroundColor: matrixBorderColor,
+      backgroundColor: matrixBracketColor,
       position: 'absolute',
       top: 0,
       right: 0,
-      height: matrixBorderWidth,
-      width: matrixBorderIngress,
+      height: matrixBracketWidth,
+      width: matrixBracketIngress,
     },
     '&::after': {
       content: `''`,
-      backgroundColor: matrixBorderColor,
+      backgroundColor: matrixBracketColor,
       position: 'absolute',
       bottom: 0,
       right: 0,
-      height: matrixBorderWidth,
-      width: matrixBorderIngress,
+      height: matrixBracketWidth,
+      width: matrixBracketIngress,
     },
-  }),
+  });
 
-  row: style({
+  export const row = style({
     listStyleType: 'none',
     padding: 0,
     margin: 0,
     display: 'flex',
-  }),
+  });
 
-  cell: style({
+  export const cell = style({
     display: 'inline-block',
     fontSize: '24px',
     width: '2em',
@@ -91,5 +92,7 @@ export default {
       '&:hover': insetBoxShadow,
       '&:focus': insetBoxShadow,
     },
-  }),
+  });
 };
+
+export default Styles;
