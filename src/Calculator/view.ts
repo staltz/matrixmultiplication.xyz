@@ -25,7 +25,8 @@ function renderColsResizer(id: MatrixID): VNode {
   ]);
 }
 
-function renderWrappedMatrixA(matrixA: VNode, showResizers: boolean): VNode {
+function renderWrappedMatrixA(matrixA: VNode, state: State): VNode {
+  const showResizers = state.step === 0;
   return table([
     tr([
       td(
@@ -58,7 +59,8 @@ function mutateCellsTransformStyle(transform: string) {
   }
 }
 
-function renderWrappedMatrixB(matrixB: VNode, showResizers: boolean, transform: string): VNode {
+function renderWrappedMatrixB(matrixB: VNode, state: State, transform: string): VNode {
+  const showResizers = state.step === 0;
   return table([
     tr([
       td('.matrixB', {
@@ -170,9 +172,9 @@ export default function view(state$: MemoryStream<State>,
     .map(([state, transform, matrixA, matrixB, matrixC]) =>
       div(`.${styles.calculator}.calculator`, [
         div(`.${styles.matrices}`, [
-          renderWrappedMatrixA(matrixA, state.step === 0),
+          renderWrappedMatrixA(matrixA, state),
           renderSign(state),
-          renderWrappedMatrixB(matrixB, state.step === 0, transform),
+          renderWrappedMatrixB(matrixB, state, transform),
           maybeRenderMatrixC(matrixC, state),
         ]),
         renderControlPanel(state),
