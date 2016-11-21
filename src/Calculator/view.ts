@@ -42,14 +42,6 @@ function renderWrappedMatrixA(matrixA: VNode, showResizers: boolean): VNode {
   ]);
 }
 
-function mutateCellWithTransform(transform: string): (cell: VNode) => void {
-  return function mutateCell(cell: VNode) {
-      cell.data = cell.data || {};
-      cell.data.style = cell.data.style || {};
-      cell.data.style = objectExtend(cell.data.style, { transform });
-  };
-}
-
 function mutateCellsTransformStyle(transform: string) {
   const rotateZTransform = (transform // string
     .split(' ') // Array<string>
