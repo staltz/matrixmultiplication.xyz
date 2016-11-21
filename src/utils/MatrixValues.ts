@@ -44,7 +44,7 @@ export default class MatrixValues {
         if (rowIndex >= oldNumRows) {
           return makeRow(nC);
         } else {
-          return rows.setSize(nC).map((v, colIndex) =>
+          return (rows as List<number>).setSize(nC).map((v, colIndex) =>
             colIndex >= oldNumCols ? 1 : v
           );
         }

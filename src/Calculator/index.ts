@@ -5,6 +5,7 @@ import isolate from '@cycle/isolate';
 import MatrixValues from '../utils/MatrixValues';
 import Matrix from '../Matrix/index';
 import intent from './intent';
+import measure from './measure';
 import model, {State, Reducer} from './model';
 import view from './view';
 import {StateSource} from 'cycle-onionify';
@@ -21,14 +22,16 @@ export interface Sinks {
 
 
 export default function Calculator(sources: Sources): Sinks {
-  let matrixASinks = isolate(Matrix, 'matrixA')(<any> sources);
-  let matrixBSinks = isolate(Matrix, 'matrixB')(<any> sources);
+  const matrixASinks = isolate(Matrix, 'matrixA')(<any> sources);
+  const matrixBSinks = isolate(Matrix, 'matrixB')(<any> sources);
 
-  let action$ = intent(sources.DOM);
-  let reducer$ = xs.merge(model(action$), matrixASinks.onion, matrixBSinks.onion);
-  let vdom$ = view(sources.onion.state$, matrixASinks.DOM, matrixBSinks.DOM);
+  const action$ = intent(sources.DOM);
+  const measurements$ = measure(sources.DOM);
+  const reducer$ = model(action$, measurements$);
+  const allReducer$ = xs.merge(reducer$, matrixASinks.onion, matrixBSinks.onion);
+  const vdom$ = view(sources.onion.state$, matrixASinks.DOM, matrixBSinks.DOM);
 
-  let sinks = {
+  const sinks = {
     DOM: vdom$,
     onion: reducer$,
   };

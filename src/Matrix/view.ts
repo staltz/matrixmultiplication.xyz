@@ -14,8 +14,8 @@ function renderRightBracket(state: State): VNode {
 function renderAllCells(state: State): Array<VNode> {
   console['table'](state.values.rows.map((row, i) => row.map((cell, j) => `row${i} col${j}`)));
   return state.values.rows.map((row, i) =>
-    ul(`.${styles.row}`, {key: `row${i}`}, row.map((cellValue, j) =>
-      li({key: `col${j}`}, [
+    ul(`.${styles.row}.row`, {key: `row${i}`}, row.map((cellValue, j) =>
+      li('.col', {key: `col${j}`}, [
         state.editable ?
           input(`.${styles.cell}.cell`, {
             key: `cell${i}-${j}`,
