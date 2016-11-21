@@ -111,7 +111,7 @@ function makeTransform$(state$: MemoryStream<State>): MemoryStream<string> {
     .map(state => {
       const yLift = state.measurements.matrixAHeight * 0.5 +
         state.measurements.matrixBHeight * 0.5;
-      const yDip = 4 + state.measurements.rowHeight;
+      const yDip = styles.matrixBracketWidth * 2 + state.measurements.rowHeight;
       return concat(
         tween({ from: 0, to: yLift, duration: 800, ease: ease1 }).map(y => `
           translateX(0%)
