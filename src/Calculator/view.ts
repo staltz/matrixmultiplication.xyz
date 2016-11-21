@@ -6,6 +6,9 @@ import {div, span, table, tr, td, button, VNode} from '@cycle/dom';
 import objectExtend from '../utils/object-extend';
 import styles from './styles';
 import select from 'snabbdom-selector';
+import playIcon from '../icons/play';
+import nextIcon from '../icons/next';
+import endIcon from '../icons/end';
 import {State, MatrixID} from './model';
 
 function renderRowsResizer(id: MatrixID): VNode {
@@ -87,52 +90,50 @@ const pattern = false;
 const match = false;
 
 function renderControlPanel(state: State): VNode {
-  const multiplyButtonStyle = pattern?match
+  return div(`.${styles.controlPanel}`, pattern?match
     :state.step === 0?
-      styles.multiplyButton
-    :state.step === 1?
-      styles.multiplyButtonDisabled
+      [
+        div(`.${styles.multiplyButton}.multiply`, [playIcon, 'Multiply'])
+      ]
+    :state.step === 1 && !state.canInteract?
+      [
+        div(`.${styles.multiplyButtonDisabled}.multiply`, [playIcon, 'Multiply'])
+      ]
+    :state.step === 1 && state.canInteract?
+      [
+        div(`.${styles.nextButton}.next`, [nextIcon, 'Next']),
+        div(`.${styles.endButton}.end`, [endIcon, 'End']),
+      ]
     :
-      styles.multiplyButtonHidden
-    ;
-
-  return div(`.${styles.controlPanel}`, [
-    div(`.${multiplyButtonStyle}.multiply`, '\u25B6 Multiply')
-  ]);
+      [
+      ]
+  );
 }
 
 function makeTransform$(state$: MemoryStream<State>): MemoryStream<string> {
-  const ease1 = tween.power2.easeInOut;
-  const ease2 = tween.power2.easeOut;
-
   return state$
     .compose(dropRepeats((s1: State, s2: State) => s1.step === s2.step))
     .filter(state => state.step === 1)
     .map(state => {
+      const ease = tween.power2.easeInOut;
       const xMove = 63.5; // px
       const padding = 10;
       const yLift = padding +
         state.measurements.matrixAHeight * 0.5 +
         state.measurements.matrixBHeight * 0.5;
-      const yDip = padding +
-        styles.matrixBracketWidth * 2 +
-        state.measurements.rowHeight;
       return concat(
-        tween({ from: 0, to: yLift, duration: 800, ease: ease1 }).map(y => `
-          translateX(0%)
-          translateY(-${y}px)
-          rotateZ(0deg)
-        `),
-        tween({ from: 0, to: 1, duration: 700 }).map(x => `
-          translateX(-${x * xMove}px)
-          translateY(-${yLift}px)
-          rotateZ(-${Math.pow(x, 2.3) * 90}deg)
-        `),
-        tween({ from: yLift, to: yLift - yDip, duration: 700, ease: ease2 }).map(y => `
-          translateX(-${xMove}px)
-          translateY(-${y}px)
-          rotateZ(-90deg)
-        `)
+        tween({ from: 0, to: yLift, duration: styles.step1Duration1, ease })
+          .map(y => `
+            translateX(0%)
+            translateY(-${y}px)
+            rotateZ(0deg)
+          `),
+        tween({ from: 0, to: 1, duration: styles.step1Duration2, ease })
+          .map(x => `
+            translateX(-${x * xMove}px)
+            translateY(-${yLift}px)
+            rotateZ(-${Math.pow(x, 2.3) * 90}deg)
+          `),
       );
     })
     .flatten()

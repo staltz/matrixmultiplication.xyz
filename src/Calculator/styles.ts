@@ -4,6 +4,8 @@ import {pallete} from '../styles';
 
 namespace Styles {
   export const matrixBracketWidth = MatrixStyles.matrixBracketWidth;
+  export const step1Duration1 = 600; // ms
+  export const step1Duration2 = 900; // ms
 
   export const hideAnimation = keyframes({
     from: {opacity: 1},
@@ -26,31 +28,49 @@ namespace Styles {
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: '86px',
+    '& > * + *': {
+      marginLeft: '8px',
+    },
   });
 
-  const multiplyButtonCommon: NestedCSSProperties = {
+  const commonButton: NestedCSSProperties = {
     color: pallete.white,
     border: 'none',
     fontSize: '24px',
     padding: '8px 16px',
+    '& > svg': {
+      marginBottom: '-2px',
+      marginRight: '8px',
+    },
   };
 
-  export const multiplyButton = style(multiplyButtonCommon, {
+  const commonButtonEnabled: NestedCSSProperties = {
     boxShadow: `0 1px 1px 0 ${pallete.gray}`,
-    backgroundColor: pallete.blue,
     cursor: 'pointer',
+  };
+
+  const commonButtonDisabled = style(commonButton, {
+    backgroundColor: pallete.gray,
+  });
+
+  export const multiplyButton = style(commonButton, commonButtonEnabled, {
+    backgroundColor: pallete.blue,
     '&:hover': {
       backgroundColor: pallete.blueWeak,
     },
   });
+  export const multiplyButtonDisabled = commonButtonDisabled;
 
-  export const multiplyButtonDisabled = style(multiplyButtonCommon, {
-    backgroundColor: pallete.gray,
-  });
+  export const nextButton = multiplyButton;
+  export const nextButtonDisabled = commonButtonDisabled;
 
-  export const multiplyButtonHidden = style({
-    display: 'none',
+  export const endButton = style(commonButton, commonButtonEnabled, {
+    backgroundColor: pallete.orange,
+    '&:hover': {
+      backgroundColor: pallete.orangeWeak,
+    },
   });
+  export const endButtonDisabled = commonButtonDisabled;
 
   export const multiplySign = style({
     margin: '1em',

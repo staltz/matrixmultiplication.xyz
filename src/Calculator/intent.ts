@@ -1,13 +1,16 @@
 import xs, {Stream, MemoryStream} from 'xstream';
+import delay from 'xstream/extra/delay';
 import {DOMSource} from '@cycle/dom/xstream-typings';
 import Matrix from '../Matrix/index';
+import styles from './styles';
 import {MatrixID} from './model';
 
 export type Direction = 'row' | 'column';
 
 export type Action =
   ResizeAction |
-  StartMultiplyAction;
+  StartMultiplyAction |
+  AllowContinueAction;
 
 export interface ResizeAction {
   type: 'RESIZE';
@@ -22,6 +25,11 @@ export interface ResizeAction {
 
 export interface StartMultiplyAction {
   type: 'START_MULTIPLY';
+  payload: null;
+}
+
+export interface AllowContinueAction {
+  type: 'ALLOW_CONTINUE';
   payload: null;
 }
 
@@ -46,6 +54,10 @@ export function isResizeAction(ac: Action): ac is ResizeAction {
 
 export function isStartMultiplyAction(ac: Action): ac is StartMultiplyAction {
   return ac.type === 'START_MULTIPLY';
+}
+
+export function isAllowContinueAction(ac: Action): ac is AllowContinueAction {
+  return ac.type === 'ALLOW_CONTINUE';
 }
 
 function resizeIntent(domSource: DOMSource): Stream<ResizeAction> {
@@ -93,13 +105,19 @@ function resizeIntent(domSource: DOMSource): Stream<ResizeAction> {
   );
 }
 
-function startMultiplyIntent(domSource: DOMSource): Stream<Action> {
-  return domSource.select('.multiply').events('click')
-    .mapTo({ type: 'START_MULTIPLY', payload: null }) as Stream<Action>;
+function stepIntent(domSource: DOMSource): Stream<Action> {
+  const startMultiplyAction$ = domSource.select('.multiply').events('click')
+    .mapTo({ type: 'START_MULTIPLY', payload: null } as StartMultiplyAction);
+
+  const allowContinueAction$ = startMultiplyAction$
+    .compose(delay(styles.step1Duration1 + styles.step1Duration2))
+    .mapTo({ type: 'ALLOW_CONTINUE', payload: null} as AllowContinueAction);
+
+  return xs.merge(startMultiplyAction$, allowContinueAction$);
 }
 
 export default function intent(domSource: DOMSource): Stream<Action> {
   const resizeAction$ = resizeIntent(domSource);
-  const startMultiplyAction$ = startMultiplyIntent(domSource);
-  return xs.merge(resizeAction$, startMultiplyAction$);
+  const stepAction$ = stepIntent(domSource);
+  return xs.merge(resizeAction$, stepAction$);
 }

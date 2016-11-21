@@ -6,14 +6,17 @@ import {
   Action,
   ResizeAction,
   StartMultiplyAction,
+  AllowContinueAction,
   isResizeAction,
   isStartMultiplyAction,
+  isAllowContinueAction,
   Direction,
 } from './intent';
 import {State as MatrixState} from '../Matrix/index';
 
 export interface State {
   step: number;
+  canInteract: boolean;
   measurements: Measurements;
   matrixA: MatrixState;
   matrixB: MatrixState;
@@ -25,6 +28,7 @@ export type Reducer = (oldState: State) => State;
 
 let defaultState: State = {
   step: 0,
+  canInteract: true,
   measurements: {
     matrixAHeight: 0,
     matrixBHeight: 0,
@@ -55,10 +59,11 @@ function resizeReducer$(action$: Stream<Action>): Stream<Reducer> {
     .filter(isResizeAction)
     .map(action => function resizeReducer(prevState: State): State {
       return Immutable.Map({
+        step: prevState.step,
+        canInteract: prevState.canInteract,
         measurements: Immutable.Map(prevState.measurements),
         matrixA: Immutable.Map(prevState.matrixA),
         matrixB: Immutable.Map(prevState.matrixB),
-        step: prevState.step
       }).updateIn(['matrix' + action.payload.target, 'values'], oldVals => {
         if (action.payload.resizeParam.direction === 'row') {
           return oldVals.resize(
@@ -82,6 +87,7 @@ function startMultiplyReducer$(action$: Stream<Action>): Stream<Reducer> {
       if (prevState.step === 0) {
         return {
           step: 1,
+          canInteract: false,
           measurements: prevState.measurements,
           matrixA: {
             editable: false,
@@ -100,11 +106,26 @@ function startMultiplyReducer$(action$: Stream<Action>): Stream<Reducer> {
     });
 }
 
+function allowContinueReducer$(action$: Stream<Action>): Stream<Reducer> {
+  return action$
+    .filter(isAllowContinueAction)
+    .map(action => function allowContinueReducer(prevState: State): State {
+      return {
+        step: prevState.step,
+        canInteract: true,
+        measurements: prevState.measurements,
+        matrixA: prevState.matrixA,
+        matrixB: prevState.matrixB,
+      };
+    });
+}
+
 function updateMeasurementsReducer$(measurements$: Stream<Measurements>): Stream<Reducer> {
   return measurements$
     .map(measurements => function (prevState: State): State {
       return {
         step: prevState.step,
+        canInteract: prevState.canInteract,
         measurements,
         matrixA: prevState.matrixA,
         matrixB: prevState.matrixB,
@@ -118,6 +139,7 @@ export default function model(action$: Stream<Action>,
     initReducer$,
     resizeReducer$(action$),
     updateMeasurementsReducer$(measurements$),
-    startMultiplyReducer$(action$)
+    startMultiplyReducer$(action$),
+    allowContinueReducer$(action$),
   );
 }
