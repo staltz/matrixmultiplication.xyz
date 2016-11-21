@@ -1,7 +1,14 @@
 import xs, {Stream, MemoryStream} from 'xstream';
 import * as Immutable from 'immutable';
 import MatrixValues from '../utils/MatrixValues';
-import {ResizeAction, Action} from './intent';
+import {
+  Action,
+  ResizeAction,
+  StartMultiplyAction,
+  isResizeAction,
+  isStartMultiplyAction,
+  Direction,
+} from './intent';
 import {State as MatrixState} from '../Matrix/index';
 
 export interface State {
@@ -38,23 +45,22 @@ const initReducer$ = xs.of(function initReducer(prevState: State) {
 
 function resizeReducer$(action$: Stream<Action>): Stream<Reducer> {
   return action$
-    .filter(a => a.type === 'RESIZE')
-    .map(a => <ResizeAction>a.payload)
+    .filter(isResizeAction)
     .map(action => function resizeReducer(oldState: State): State {
       return Immutable.Map({
         matrixA: Immutable.Map(oldState.matrixA),
         matrixB: Immutable.Map(oldState.matrixB),
         step: oldState.step
-      }).updateIn(['matrix' + action.target, 'values'], oldVals => {
-        if (action.resizeParam.direction === 'row') {
+      }).updateIn(['matrix' + action.payload.target, 'values'], oldVals => {
+        if (action.payload.resizeParam.direction === 'row') {
           return oldVals.resize(
-            oldVals.numberRows + action.resizeParam.amount,
+            oldVals.numberRows + action.payload.resizeParam.amount,
             oldVals.numberColumns
           )
         } else {
           return oldVals.resize(
             oldVals.numberRows,
-            oldVals.numberColumns + action.resizeParam.amount
+            oldVals.numberColumns + action.payload.resizeParam.amount
           )
         }
       }).toJS();
@@ -63,7 +69,7 @@ function resizeReducer$(action$: Stream<Action>): Stream<Reducer> {
 
 function startMultiplyReducer$(action$: Stream<Action>): Stream<Reducer> {
   return action$
-    .filter(a => a.type === 'START_MULTIPLY')
+    .filter(isStartMultiplyAction)
     .map(action => function startMultiplyReducer(prevState: State): State {
       if (prevState.step === 0) {
         return {
