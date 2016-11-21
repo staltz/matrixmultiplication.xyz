@@ -1,4 +1,5 @@
 import {style} from 'typestyle';
+import {pallete} from '../styles';
 
 namespace Styles {
   const insetBoxShadow = {
@@ -8,7 +9,7 @@ namespace Styles {
   export const matrixBracketWidth = 2;
   export const matrixBracketWidthPx = `${matrixBracketWidth}px`;
   export const matrixBracketIngress = '9px';
-  export const matrixBracketColor = 'black';
+  export const matrixBracketColor = pallete.black;
 
   export const matrix = style({
     position: 'relative',
@@ -87,6 +88,7 @@ namespace Styles {
     border: 'none',
     textIndent: '0',
     padding: '0',
+    color: pallete.black,
     backgroundColor: 'transparent',
     'input&': {
       '&:hover': insetBoxShadow,

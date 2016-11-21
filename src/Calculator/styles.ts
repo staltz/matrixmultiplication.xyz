@@ -1,5 +1,6 @@
 import {style, keyframes} from 'typestyle';
 import MatrixStyles from '../Matrix/styles';
+import {pallete} from '../styles';
 
 namespace Styles {
   export const matrixBracketWidth = MatrixStyles.matrixBracketWidth;
@@ -27,25 +28,24 @@ namespace Styles {
     marginTop: '86px',
   });
 
-  export const multiplyButton = style({
-    boxShadow: '0 1px 1px 0 #c5c5c5',
-    backgroundColor: 'rgba(48, 141, 255, 1)',
-    color: 'white',
+  const multiplyButtonCommon: NestedCSSProperties = {
+    color: pallete.white,
     border: 'none',
     fontSize: '24px',
     padding: '8px 16px',
+  };
+
+  export const multiplyButton = style(multiplyButtonCommon, {
+    boxShadow: `0 1px 1px 0 ${pallete.gray}`,
+    backgroundColor: pallete.blue,
     cursor: 'pointer',
     '&:hover': {
-      backgroundColor: 'rgba(48, 141, 255, 0.8)',
+      backgroundColor: pallete.blueWeak,
     },
   });
 
-  export const multiplyButtonDisabled = style({
-    backgroundColor: '#c5c5c5',
-    color: 'white',
-    border: 'none',
-    fontSize: '24px',
-    padding: '8px 16px',
+  export const multiplyButtonDisabled = style(multiplyButtonCommon, {
+    backgroundColor: pallete.gray,
   });
 
   export const multiplyButtonHidden = style({
@@ -55,7 +55,7 @@ namespace Styles {
   export const multiplySign = style({
     margin: '1em',
     fontSize: '24px',
-    color: '#686868',
+    color: pallete.grayDark,
   });
 
   export const disappear = style({
@@ -86,8 +86,8 @@ namespace Styles {
 
   export const resizerButton = style({
     backgroundColor: 'rgba(0, 0, 0, 0)',
-    boxShadow: '0 1px 1px 0 #c5c5c5',
-    color: '#686868',
+    boxShadow: `0 1px 1px 0 ${pallete.gray}`,
+    color: pallete.grayDark,
     border: 'none',
     fontSize: '20px',
     textAlign: 'center',
@@ -97,7 +97,7 @@ namespace Styles {
     margin: '4px',
     cursor: 'pointer',
     '&:hover': {
-      backgroundColor: 'rgba(0, 0, 0, 0.08)',
+      backgroundColor: pallete.grayLight,
     },
   });
 };

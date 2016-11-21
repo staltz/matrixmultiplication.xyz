@@ -1,7 +1,9 @@
 import {style, cssRule} from 'typestyle';
+import {pallete} from '../styles';
 
 cssRule('body', {
   margin: 0,
+  color: pallete.black,
   fontFamily: '"Source Sans Pro", serif',
   fontWeight: 400,
 });
