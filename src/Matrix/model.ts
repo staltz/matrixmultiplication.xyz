@@ -1,7 +1,7 @@
 import xs, {Stream, MemoryStream} from 'xstream';
 import * as Immutable from 'immutable';
 import {Action} from './intent';
-import MatrixValues from '../MatrixValues';
+import MatrixValues from '../utils/MatrixValues';
 
 export interface State {
   values: MatrixValues;

@@ -1,6 +1,6 @@
 import xs, {Stream, MemoryStream} from 'xstream';
 import * as Immutable from 'immutable';
-import MatrixValues from '../MatrixValues';
+import MatrixValues from '../utils/MatrixValues';
 import {ResizeAction, Action} from './intent';
 import {State as MatrixState} from '../Matrix/index';
 

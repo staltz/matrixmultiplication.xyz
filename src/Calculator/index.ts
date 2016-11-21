@@ -2,7 +2,7 @@ import xs, {Stream} from 'xstream';
 import {VNode} from '@cycle/dom';
 import {DOMSource} from '@cycle/dom/xstream-typings';
 import isolate from '@cycle/isolate';
-import MatrixValues from '../MatrixValues';
+import MatrixValues from '../utils/MatrixValues';
 import Matrix from '../Matrix/index';
 import intent from './intent';
 import model, {State, Reducer} from './model';
