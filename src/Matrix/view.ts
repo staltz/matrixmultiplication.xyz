@@ -20,10 +20,11 @@ function renderAllCells(state: State): Array<VNode> {
           input(`.${styles.cell}.cell`, {
             key: `cell${i}-${j}`,
             attrs: {
-              type: 'text', 'data-row': i, 'data-col': j, value: cellValue,
+              type: 'text', 'data-row': i, 'data-col': j,
+              value: cellValue ? cellValue : void 0,
             },
           }) :
-          span(`.${styles.cell}.cell`, cellValue)
+          span(`.${styles.cell}.cell`, cellValue ? [cellValue] : ['\u200B'])
       ])
     ))
   );

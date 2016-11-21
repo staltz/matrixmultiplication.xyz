@@ -5,6 +5,7 @@ import {DOMSource} from '@cycle/dom/xstream-typings';
 
 export interface Measurements {
   matrixAHeight: number;
+  matrixBWidth: number;
   matrixBHeight: number;
   rowHeight: number;
 }
@@ -23,6 +24,7 @@ export default function measure(domSource: DOMSource): Stream<Measurements> {
         const someRow = matrixAElem.querySelector('.row');
         const measurements: Measurements = {
           matrixAHeight: matrixAElem.clientHeight,
+          matrixBWidth: matrixBElem.clientWidth,
           matrixBHeight: matrixBElem.clientHeight,
           rowHeight: someRow.clientHeight,
         };

@@ -24,12 +24,18 @@ export interface Sinks {
 export default function Calculator(sources: Sources): Sinks {
   const matrixASinks = isolate(Matrix, 'matrixA')(<any> sources);
   const matrixBSinks = isolate(Matrix, 'matrixB')(<any> sources);
+  const matrixCSinks = isolate(Matrix, 'matrixC')(<any> sources);
 
   const action$ = intent(sources.DOM);
   const measurements$ = measure(sources.DOM);
   const reducer$ = model(action$, measurements$);
   const allReducer$ = xs.merge(reducer$, matrixASinks.onion, matrixBSinks.onion);
-  const vdom$ = view(sources.onion.state$, matrixASinks.DOM, matrixBSinks.DOM);
+  const vdom$ = view(
+    sources.onion.state$,
+    matrixASinks.DOM,
+    matrixBSinks.DOM,
+    matrixCSinks.DOM,
+  );
 
   const sinks = {
     DOM: vdom$,

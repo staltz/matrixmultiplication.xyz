@@ -20,6 +20,7 @@ export interface State {
   measurements: Measurements;
   matrixA: MatrixState;
   matrixB: MatrixState;
+  matrixC: MatrixState | undefined;
 }
 
 export type MatrixID = 'A' | 'B';
@@ -31,6 +32,7 @@ let defaultState: State = {
   canInteract: true,
   measurements: {
     matrixAHeight: 0,
+    matrixBWidth: 0,
     matrixBHeight: 0,
     rowHeight: 0,
   },
@@ -44,6 +46,7 @@ let defaultState: State = {
     editable: true,
     id: 'B',
   },
+  matrixC: void 0,
 };
 
 const initReducer$ = xs.of(function initReducer(prevState: State) {
@@ -64,6 +67,7 @@ function resizeReducer$(action$: Stream<Action>): Stream<Reducer> {
         measurements: Immutable.Map(prevState.measurements),
         matrixA: Immutable.Map(prevState.matrixA),
         matrixB: Immutable.Map(prevState.matrixB),
+        matrixC: prevState.matrixC,
       }).updateIn(['matrix' + action.payload.target, 'values'], oldVals => {
         if (action.payload.resizeParam.direction === 'row') {
           return oldVals.resize(
@@ -99,6 +103,14 @@ function startMultiplyReducer$(action$: Stream<Action>): Stream<Reducer> {
             values: prevState.matrixB.values,
             id: prevState.matrixB.id,
           },
+          matrixC: {
+            editable: false,
+            values: MatrixValues.ofDimensions(
+              prevState.matrixA.values.numberRows,
+              prevState.matrixB.values.numberColumns
+            ).setAll(null),
+            id: 'C',
+          }
         };
       } else {
         return prevState;
@@ -116,6 +128,7 @@ function allowContinueReducer$(action$: Stream<Action>): Stream<Reducer> {
         measurements: prevState.measurements,
         matrixA: prevState.matrixA,
         matrixB: prevState.matrixB,
+        matrixC: prevState.matrixC,
       };
     });
 }
@@ -129,6 +142,7 @@ function updateMeasurementsReducer$(measurements$: Stream<Measurements>): Stream
         measurements,
         matrixA: prevState.matrixA,
         matrixB: prevState.matrixB,
+        matrixC: prevState.matrixC,
       };
     });
 }

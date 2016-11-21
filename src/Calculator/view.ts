@@ -140,18 +140,48 @@ function makeTransform$(state$: MemoryStream<State>): MemoryStream<string> {
     .startWith('translateX(0%) translateY(0px) rotateZ(0deg)');
 }
 
+function renderSign(state: State): VNode {
+  if (state.step >= 1 && state.canInteract) {
+    return span(`.${styles.multiplyOrEqualsSign}`, '=');
+  } else {
+    return span(`.${styles.multiplyOrEqualsSign}`, '\u00D7');
+  }
+}
+
+function maybeRenderMatrixC(matrixC: VNode | null, state: State): VNode | null {
+  if (matrixC === null || (state.step <= 1 && !state.canInteract)) {
+    return div(`.${styles.resultMatrix}.matrixC`, {style: { opacity: '0' }});
+  } else {
+    matrixC.data = matrixC.data || {};
+    matrixC.data.style = matrixC.data.style || {};
+    matrixC.data.style.position = 'absolute';
+    const xDist = state.measurements.matrixBWidth + 8;
+    const yDist = state.measurements.matrixBHeight;
+    return div(`.${styles.resultMatrix}.matrixC`, {
+      style: {
+        transform: `translateX(-${xDist}px) translateY(-${yDist}px)`,
+        opacity: '1',
+      }
+    }, [
+      matrixC
+    ]);
+  }
+}
+
 export default function view(state$: MemoryStream<State>,
                              vdomA$: Stream<VNode>,
-                             vdomB$: Stream<VNode>): Stream<VNode> {
+                             vdomB$: Stream<VNode>,
+                             vdomC$: Stream<VNode | null>): Stream<VNode> {
   const transform$ = makeTransform$(state$);
 
-  return xs.combine(state$, transform$, vdomA$, vdomB$)
-    .map(([state, transform, matrixA, matrixB]) =>
+  return xs.combine(state$, transform$, vdomA$, vdomB$, vdomC$.startWith(null))
+    .map(([state, transform, matrixA, matrixB, matrixC]) =>
       div(`.${styles.calculator}.calculator`, [
         div(`.${styles.matrices}`, [
           renderWrappedMatrixA(matrixA, state.step === 0),
-          span(`.${styles.multiplySign}`, '\u00D7'),
+          renderSign(state),
           renderWrappedMatrixB(matrixB, state.step === 0, transform),
+          maybeRenderMatrixC(matrixC, state),
         ]),
         renderControlPanel(state),
       ])

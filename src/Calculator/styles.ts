@@ -23,6 +23,11 @@ namespace Styles {
     justifyContent: 'center',
   });
 
+  export const resultMatrix = style({
+    position: 'relative',
+    transition: 'opacity 0.5s',
+  });
+
   export const controlPanel = style({
     display: 'flex',
     alignItems: 'center',
@@ -72,7 +77,7 @@ namespace Styles {
   });
   export const endButtonDisabled = commonButtonDisabled;
 
-  export const multiplySign = style({
+  export const multiplyOrEqualsSign = style({
     margin: '1em',
     fontSize: '24px',
     color: pallete.grayDark,

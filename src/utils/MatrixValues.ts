@@ -6,7 +6,7 @@ import {List} from 'immutable';
 export default class MatrixValues {
   private numRows: number;
   private numCols: number;
-  public values: List<List<number>>;
+  public values: List<List<number | null>>;
 
   constructor() {
   }
@@ -38,7 +38,7 @@ export default class MatrixValues {
     mv.numCols = nC;
 
     // Override the new values using the old MatrixValues
-    mv.values = <List<List<number>>>this.values
+    mv.values = this.values
       .setSize(nR)
       .map((rows, rowIndex) => {
         if (rowIndex >= oldNumRows) {
@@ -48,7 +48,7 @@ export default class MatrixValues {
             colIndex >= oldNumCols ? 1 : v
           );
         }
-      });
+      }) as List<List<number>>;
 
     return mv;
   }
@@ -56,6 +56,14 @@ export default class MatrixValues {
   set(rowIndex: number, colIndex: number, value: number): MatrixValues {
     let mv = this.clone();
     mv.values = mv.values.setIn([rowIndex, colIndex], value);
+    return mv;
+  }
+
+  setAll(value: number | null): MatrixValues {
+    let mv = new MatrixValues();
+    mv.numRows = this.numRows;
+    mv.numCols = this.numCols;
+    mv.values = makeValues(mv.numRows, mv.numCols, value);
     return mv;
   }
 
@@ -67,23 +75,23 @@ export default class MatrixValues {
     return this.numCols;
   }
 
-  get rows(): Array<Array<number>> {
+  get rows(): Array<Array<number | null>> {
     return this.values.toJS();
   }
 }
 
-function makeValues(numRows: number, numColumns: number): List<List<number>> {
-  let vals = new Array<List<number>>(numRows);
+function makeValues(numRows: number, numColumns: number, val: number | null = 1): List<List<number | null>> {
+  let vals = new Array<List<number | null>>(numRows);
   for (let i = 0; i < numRows; i++) {
-    vals[i] = makeRow(numColumns);
+    vals[i] = makeRow(numColumns, val);
   }
   return List(vals);
 }
 
-function makeRow(numColumns: number): List<number> {
-  let row = new Array<number>(numColumns);
+function makeRow(numColumns: number, val: number | null = 1): List<number | null> {
+  let row = new Array<number | null>(numColumns);
   for (let i = 0; i < numColumns; i++) {
-    row[i] = 1;
+    row[i] = val;
   }
   return List(row);
 }
