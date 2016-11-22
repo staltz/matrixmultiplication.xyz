@@ -116,19 +116,57 @@ function startMultiplyReducer$(action$: Stream<Action>): Stream<Reducer> {
     });
 }
 
+function calculateCellMatrixC(i: number,
+                              j: number,
+                              matrixA: MatrixValues,
+                              matrixB: MatrixValues): number {
+  const m = matrixA.numberColumns;
+  let acc = 0;
+  for (let k = 0; k < m; k++) {
+    acc += matrixA.get(i, k) * matrixB.get(k, j);
+  }
+  return acc;
+}
+
+function calculateNextMatrixC(nextStep: number,
+                              matrixA: MatrixValues,
+                              matrixB: MatrixValues,
+                              matrixC: MatrixValues): MatrixValues {
+  let newMatrixC = matrixC;
+  matrixC.rows.forEach((row, i) => {
+    row.forEach((cellC, j) => {
+      if (i + j === nextStep - 2) {
+        const val = calculateCellMatrixC(i, j, matrixA, matrixB);
+        newMatrixC = newMatrixC.set(i, j, val);
+      }
+    });
+  });
+  return newMatrixC;
+}
+
 function nextStepReducer$(action$: Stream<Action>): Stream<Reducer> {
   return action$
     .filter(isNextStepAction)
     .map(action => function nextStepReducer(prevState: State): State {
-      if (prevState.step >= 1 && prevState.canInteract) {
+      if (prevState.step >= 1 && prevState.canInteract && prevState.matrixC) {
+        const nextStep = prevState.step + 1;
         return {
-          step: prevState.step + 1,
+          step: nextStep,
           canInteract: false,
           measurements: prevState.measurements,
           matrixA: prevState.matrixA,
           matrixB: prevState.matrixB,
-          matrixC: prevState.matrixC,
-        }
+          matrixC: {
+            editable: prevState.matrixC.editable,
+            values: calculateNextMatrixC(
+              nextStep,
+              prevState.matrixA.values,
+              prevState.matrixB.values,
+              prevState.matrixC.values,
+            ),
+            id: prevState.matrixC.id,
+          },
+        };
       } else {
         return prevState;
       }

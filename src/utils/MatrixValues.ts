@@ -59,6 +59,10 @@ export default class MatrixValues {
     return mv;
   }
 
+  get(rowIndex: number, colIndex: number): number | null {
+    return this.values.getIn([rowIndex, colIndex]);
+  }
+
   setAll(value: number | null): MatrixValues {
     let mv = new MatrixValues();
     mv.numRows = this.numRows;
