@@ -5,6 +5,7 @@ import isolate from '@cycle/isolate';
 import MatrixValues from '../utils/MatrixValues';
 import Matrix from '../Matrix/index';
 import intent from './intent';
+import timers from './timers';
 import measure from './measure';
 import model, {State, Reducer} from './model';
 import view from './view/index';
@@ -26,12 +27,13 @@ export default function Calculator(sources: Sources): Sinks {
   const matrixBSinks = isolate(Matrix, 'matrixB')(<any> sources);
   const matrixCSinks = isolate(Matrix, 'matrixC')(<any> sources);
 
-  const action$ = intent(sources.DOM);
+  const state$ = sources.onion.state$;
+  const action$ = xs.merge(intent(sources.DOM), timers(state$));
   const measurements$ = measure(sources.DOM);
   const reducer$ = model(action$, measurements$);
   const allReducer$ = xs.merge(reducer$, matrixASinks.onion, matrixBSinks.onion);
   const vdom$ = view(
-    sources.onion.state$,
+    state$,
     matrixASinks.DOM,
     matrixBSinks.DOM,
     matrixCSinks.DOM,

@@ -2,7 +2,6 @@ import xs, {Stream, MemoryStream} from 'xstream';
 import delay from 'xstream/extra/delay';
 import {DOMSource} from '@cycle/dom/xstream-typings';
 import Matrix from '../Matrix/index';
-import styles from './styles';
 import {MatrixID} from './model';
 
 export type Direction = 'row' | 'column';
@@ -122,14 +121,7 @@ function stepIntent(domSource: DOMSource): Stream<Action> {
   const nextStepAction$ = domSource.select('.next').events('click')
     .mapTo({ type: 'NEXT_STEP', payload: null } as NextStepAction);
 
-  const startMultiplyDuration = styles.step1Duration1 + styles.step1Duration2;
-
-  const allowContinueAction$ = xs.merge(
-    startMultiplyAction$.compose(delay(startMultiplyDuration)),
-    nextStepAction$.compose(delay(styles.nextCombDuration)),
-  ).mapTo({ type: 'ALLOW_CONTINUE', payload: null} as AllowContinueAction);
-
-  return xs.merge(startMultiplyAction$, allowContinueAction$, nextStepAction$);
+  return xs.merge(startMultiplyAction$, nextStepAction$);
 }
 
 export default function intent(domSource: DOMSource): Stream<Action> {

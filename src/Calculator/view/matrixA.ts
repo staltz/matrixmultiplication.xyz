@@ -2,6 +2,7 @@ import {div, span, table, tr, td, ul, li, VNode} from '@cycle/dom';
 import {State} from '../model';
 import styles from '../styles';
 import matrixStyles from '../../Matrix/styles';
+import {isInCombStep, lastCombStep} from '../queries';
 import {multiplySign, renderRowsResizer, renderColsResizer} from './common';
 
 function renderOperatorGrid(state: State): VNode {
@@ -26,23 +27,29 @@ function renderOperatorGrid(state: State): VNode {
   }));
 }
 
-
 function mutateMatrixACellsStyle(state: State) {
   const lastIntersectRow = state.step - 2;
   const firstIntersectRow = state.step - 2 - state.matrixB.values.numberColumns;
-  const isCombing = (state.step === 1 && state.canInteract) || state.step > 1;
   return function updateHook(prev: VNode, next: VNode) {
     const all = (next.elm as Element).querySelectorAll('.cell');
     for (let i = 0, N = all.length; i < N; i++) {
       const cellElem = all.item(i) as HTMLElement;
       const rowOfCell: number = parseInt((cellElem.dataset as any).row);
-      if (isCombing) {
+      if (isInCombStep(state)) {
         cellElem.classList.add(styles.animatedCell);
-      } else {
-        cellElem.classList.remove(styles.animatedCell);
+      } else if (state.step > lastCombStep(state)) {
+        setTimeout(
+          () => cellElem.classList.remove(styles.animatedCell),
+          styles.nextCombDuration,
+        );
       }
+
       if (firstIntersectRow < rowOfCell && rowOfCell <= lastIntersectRow) {
-        cellElem.style.transform = 'scale(0.55) translateX(-16px) translateY(-10px)';
+        cellElem.style.transform = `
+          scale(${styles.cellScaleWhenIntersecting})
+          translateX(${-styles.cellTranslateXWhenIntersecting}px)
+          translateY(${-styles.cellTranslateYWhenIntersecting}px)
+        `;
         cellElem.style.color = styles.colorPallete.blue;
       } else {
         cellElem.style.transform = null;

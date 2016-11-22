@@ -7,8 +7,13 @@ namespace Styles {
   export const step1Duration1 = 600; // ms
   export const step1Duration2 = 900; // ms
   export const nextCombDuration = 500; // ms
-  export const nextCombCellTransitionDelay = nextCombDuration * 0.001 * 0.5;
+  export const nextCombCellTransitionDelay = nextCombDuration * 0.5; // ms
   export const colorPallete = pallete;
+  export const cellScaleWhenIntersecting = 0.55;
+  export const cellTranslateXWhenIntersecting = 16; // px
+  export const cellTranslateYWhenIntersecting = 10; // px
+  export const finalResultDuration = 1500; // ms
+  export const finalFadeDuration = finalResultDuration * 0.8; // ms
 
   export const hideAnimation = keyframes({
     from: {opacity: 1},
@@ -34,13 +39,17 @@ namespace Styles {
     position: 'relative',
   });
 
-  export const resultMatrix = style({
+  export const matrixB = style({
+    transition: `opacity ${finalFadeDuration}ms`,
+  });
+
+  export const matrixC = style({
     position: 'relative',
-    transition: 'opacity 0.5s',
+    transition: 'opacity 500ms',
   });
 
   export const animatedCell = style({
-    transition: `all 0.3s ease ${nextCombCellTransitionDelay}s`,
+    transition: `all 300ms ease ${nextCombCellTransitionDelay}ms`,
   });
 
   export const operatorGrid = style({
@@ -51,7 +60,7 @@ namespace Styles {
 
   export const operatorCell = style({
     transform: 'scale(0.6)',
-    transition: `opacity 0.3s ease ${nextCombCellTransitionDelay}s`,
+    transition: `opacity 300ms ease ${nextCombCellTransitionDelay}ms`,
   });
 
   export const plusSign = style({
