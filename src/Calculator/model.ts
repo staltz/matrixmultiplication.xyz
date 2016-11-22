@@ -4,12 +4,10 @@ import MatrixValues from '../utils/MatrixValues';
 import {Measurements} from './measure';
 import {
   Action,
-  ResizeAction,
-  StartMultiplyAction,
-  AllowContinueAction,
   isResizeAction,
   isStartMultiplyAction,
   isAllowContinueAction,
+  isNextStepAction,
   Direction,
 } from './intent';
 import {State as MatrixState} from '../Matrix/index';
@@ -118,6 +116,25 @@ function startMultiplyReducer$(action$: Stream<Action>): Stream<Reducer> {
     });
 }
 
+function nextStepReducer$(action$: Stream<Action>): Stream<Reducer> {
+  return action$
+    .filter(isNextStepAction)
+    .map(action => function nextStepReducer(prevState: State): State {
+      if (prevState.step >= 1 && prevState.canInteract) {
+        return {
+          step: prevState.step + 1,
+          canInteract: false,
+          measurements: prevState.measurements,
+          matrixA: prevState.matrixA,
+          matrixB: prevState.matrixB,
+          matrixC: prevState.matrixC,
+        }
+      } else {
+        return prevState;
+      }
+    });
+}
+
 function allowContinueReducer$(action$: Stream<Action>): Stream<Reducer> {
   return action$
     .filter(isAllowContinueAction)
@@ -155,5 +172,6 @@ export default function model(action$: Stream<Action>,
     updateMeasurementsReducer$(measurements$),
     startMultiplyReducer$(action$),
     allowContinueReducer$(action$),
+    nextStepReducer$(action$),
   );
 }

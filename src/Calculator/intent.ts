@@ -10,7 +10,8 @@ export type Direction = 'row' | 'column';
 export type Action =
   ResizeAction |
   StartMultiplyAction |
-  AllowContinueAction;
+  AllowContinueAction |
+  NextStepAction;
 
 export interface ResizeAction {
   type: 'RESIZE';
@@ -30,6 +31,11 @@ export interface StartMultiplyAction {
 
 export interface AllowContinueAction {
   type: 'ALLOW_CONTINUE';
+  payload: null;
+}
+
+export interface NextStepAction {
+  type: 'NEXT_STEP';
   payload: null;
 }
 
@@ -58,6 +64,10 @@ export function isStartMultiplyAction(ac: Action): ac is StartMultiplyAction {
 
 export function isAllowContinueAction(ac: Action): ac is AllowContinueAction {
   return ac.type === 'ALLOW_CONTINUE';
+}
+
+export function isNextStepAction(ac: Action): ac is NextStepAction {
+  return ac.type === 'NEXT_STEP';
 }
 
 function resizeIntent(domSource: DOMSource): Stream<ResizeAction> {
@@ -109,11 +119,17 @@ function stepIntent(domSource: DOMSource): Stream<Action> {
   const startMultiplyAction$ = domSource.select('.multiply').events('click')
     .mapTo({ type: 'START_MULTIPLY', payload: null } as StartMultiplyAction);
 
-  const allowContinueAction$ = startMultiplyAction$
-    .compose(delay(styles.step1Duration1 + styles.step1Duration2))
-    .mapTo({ type: 'ALLOW_CONTINUE', payload: null} as AllowContinueAction);
+  const nextStepAction$ = domSource.select('.next').events('click')
+    .mapTo({ type: 'NEXT_STEP', payload: null } as NextStepAction);
 
-  return xs.merge(startMultiplyAction$, allowContinueAction$);
+  const startMultiplyDuration = styles.step1Duration1 + styles.step1Duration2;
+
+  const allowContinueAction$ = xs.merge(
+    startMultiplyAction$.compose(delay(startMultiplyDuration)),
+    nextStepAction$.compose(delay(styles.nextCombDuration)),
+  ).mapTo({ type: 'ALLOW_CONTINUE', payload: null} as AllowContinueAction);
+
+  return xs.merge(startMultiplyAction$, allowContinueAction$, nextStepAction$);
 }
 
 export default function intent(domSource: DOMSource): Stream<Action> {

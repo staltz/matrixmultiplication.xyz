@@ -36,7 +36,8 @@ export default function measure(domSource: DOMSource): Stream<Measurements> {
     .filter(isNotNull)
     .compose(dropRepeats((m1: Measurements, m2: Measurements) =>
       m1.matrixAHeight === m2.matrixAHeight &&
-      m1.matrixBHeight === m2.matrixBHeight
+      m1.matrixBHeight === m2.matrixBHeight &&
+      m1.matrixBWidth === m2.matrixBWidth
     ))
     .compose(delay(16));
 }

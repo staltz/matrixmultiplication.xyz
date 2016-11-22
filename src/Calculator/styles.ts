@@ -6,6 +6,9 @@ namespace Styles {
   export const matrixBracketWidth = MatrixStyles.matrixBracketWidth;
   export const step1Duration1 = 600; // ms
   export const step1Duration2 = 900; // ms
+  export const nextCombDuration = 500; // ms
+  export const nextCombCellTransitionDelay = nextCombDuration * 0.001 * 0.5;
+  export const colorPallete = pallete;
 
   export const hideAnimation = keyframes({
     from: {opacity: 1},
@@ -23,9 +26,48 @@ namespace Styles {
     justifyContent: 'center',
   });
 
+  export const matrixAWrapper = style({
+    position: 'relative',
+  });
+
   export const resultMatrix = style({
     position: 'relative',
     transition: 'opacity 0.5s',
+  });
+
+  export const animatedCell = style({
+    transition: `all 0.3s ease ${nextCombCellTransitionDelay}s`,
+  });
+
+  export const operatorGrid = style({
+    position: 'absolute',
+    top: '3px',
+    left: '3px',
+  });
+
+  export const operatorCell = style({
+    transform: 'scale(0.6)',
+    transition: `opacity 0.3s ease ${nextCombCellTransitionDelay}s`,
+  });
+
+  export const plusSign = style({
+    '&::after': {
+      content: '"+"',
+      display: 'block',
+      position: 'absolute',
+      top: 0,
+      left: '40px',
+      fontSize: '24px',
+      width: '2em',
+      height: '2em',
+      fontFamily: `'Source Sans Pro', sans-serif`,
+      lineHeight: '49px',
+      textAlign: 'center',
+      border: 'none',
+      textIndent: '0',
+      padding: '0',
+      color: pallete.black,
+    },
   });
 
   export const controlPanel = style({

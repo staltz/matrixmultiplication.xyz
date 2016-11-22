@@ -11,6 +11,8 @@ function renderRightBracket(state: State): VNode {
   return div(`.${styles.rightBracket}`, {key: `rightBracket${state.id}`});
 }
 
+const zeroWidthSpace = '\u200B';
+
 function renderAllCells(state: State): Array<VNode> {
   console['table'](state.values.rows.map((row, i) => row.map((cell, j) => `row${i} col${j}`)));
   return state.values.rows.map((row, i) =>
@@ -24,7 +26,11 @@ function renderAllCells(state: State): Array<VNode> {
               value: cellValue ? cellValue : void 0,
             },
           }) :
-          span(`.${styles.cell}.cell`, cellValue ? [cellValue] : ['\u200B'])
+          span(`.${styles.cell}.cell`, {
+            attrs: {
+              'data-row': i, 'data-col': j
+            },
+          }, cellValue ? [cellValue] : [zeroWidthSpace])
       ])
     ))
   );
