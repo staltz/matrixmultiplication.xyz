@@ -7,7 +7,7 @@ import Matrix from '../Matrix/index';
 import intent from './intent';
 import measure from './measure';
 import model, {State, Reducer} from './model';
-import view from './view';
+import view from './view/index';
 import {StateSource} from 'cycle-onionify';
 
 export interface Sources {
