@@ -6,15 +6,15 @@ export const multiplySign = '\u00D7';
 export const zeroWidthSpace = '\u200B';
 
 export function renderRowsResizer(id: MatrixID): VNode {
-  return div(`.${styles.rowsResizer}`, [
-    div(`.${styles.resizerButton}.decreaseRow${id}`, '-'),
-    div(`.${styles.resizerButton}.increaseRow${id}`, '+'),
+  return div(`.rowsResizer.${styles.rowsResizer}`, [
+    div(`.decreaseRow${id}.${styles.resizerButton}`, '-'),
+    div(`.increaseRow${id}.${styles.resizerButton}`, '+'),
   ]);
 }
 
 export function renderColsResizer(id: MatrixID): VNode {
-  return div(`.${styles.colsResizer}`, [
-    div(`.${styles.resizerButton}.decreaseCol${id}`, '-'),
-    div(`.${styles.resizerButton}.increaseCol${id}`, '+'),
+  return div(`.colsResizer.${styles.colsResizer}`, [
+    div(`.decreaseCol${id}.${styles.resizerButton}`, '-'),
+    div(`.increaseCol${id}.${styles.resizerButton}`, '+'),
   ]);
 }

@@ -11,9 +11,9 @@ import {makeTransform$} from './tweens';
 
 function renderSign(state: State): VNode {
   if ((state.step === 1 && state.canInteract) || state.step > 1) {
-    return span(`.${styles.multiplyOrEqualsSign}`, '=');
+    return span(`.multiplySign.${styles.multiplyOrEqualsSign}`, '=');
   } else {
-    return span(`.${styles.multiplyOrEqualsSign}`, multiplySign);
+    return span(`.equalsSign.${styles.multiplyOrEqualsSign}`, multiplySign);
   }
 }
 
@@ -25,8 +25,8 @@ export default function view(state$: MemoryStream<State>,
 
   return xs.combine(state$, transform$, vdomA$, vdomB$, vdomC$.startWith(null))
     .map(([state, transform, matrixA, matrixB, matrixC]) =>
-      div(`.${styles.calculator}.calculator`, [
-        div(`.${styles.matrices}`, [
+      div(`.calculator.${styles.calculator}`, [
+        div(`.matrices.${styles.matrices}`, [
           renderMatrixA(matrixA, state),
           renderSign(state),
           renderMatrixB(matrixB, state, transform),

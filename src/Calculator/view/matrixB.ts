@@ -37,7 +37,7 @@ function mutateCellsTransformStyle(state: State, transform: string) {
 
 export function renderMatrixB(matrixB: VNode, state: State, transform: string): VNode {
   const showResizers = state.step === 0;
-  return table([
+  return table(`.matrixBWrapper.${styles.matrixWrapperTable}`, [
     tr([
       td('.matrixB', {
         style: { transform, 'transform-origin': 'bottom left' },
@@ -48,7 +48,7 @@ export function renderMatrixB(matrixB: VNode, state: State, transform: string): 
       ),
     ]),
     tr([
-      td(`.${styles.colsResizerContainer}`,
+      td(`.colsResizerContainer.${styles.colsResizerContainer}`,
         showResizers ? [renderColsResizer('B')] : []
       ),
       td(),

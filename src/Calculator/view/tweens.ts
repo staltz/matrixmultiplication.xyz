@@ -5,13 +5,14 @@ import dropRepeats from 'xstream/extra/dropRepeats';
 import {State} from '../model';
 import styles from '../styles';
 
+const xMove = 59.5; // px
+const padding = 8; // px
+
 function makeWaterfallTransform$(state$: Stream<State>): Stream<string> {
   return state$
     .filter(state => state.step === 1)
     .map(state => {
       const ease = tween.power2.easeInOut;
-      const xMove = 63.5; // px
-      const padding = 8;
       const yLift = padding +
         state.measurements.matrixAHeight * 0.5 +
         state.measurements.matrixBHeight * 0.5;
@@ -39,8 +40,6 @@ function makeStepTransform$(state$: Stream<State>): Stream<string> {
     .map(state => {
       const ease = tween.power2.easeInOut;
       const duration = styles.nextCombDuration
-      const xMove = 63.5; // px
-      const padding = 8;
       const yLift = padding +
         state.measurements.matrixAHeight * 0.5 +
         state.measurements.matrixBHeight * 0.5;

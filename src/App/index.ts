@@ -18,8 +18,8 @@ export type Sinks = {
 
 function view(calculatorVDom: Stream<VNode>): Stream<VNode> {
   return calculatorVDom.map(calcVNode =>
-    div([
-      h1(`.${styles.title}`, 'Matrix Multiplication'),
+    div('.app', [
+      h1(`.title.${styles.title}`, 'Matrix Multiplication'),
       calcVNode,
     ])
   );

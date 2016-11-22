@@ -7,12 +7,13 @@ import {multiplySign, renderRowsResizer, renderColsResizer} from './common';
 function renderOperatorGrid(state: State): VNode {
   const lastIntersectRow = state.step - 2;
   const firstIntersectRow = state.step - 2 - state.matrixB.values.numberColumns;
-  return div(`.${styles.operatorGrid}`, state.matrixA.values.rows.map((row, i) => {
+  const rows = state.matrixA.values.rows;
+  return div(`.operatorGrid.${styles.operatorGrid}`, rows.map((row, i) => {
     const shouldShowMultiply = firstIntersectRow < i && i <= lastIntersectRow;
     return ul(`.${matrixStyles.row}`, row.map((cellVal, j) => {
       const shouldShowPlus = j < state.matrixA.values.numberColumns - 1;
       return li([
-        span({
+        span('.operator', {
           class: {
             [matrixStyles.cell]: true,
             [styles.operatorCell]: true,
@@ -53,18 +54,18 @@ function mutateMatrixACellsStyle(state: State) {
 
 export function renderMatrixA(matrixA: VNode, state: State): VNode {
   const showResizers = state.step === 0;
-  return table([
+  return table(`.matrixAWrapper.${styles.matrixWrapperTable}`, [
     tr([
       td(
         showResizers ? [renderRowsResizer('A')] : []
       ),
-      td(`.matrixA.${styles.matrixAWrapper}`, {
+      td(`.matrixA.${styles.matrixA}`, {
         hook: {update: mutateMatrixACellsStyle(state)}
       }, [matrixA, renderOperatorGrid(state)]),
     ]),
     tr([
       td(),
-      td(`.${styles.colsResizerContainer}`,
+      td(`.colsResizerContainer.${styles.colsResizerContainer}`,
         showResizers ? [renderColsResizer('A')] : []
       ),
     ]),

@@ -26,7 +26,11 @@ namespace Styles {
     justifyContent: 'center',
   });
 
-  export const matrixAWrapper = style({
+  export const matrixWrapperTable = style({
+    borderSpacing: 0,
+  });
+
+  export const matrixA = style({
     position: 'relative',
   });
 
