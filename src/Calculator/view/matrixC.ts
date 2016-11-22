@@ -1,6 +1,7 @@
 import {div, VNode} from '@cycle/dom';
 import {State} from '../model';
 import styles from '../styles';
+import {lastCombStep} from '../queries';
 
 function mutateCellsStyle(state: State) {
   const isCombing = (state.step === 1 && state.canInteract) || state.step > 1;
@@ -32,7 +33,9 @@ function mutateCellsStyle(state: State) {
 
 export function maybeRenderMatrixC(matrixC: VNode | null, state: State): VNode | null {
   if (matrixC === null || (state.step <= 1 && !state.canInteract)) {
-    return div(`.matrixC.${styles.matrixC}`, {style: { opacity: '0' }});
+    return div(`.matrixC.${styles.matrixC}`, {
+      style: { opacity: '0', marginLeft: '0' },
+    });
   } else {
     matrixC.data = matrixC.data || {};
     matrixC.data.style = matrixC.data.style || {};
@@ -43,6 +46,7 @@ export function maybeRenderMatrixC(matrixC: VNode | null, state: State): VNode |
       style: {
         transform: `translateX(-${xDist}px) translateY(-${yDist}px)`,
         opacity: '1',
+        marginLeft: state.step === lastCombStep(state) + 1 ? `${xDist}px` : '0',
       },
       hook: {
         update: mutateCellsStyle(state),

@@ -43,13 +43,13 @@ function makeUpdateCellElements(state: State, transform: string) {
   }
 }
 
-function getOpacity(state: State): number {
+function getOpacity(state: State): string {
   if (state.step === lastCombStep(state) + 1 && !state.canInteract) {
-    return 0.01;
+    return '0.01';
   } else if (state.step === lastCombStep(state) + 1 && state.canInteract) {
-    return 1;
+    return '1';
   } else {
-    return 1;
+    return '1';
   }
 }
 

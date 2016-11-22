@@ -8,13 +8,24 @@ import {maybeRenderMatrixC} from './matrixC';
 import {renderControlPanel} from './controlPanel';
 import {multiplySign} from './common';
 import {makeTransform$} from './tweens';
+import {isInCombStep, lastCombStep} from '../queries';
 
 function renderSign(state: State): VNode {
-  if ((state.step === 1 && state.canInteract) || state.step > 1) {
+  if (isInCombStep(state)) {
     return span(`.multiplySign.${styles.multiplyOrEqualsSign}`, '=');
   } else {
-    return span(`.equalsSign.${styles.multiplyOrEqualsSign}`, multiplySign);
+    return span(`.tempEqualsSign.${styles.multiplyOrEqualsSign}`, multiplySign);
   }
+}
+
+function maybeRenderEqualsSign(state: State): VNode {
+  let style = {};
+  if (state.step === lastCombStep(state) + 1) {
+    style = {margin: '1em', width: '12px', opacity: '1'};
+  } else {
+    style = {margin: '0', width: '0', opacity: '0.01'};
+  }
+  return span(`.resultEqualsSign.${styles.resultEqualsSign}`, {style}, '=')
 }
 
 export default function view(state$: MemoryStream<State>,
@@ -30,6 +41,7 @@ export default function view(state$: MemoryStream<State>,
           renderMatrixA(matrixA, state),
           renderSign(state),
           renderMatrixB(matrixB, state, transform),
+          maybeRenderEqualsSign(state),
           maybeRenderMatrixC(matrixC, state),
         ]),
         renderControlPanel(state),

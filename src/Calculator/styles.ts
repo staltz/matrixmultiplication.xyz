@@ -12,7 +12,7 @@ namespace Styles {
   export const cellScaleWhenIntersecting = 0.55;
   export const cellTranslateXWhenIntersecting = 16; // px
   export const cellTranslateYWhenIntersecting = 10; // px
-  export const finalResultDuration = 1500; // ms
+  export const finalResultDuration = 1100; // ms
   export const finalFadeDuration = finalResultDuration * 0.8; // ms
 
   export const hideAnimation = keyframes({
@@ -45,7 +45,17 @@ namespace Styles {
 
   export const matrixC = style({
     position: 'relative',
-    transition: 'opacity 500ms',
+    transitionDuration: '700ms',
+    transitionProperty: 'opacity, margin-left',
+    transitionDelay: '300ms',
+  });
+
+  export const resultEqualsSign = style({
+    fontSize: '24px',
+    color: pallete.grayDark,
+    transitionDuration: '700ms',
+    transitionProperty: 'opacity, width, margin',
+    transitionDelay: '700ms, 300ms, 300ms',
   });
 
   export const animatedCell = style({
