@@ -3,6 +3,10 @@ import MatrixStyles from '../Matrix/styles';
 import {pallete} from '../styles';
 
 namespace Styles {
+  /**
+   * Constants for sizes and durations.
+   */
+
   export const matrixBracketWidth = MatrixStyles.matrixBracketWidth;
   export const step1Duration1 = 600; // ms
   export const step1Duration2 = 900; // ms
@@ -15,10 +19,9 @@ namespace Styles {
   export const finalResultDuration = 1100; // ms
   export const finalFadeDuration = finalResultDuration * 0.8; // ms
 
-  export const hideAnimation = keyframes({
-    from: {opacity: 1},
-    to: {opacity: 0},
-  });
+  /**
+   * Styles for the calculator, the matrices, and their cells.
+   */
 
   export const calculator = style({
     marginTop: '200px',
@@ -100,6 +103,10 @@ namespace Styles {
     },
   });
 
+  /**
+   * Styles for the control panel.
+   */
+
   export const controlPanel = style({
     display: 'flex',
     alignItems: 'center',
@@ -166,10 +173,9 @@ namespace Styles {
     color: pallete.grayDark,
   });
 
-  export const disappear = style({
-    animationName: hideAnimation,
-    animationDuration: '0.5s',
-  });
+  /**
+   * Styles for the resizer controls.
+   */
 
   export const rowsResizer = style({
     display: 'flex',
