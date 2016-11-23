@@ -1,5 +1,9 @@
 import {State} from './index';
 
+/**
+ * This file contains some useful computed properties derivable from the state.
+ */
+
 export function totalCombSteps(state: State): number {
   return state.matrixA.values.numberRows + state.matrixB.values.numberColumns - 2;
 }

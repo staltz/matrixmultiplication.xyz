@@ -1,5 +1,9 @@
 import {MatrixID} from './index';
 
+/**
+ * This file defines "actions", which are events which may affect the state.
+ */
+
 export type Action =
   ResizeAction |
   StartMultiplyAction |

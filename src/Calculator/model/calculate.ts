@@ -12,6 +12,11 @@ function calculateCellMatrixC(i: number,
   return acc;
 }
 
+/**
+ * Performs the actual matrix multiplication calculation.
+ * However, it does so in steps. Provided `nextStep`, it will
+ * compute the corresponding cell values in `matrixC`.
+ */
 export function calculateNextMatrixC(nextStep: number,
                                      matrixA: MatrixValues,
                                      matrixB: MatrixValues,

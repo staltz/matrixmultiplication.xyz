@@ -30,6 +30,10 @@ function maybeRenderEqualsSign(state: State): VNode | null {
   return span(`.resultEqualsSign.${styles.resultEqualsSign}`, {style}, '=')
 }
 
+/**
+ * Creates a visual representation ("VNode") of the state.
+ * Includes also the visual representations of child matrices.
+ */
 export default function view(state$: MemoryStream<State>,
                              vdomA$: Stream<VNode>,
                              vdomB$: Stream<VNode>,

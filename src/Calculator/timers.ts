@@ -6,6 +6,13 @@ import {AllowContinueAction} from './model/actions';
 import {isInCombStep, lastCombStep} from './model/queries';
 import styles from './styles';
 
+/**
+ * Reads the stream of state objects, and sets timers that will trigger
+ * later on to emit actions of "allow continue". This is meant for
+ * allowing the user to continue interacting after some animations have
+ * completed. This detects when the state object has just changed the
+ * `step` field.
+ */
 export default function timers(state$: Stream<State>): Stream<AllowContinueAction> {
   const stateChange$ = state$
     .compose(dropRepeats((s1: State, s2: State) =>

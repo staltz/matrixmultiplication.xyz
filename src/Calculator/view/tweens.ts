@@ -92,6 +92,10 @@ function makeEndTransform$(state$: Stream<State>): Stream<string> {
     .flatten();
 }
 
+/**
+ * Creates a stream of CSS transform strings to be applied on matrixB when
+ * it is in motion during the "combing" animation.
+ */
 export function makeTransform$(state$: MemoryStream<State>): MemoryStream<string> {
   const stateOnStepChange$ = state$
     .compose(dropRepeats((s1: State, s2: State) => s1.step === s2.step));

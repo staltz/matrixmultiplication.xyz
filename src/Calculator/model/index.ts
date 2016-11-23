@@ -66,6 +66,9 @@ const initReducer$ = xs.of(
   }
 );
 
+/**
+ * Controls modifications to state, through the emission of reducer functions.
+ */
 export default function model(action$: Stream<Action>,
                               measurements$: Stream<Measurements>): Stream<Reducer> {
   return xs.merge(

@@ -14,6 +14,10 @@ function isNotNull(x: Measurements | null): x is Measurements {
   return x !== null;
 }
 
+/**
+ * Provides a stream of measurements of elements on the DOM, such as the
+ * width and height (in pixels) of the matrices.
+ */
 export default function measure(domSource: DOMSource): Stream<Measurements> {
   return domSource.select('.calculator').elements()
     .map((e: Element | Array<Element>) => {

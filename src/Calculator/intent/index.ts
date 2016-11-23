@@ -7,6 +7,9 @@ import {Action} from '../model/actions';
 import {controlPanelIntent} from './controlPanel';
 import {resizeIntent} from './resize';
 
+/**
+ * Interprets user events as actions that can affect the state in the model.
+ */
 export default function intent(domSource: DOMSource): Stream<Action> {
   const resizeAction$ = resizeIntent(domSource);
   const controlPanelAction$ = controlPanelIntent(domSource);
