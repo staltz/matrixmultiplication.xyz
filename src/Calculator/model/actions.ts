@@ -7,10 +7,10 @@ import {MatrixID} from './index';
 export type Action =
   ResizeAction |
   StartMultiplyAction |
-  AllowContinueAction |
   NextStepAction |
+  EndAction |
   ResetAction |
-  EndAction;
+  AllowContinueAction;
 
 export type Direction = 'row' | 'column';
 
@@ -30,13 +30,13 @@ export interface StartMultiplyAction {
   payload: null;
 }
 
-export interface AllowContinueAction {
-  type: 'ALLOW_CONTINUE';
+export interface NextStepAction {
+  type: 'NEXT_STEP';
   payload: null;
 }
 
-export interface NextStepAction {
-  type: 'NEXT_STEP';
+export interface EndAction {
+  type: 'END';
   payload: null;
 }
 
@@ -45,10 +45,15 @@ export interface ResetAction {
   payload: null;
 }
 
-export interface EndAction {
-  type: 'END';
+export interface AllowContinueAction {
+  type: 'ALLOW_CONTINUE';
   payload: null;
 }
+
+/**
+ * The functions below assist TypeScript's inference to know which action
+ * sub-type we have based on the `type` field which is a string.
+ */
 
 export function isResizeAction(ac: Action): ac is ResizeAction {
   return ac.type === 'RESIZE';
@@ -58,18 +63,18 @@ export function isStartMultiplyAction(ac: Action): ac is StartMultiplyAction {
   return ac.type === 'START_MULTIPLY';
 }
 
-export function isAllowContinueAction(ac: Action): ac is AllowContinueAction {
-  return ac.type === 'ALLOW_CONTINUE';
-}
-
 export function isNextStepAction(ac: Action): ac is NextStepAction {
   return ac.type === 'NEXT_STEP';
+}
+
+export function isEndAction(ac: Action): ac is EndAction {
+  return ac.type === 'END';
 }
 
 export function isResetAction(ac: Action): ac is ResetAction {
   return ac.type === 'RESET';
 }
 
-export function isEndAction(ac: Action): ac is EndAction {
-  return ac.type === 'END';
+export function isAllowContinueAction(ac: Action): ac is AllowContinueAction {
+  return ac.type === 'ALLOW_CONTINUE';
 }
