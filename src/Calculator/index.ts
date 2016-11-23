@@ -4,7 +4,7 @@ import {DOMSource} from '@cycle/dom/xstream-typings';
 import isolate from '@cycle/isolate';
 import MatrixValues from '../utils/MatrixValues';
 import Matrix from '../Matrix/index';
-import intent from './intent';
+import intent from './intent/index';
 import timers from './timers';
 import measure from './measure';
 import model, {State, Reducer} from './model';

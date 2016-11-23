@@ -11,7 +11,7 @@ import {
   isResetAction,
   isEndAction,
   Direction,
-} from './intent';
+} from './intent/index';
 import {State as MatrixState} from '../Matrix/index';
 import {lastCombStep} from './queries';
 

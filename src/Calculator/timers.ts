@@ -2,7 +2,7 @@ import xs, {Stream, MemoryStream} from 'xstream';
 import delay from 'xstream/extra/delay';
 import dropRepeats from 'xstream/extra/dropRepeats';
 import {State} from './model';
-import {AllowContinueAction} from './intent';
+import {AllowContinueAction} from './intent/index';
 import styles from './styles';
 import {isInCombStep, lastCombStep} from './queries';
 
