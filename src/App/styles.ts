@@ -27,6 +27,19 @@ namespace Styles {
         'rgba(255,255,255,0.9) 60%, ' +
         'transparent 100%)',
   });
+
+  export const footnote = style({
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    fontFamily: '"Source Sans Pro", serif',
+    fontSize: '14px',
+    textAlign: 'center',
+    '& > *': {
+      color: pallete.gray,
+    },
+  });
 };
 
 export default Styles;

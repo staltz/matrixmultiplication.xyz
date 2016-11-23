@@ -1,5 +1,5 @@
 import xs, {Stream, MemoryStream} from 'xstream';
-import {div, h1, VNode} from '@cycle/dom';
+import {div, h1, h2, a, VNode} from '@cycle/dom';
 import {DOMSource} from '@cycle/dom/xstream-typings';
 import MatrixValues from '../utils/MatrixValues';
 import Calculator from '../Calculator/index';
@@ -21,6 +21,11 @@ function view(calculatorVDom: Stream<VNode>): Stream<VNode> {
     div('.app', [
       h1(`.title.${styles.title}`, 'Matrix Multiplication'),
       calcVNode,
+      h2(`.footnote.${styles.footnote}`, [
+        a({attrs: {href: 'https://github.com/staltz/matrix-multiplication'}},
+          'Built by @andrestaltz with Cycle.js'
+        )
+      ])
     ])
   );
 }
