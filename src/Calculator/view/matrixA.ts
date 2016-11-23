@@ -12,6 +12,7 @@ function renderOperatorGrid(state: State): VNode | null {
   const lastIntersectRow = state.step - 2;
   const firstIntersectRow = state.step - 2 - state.matrixB.values.numberColumns;
   const rows = state.matrixA.values.rows;
+
   return div(`.operatorGrid.${styles.operatorGrid}`, rows.map((row, i) => {
     const shouldShowMultiply = firstIntersectRow < i && i <= lastIntersectRow;
     return ul(`.${matrixStyles.row}`, row.map((cellVal, j) => {
@@ -30,14 +31,16 @@ function renderOperatorGrid(state: State): VNode | null {
   }));
 }
 
-function mutateMatrixACellsStyle(state: State) {
+function mutateCellStyles(state: State) {
   const lastIntersectRow = state.step - 2;
   const firstIntersectRow = state.step - 2 - state.matrixB.values.numberColumns;
+
   return function updateHook(prev: VNode, next: VNode) {
     const all = (next.elm as Element).querySelectorAll('.cell');
     for (let i = 0, N = all.length; i < N; i++) {
       const cellElem = all.item(i) as HTMLElement;
       const rowOfCell: number = parseInt((cellElem.dataset as any).row);
+
       if (isInCombStep(state)) {
         cellElem.classList.add(styles.animatedCell);
       } else if (state.step > lastCombStep(state)) {
@@ -70,7 +73,7 @@ export function renderMatrixA(matrixA: VNode, state: State): VNode {
         showResizers ? [renderRowsResizer('A')] : []
       ),
       td(`.matrixA.${styles.matrixA}`, {
-        hook: {update: mutateMatrixACellsStyle(state)}
+        hook: {update: mutateCellStyles(state)}
       }, [matrixA, renderOperatorGrid(state)]),
     ]),
     tr([
