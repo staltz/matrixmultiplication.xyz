@@ -13,10 +13,10 @@ cssRule('@font-face', {
 });
 
 export const pallete = {
-  blue: 'rgba(48, 141, 255, 1)',
-  blueWeak: 'rgba(48, 141, 255, 0.8)',
-  orange: 'rgba(255, 162, 48, 1)',
-  orangeWeak: 'rgba(255, 162, 48, 0.8)',
+  blue: 'rgb(48, 141, 255)',
+  blueWeak: 'rgb(93, 166, 252)',
+  orange: 'rgb(255, 162, 48)',
+  orangeWeak: 'rgb(253, 180, 97)',
   // grayscale
   white:     '#FFFFFF',
   grayLight: '#EEEEEE',
