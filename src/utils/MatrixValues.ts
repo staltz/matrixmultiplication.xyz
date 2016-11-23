@@ -1,4 +1,4 @@
-import {List} from 'immutable';
+import {List, fromJS} from 'immutable';
 
 /**
  * An immutable data structure to hold the numbers in a matrix.
@@ -24,6 +24,14 @@ export default class MatrixValues {
     mv.numRows = Math.max(1, rows);
     mv.numCols = Math.max(1, columns);
     mv.values = makeValues(rows, columns);
+    return mv;
+  }
+
+  static from(vals: Array<Array<number>>): MatrixValues {
+    let mv = new MatrixValues();
+    mv.numRows = vals.length;
+    mv.numCols = vals[0].length;
+    mv.values = fromJS(vals);
     return mv;
   }
 
