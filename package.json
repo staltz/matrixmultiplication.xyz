@@ -8,8 +8,8 @@
     "@cycle/dom": "14.0.0",
     "@cycle/isolate": "1.4.x",
     "@cycle/xstream-run": "3.1.x",
+    "cycle-onionify": "^2.2.0",
     "immutable": "^3.8.1",
-    "snabbdom-selector": "^0.4.0",
     "typestyle": "^0.7.1",
     "xstream": "7.0.x"
   },
@@ -17,11 +17,13 @@
     "browserify": "13.1.1",
     "mkdirp": "0.5.x",
     "typescript": "2.0.9",
-    "typings": "^2.0.0"
+    "typings": "^2.0.0",
+    "uglify-js": "^2.7.4"
   },
   "scripts": {
     "prebrowserify": "mkdirp dist && typings install && tsc",
     "browserify": "browserify lib/index.js --outfile dist/main.js",
+    "postbrowserify": "uglifyjs dist/main.js -o dist/main.min.js",
     "start": "npm install && npm run browserify && echo 'OPEN index.html IN YOUR BROWSER'"
   }
 }
