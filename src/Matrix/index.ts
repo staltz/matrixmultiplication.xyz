@@ -20,12 +20,13 @@ export interface Sinks {
 export type State = State;
 
 export default function Matrix(sources: Sources): Sinks {
-  let action$ = intent(sources.DOM);
-  let reducer$ = model(action$);
-  let vdom$ = view(sources.onion.state$);
+  const action$ = intent(sources.DOM);
+  const reducer$ = model(action$);
+  const vdom$ = view(sources.onion.state$);
 
-  return {
+  const sinks = {
     DOM: vdom$,
     onion: reducer$,
   };
+  return sinks;
 }
