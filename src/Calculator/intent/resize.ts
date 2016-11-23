@@ -19,40 +19,40 @@ function createResizeAction(target: MatrixID,
 }
 
 export function resizeIntent(domSource: DOMSource): Stream<ResizeAction> {
-  let decreaseRowA$ = domSource.select('.decreaseRowA').events('click')
+  const  decreaseRowA$ = domSource.select('.decreaseRowA').events('click')
     .mapTo(createResizeAction('A', 'row', -1));
 
-  let increaseRowA$ = domSource.select('.increaseRowA').events('click')
+  const  increaseRowA$ = domSource.select('.increaseRowA').events('click')
     .mapTo(createResizeAction('A', 'row', +1));
 
-  let decreaseColA$ = xs
+  const  decreaseColA$ = xs
     .merge(
       domSource.select('.decreaseColA').events('click'),
       domSource.select('.decreaseRowB').events('click')
     ).mapTo(createResizeAction('A', 'column', -1));
 
-  let increaseColA$ = xs
+  const  increaseColA$ = xs
     .merge(
       domSource.select('.increaseColA').events('click'),
       domSource.select('.increaseRowB').events('click')
     ).mapTo(createResizeAction('A', 'column', +1));
 
-  let decreaseRowB$ = xs
+  const  decreaseRowB$ = xs
     .merge(
       domSource.select('.decreaseColA').events('click'),
       domSource.select('.decreaseRowB').events('click')
     ).mapTo(createResizeAction('B', 'row', -1));
 
-  let increaseRowB$ = xs
+  const  increaseRowB$ = xs
     .merge(
       domSource.select('.increaseColA').events('click'),
       domSource.select('.increaseRowB').events('click')
     ).mapTo(createResizeAction('B', 'row', +1));
 
-  let decreaseColB$ = domSource.select('.decreaseColB').events('click')
+  const  decreaseColB$ = domSource.select('.decreaseColB').events('click')
     .mapTo(createResizeAction('B', 'column', -1));
 
-  let increaseColB$ = domSource.select('.increaseColB').events('click')
+  const  increaseColB$ = domSource.select('.increaseColB').events('click')
     .mapTo(createResizeAction('B', 'column', +1));
 
   return xs.merge(
