@@ -15,11 +15,11 @@ export function controlPanelIntent(domSource: DOMSource): Stream<Action> {
   const nextStepAction$ = domSource.select('.next').events('click')
     .mapTo({ type: 'NEXT_STEP', payload: null } as NextStepAction);
 
-  const resetAction$ = domSource.select('.reset').events('click')
-    .mapTo({ type: 'RESET', payload: null } as ResetAction);
-
   const endAction$ = domSource.select('.end').events('click')
     .mapTo({ type: 'END', payload: null } as EndAction);
+
+  const resetAction$ = domSource.select('.reset').events('click')
+    .mapTo({ type: 'RESET', payload: null } as ResetAction);
 
   return xs.merge(
     startMultiplyAction$,
