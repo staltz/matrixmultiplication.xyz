@@ -1,10 +1,10 @@
 import xs, {Stream, MemoryStream} from 'xstream';
 import {VNode} from '@cycle/dom';
 import {DOMSource} from '@cycle/dom/xstream-typings';
-import MatrixValues from '../utils/MatrixValues';
 import {StateSource} from 'cycle-onionify';
-import model, {State, Reducer} from './model';
+import MatrixValues from '../utils/MatrixValues';
 import intent from './intent';
+import model, {State, Reducer} from './model';
 import view from './view';
 
 export interface Sources {

@@ -1,11 +1,6 @@
 import xs, {Stream, MemoryStream} from 'xstream';
 import {DOMSource} from '@cycle/dom/xstream-typings';
-
-export interface Action {
-  row: number;
-  col: number;
-  val: number;
-}
+import {Action} from './model';
 
 export default function intent(domSource: DOMSource): Stream<Action> {
   return domSource.select('.cell').events('input')

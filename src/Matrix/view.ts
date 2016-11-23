@@ -1,7 +1,7 @@
 import xs, {Stream, MemoryStream} from 'xstream';
 import {div, span, input, ul, li, VNode} from '@cycle/dom';
-import styles from './styles';
 import {State} from './model';
+import styles from './styles';
 
 function renderLeftBracket(state: State): VNode {
   return div(`.leftBracket.${styles.leftBracket}`, {

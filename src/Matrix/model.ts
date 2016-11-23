@@ -1,6 +1,5 @@
 import xs, {Stream, MemoryStream} from 'xstream';
 import * as Immutable from 'immutable';
-import {Action} from './intent';
 import MatrixValues from '../utils/MatrixValues';
 
 export interface State {
@@ -10,6 +9,12 @@ export interface State {
 }
 
 export type Reducer = (state: State) => State;
+
+export interface Action {
+  row: number;
+  col: number;
+  val: number;
+}
 
 const defaultState: State = {
   values: MatrixValues.ofDimensions(1, 1),
