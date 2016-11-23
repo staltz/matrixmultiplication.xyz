@@ -10,7 +10,7 @@ import styles from '../styles';
 const xMove = 59.5; // px
 const padding = 8; // px
 
-function makeWaterfallTransform$(state$: Stream<State>): Stream<string> {
+function makeStartMultiplyTransform$(state$: Stream<State>): Stream<string> {
   return state$
     .filter(state => state.step === 1)
     .map(state => {
@@ -36,7 +36,7 @@ function makeWaterfallTransform$(state$: Stream<State>): Stream<string> {
     .flatten();
 }
 
-function makeStepTransform$(state$: Stream<State>): Stream<string> {
+function makeNextStepTransform$(state$: Stream<State>): Stream<string> {
   return state$
     .filter(state => state.step > 1 && state.step <= lastCombStep(state))
     .map(state => {
@@ -97,8 +97,8 @@ export function makeTransform$(state$: MemoryStream<State>): MemoryStream<string
     .compose(dropRepeats((s1: State, s2: State) => s1.step === s2.step));
 
   return xs.merge(
-    makeWaterfallTransform$(stateOnStepChange$),
-    makeStepTransform$(stateOnStepChange$),
+    makeStartMultiplyTransform$(stateOnStepChange$),
+    makeNextStepTransform$(stateOnStepChange$),
     makeEndTransform$(stateOnStepChange$),
   ).startWith('translateX(0%) translateY(0px) rotateZ(0deg)');
 }
