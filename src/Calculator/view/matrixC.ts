@@ -1,7 +1,7 @@
 import {div, VNode} from '@cycle/dom';
-import {State} from '../model';
+import {State} from '../model/index';
+import {lastCombStep, isInCombStep} from '../model/queries';
 import styles from '../styles';
-import {lastCombStep, isInCombStep} from '../queries';
 
 function mutateCellsStyle(state: State) {
   return function updateHook(prev: VNode, next: VNode) {

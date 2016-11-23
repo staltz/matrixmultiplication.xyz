@@ -1,0 +1,81 @@
+import xs, {Stream} from 'xstream';
+import MatrixValues from '../../utils/MatrixValues';
+import {State as MatrixState} from '../../Matrix/index';
+import {Action} from './actions';
+import {updateMeasurementsReducer$} from './reducers/measure';
+import {resizeReducer$} from './reducers/resize';
+import {
+  startMultiplyReducer$,
+  nextStepReducer$,
+  fastForwardToEndReducer$,
+  resetReducer$,
+} from './reducers/controlPanel';
+import {allowContinueReducer$} from './reducers/timers';
+
+export interface State {
+  step: number;
+  canInteract: boolean;
+  fastForwardToEnd: boolean;
+  measurements: Measurements;
+  matrixA: MatrixState;
+  matrixB: MatrixState;
+  matrixC: MatrixState | undefined;
+}
+
+export type MatrixID = 'A' | 'B';
+
+export interface Measurements {
+  matrixAHeight: number;
+  matrixBWidth: number;
+  matrixBHeight: number;
+  rowHeight: number;
+}
+
+export type Reducer = (oldState: State) => State;
+
+const defaultState: State = {
+  step: 0,
+  canInteract: true,
+  fastForwardToEnd: false,
+  measurements: {
+    matrixAHeight: 0,
+    matrixBWidth: 0,
+    matrixBHeight: 0,
+    rowHeight: 0,
+  },
+  matrixA: {
+    values: MatrixValues.from([[1, 2, 1], [0, 1, 0], [2, 3, 4]]),
+    editable: true,
+    id: 'A',
+  },
+  matrixB: {
+    values: MatrixValues.from([[2, 5], [6, 7], [1, 8]]),
+    editable: true,
+    id: 'B',
+  },
+  matrixC: void 0,
+};
+
+const initReducer$ = xs.of(
+  function initReducer(prevState: State) {
+    if (!prevState) {
+      return defaultState;
+    } else {
+      return prevState;
+    }
+  }
+);
+
+export default function model(action$: Stream<Action>,
+                              measurements$: Stream<Measurements>): Stream<Reducer> {
+  return xs.merge(
+    initReducer$,
+    updateMeasurementsReducer$(measurements$),
+    resizeReducer$(action$),
+    startMultiplyReducer$(action$),
+    nextStepReducer$(action$),
+    fastForwardToEndReducer$(action$),
+    resetReducer$(action$),
+    allowContinueReducer$(action$),
+  );
+}

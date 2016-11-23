@@ -1,11 +1,11 @@
 import {div, VNode} from '@cycle/dom';
-import {State} from '../model';
+import {State} from '../model/index';
+import {lastCombStep} from '../model/queries';
 import styles from '../styles';
 import playIcon from '../../icons/play';
 import nextIcon from '../../icons/next';
 import endIcon from '../../icons/end';
 import resetIcon from '../../icons/reset';
-import {lastCombStep} from '../queries';
 
 function getArrayOfButtons(state: State): Array<VNode> {
   const step = state.step;

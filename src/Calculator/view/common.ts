@@ -1,5 +1,5 @@
 import {div, VNode} from '@cycle/dom';
-import {MatrixID} from '../model';
+import {MatrixID} from '../model/index';
 import styles from '../styles';
 
 export const multiplySign = '\u00D7';

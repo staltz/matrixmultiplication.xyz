@@ -1,6 +1,7 @@
 import xs, {Stream, MemoryStream} from 'xstream';
 import {div, span, VNode} from '@cycle/dom';
-import {State} from '../model';
+import {State} from '../model/index';
+import {isInCombStep, lastCombStep} from '../model/queries';
 import styles from '../styles';
 import {renderMatrixA} from './matrixA';
 import {renderMatrixB} from './matrixB';
@@ -8,7 +9,6 @@ import {maybeRenderMatrixC} from './matrixC';
 import {renderControlPanel} from './controlPanel';
 import {multiplySign} from './common';
 import {makeTransform$} from './tweens';
-import {isInCombStep, lastCombStep} from '../queries';
 
 function renderSign(state: State): VNode {
   if (isInCombStep(state)) {

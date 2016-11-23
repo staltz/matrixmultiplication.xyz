@@ -3,8 +3,8 @@ import concat from 'xstream/extra/concat';
 import delay from 'xstream/extra/delay';
 import tween from 'xstream/extra/tween';
 import dropRepeats from 'xstream/extra/dropRepeats';
-import {State} from '../model';
-import {lastCombStep} from '../queries';
+import {State} from '../model/index';
+import {lastCombStep} from '../model/queries';
 import styles from '../styles';
 
 const xMove = 59.5; // px

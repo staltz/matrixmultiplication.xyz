@@ -1,7 +1,7 @@
 import {table, tr, td, VNode} from '@cycle/dom';
-import {State} from '../model';
+import {State} from '../model/index';
+import {isInCombStep, lastCombStep} from '../model/queries';
 import styles from '../styles';
-import {isInCombStep, lastCombStep} from '../queries';
 import {renderRowsResizer, renderColsResizer} from './common';
 
 function makeUpdateCellElements(state: State, transform: string) {

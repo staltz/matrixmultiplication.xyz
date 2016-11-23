@@ -1,8 +1,8 @@
 import {div, span, table, tr, td, ul, li, VNode} from '@cycle/dom';
-import {State} from '../model';
-import styles from '../styles';
+import {State} from '../model/index';
+import {isInCombStep, lastCombStep} from '../model/queries';
 import matrixStyles from '../../Matrix/styles';
-import {isInCombStep, lastCombStep} from '../queries';
+import styles from '../styles';
 import {multiplySign, renderRowsResizer, renderColsResizer} from './common';
 
 function renderOperatorGrid(state: State): VNode | null {

@@ -1,7 +1,7 @@
 import xs, {Stream} from 'xstream';
 import {DOMSource} from '@cycle/dom/xstream-typings';
-import {MatrixID} from '../model';
-import {ResizeAction, Direction} from './index';
+import {MatrixID} from '../model/index';
+import {ResizeAction, Direction} from '../model/actions';
 
 function createResizeAction(target: MatrixID,
                             direction: Direction,

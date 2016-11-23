@@ -6,7 +6,7 @@ import {
   NextStepAction,
   ResetAction,
   EndAction,
-} from './index';
+} from '../model/actions';
 
 export function controlPanelIntent(domSource: DOMSource): Stream<Action> {
   const startMultiplyAction$ = domSource.select('.multiply').events('click')

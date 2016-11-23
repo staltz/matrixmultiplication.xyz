@@ -1,4 +1,4 @@
-import {State} from './model';
+import {State} from './index';
 
 export function totalCombSteps(state: State): number {
   return state.matrixA.values.numberRows + state.matrixB.values.numberColumns - 2;

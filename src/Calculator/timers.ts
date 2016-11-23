@@ -1,10 +1,10 @@
-import xs, {Stream, MemoryStream} from 'xstream';
+import xs, {Stream} from 'xstream';
 import delay from 'xstream/extra/delay';
 import dropRepeats from 'xstream/extra/dropRepeats';
-import {State} from './model';
-import {AllowContinueAction} from './intent/index';
+import {State} from './model/index';
+import {AllowContinueAction} from './model/actions';
+import {isInCombStep, lastCombStep} from './model/queries';
 import styles from './styles';
-import {isInCombStep, lastCombStep} from './queries';
 
 export default function timers(state$: Stream<State>): Stream<AllowContinueAction> {
   const stateChange$ = state$
