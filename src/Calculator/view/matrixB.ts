@@ -32,7 +32,7 @@ function makeUpdateCellElements(state: State, transform: string) {
           ${rotateZTransform}
           scale(${styles.cellScaleWhenIntersecting})
           translateX(${styles.cellTranslateXWhenIntersecting}px)
-          translateY(${styles.cellTranslateYWhenIntersecting}px)
+          translateY(${-styles.cellTranslateYWhenIntersecting}px)
         `;
         cellElem.style.color = styles.colorPallete.blue;
       } else {
