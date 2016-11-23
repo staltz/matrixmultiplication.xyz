@@ -29,7 +29,7 @@ namespace Styles {
   });
 
   export const footnote = style({
-    position: 'absolute',
+    position: 'fixed',
     left: 0,
     right: 0,
     bottom: 0,
