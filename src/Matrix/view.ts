@@ -27,14 +27,14 @@ function renderAllCells(state: State): Array<VNode> {
             key: `cell${i}-${j}`,
             attrs: {
               type: 'text', 'data-row': i, 'data-col': j,
-              value: cellValue ? cellValue : void 0,
+              value: typeof cellValue === 'number' ? `${cellValue}` : void 0,
             },
           }) :
           span(`.cell.${styles.cell}`, {
             attrs: {
               'data-row': i, 'data-col': j
             },
-          }, cellValue ? [cellValue] : [zeroWidthSpace])
+          }, typeof cellValue === 'number' ? [`${cellValue}`] : [zeroWidthSpace])
       ])
     ))
   );

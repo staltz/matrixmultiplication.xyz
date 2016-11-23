@@ -5,7 +5,10 @@ import matrixStyles from '../../Matrix/styles';
 import {isInCombStep, lastCombStep} from '../queries';
 import {multiplySign, renderRowsResizer, renderColsResizer} from './common';
 
-function renderOperatorGrid(state: State): VNode {
+function renderOperatorGrid(state: State): VNode | null {
+  if (state.step === 0) {
+    return null;
+  }
   const lastIntersectRow = state.step - 2;
   const firstIntersectRow = state.step - 2 - state.matrixB.values.numberColumns;
   const rows = state.matrixA.values.rows;

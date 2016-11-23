@@ -41,7 +41,7 @@ export default function Calculator(sources: Sources): Sinks {
 
   const sinks = {
     DOM: vdom$,
-    onion: reducer$,
+    onion: allReducer$,
   };
   return sinks;
 }

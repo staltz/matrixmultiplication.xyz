@@ -8,7 +8,7 @@ export interface Action {
 }
 
 export default function intent(domSource: DOMSource): Stream<Action> {
-  return domSource.select('input').events('input')
+  return domSource.select('.cell').events('input')
     .map(ev => {
       const inputEl = <HTMLInputElement>ev.target;
       return {
