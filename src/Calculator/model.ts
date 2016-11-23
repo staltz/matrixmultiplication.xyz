@@ -40,12 +40,12 @@ let defaultState: State = {
     rowHeight: 0,
   },
   matrixA: {
-    values: MatrixValues.from([[1, 2], [0, 1], [2, 3], [1, 3]]),
+    values: MatrixValues.from([[1, 2, 1], [0, 1, 0], [2, 3, 4]]),
     editable: true,
     id: 'A',
   },
   matrixB: {
-    values: MatrixValues.from([[2, 5, 10], [6, 7, 0]]),
+    values: MatrixValues.from([[2, 5], [6, 7], [1, 8]]),
     editable: true,
     id: 'B',
   },
