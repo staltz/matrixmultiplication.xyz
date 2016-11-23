@@ -14,7 +14,7 @@ export interface Sources {
 
 export interface Sinks {
   DOM: Stream<VNode>;
-  onion: Stream<any>;
+  onion: Stream<(s: any) => any>;
 }
 
 export type State = State;
