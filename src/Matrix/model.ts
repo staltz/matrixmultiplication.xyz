@@ -1,5 +1,4 @@
 import xs, {Stream, MemoryStream} from 'xstream';
-import * as Immutable from 'immutable';
 import MatrixValues from '../utils/MatrixValues';
 
 export interface State {
@@ -26,14 +25,6 @@ const defaultState: State = {
  * Controls modifications to state, through the emission of reducer functions.
  */
 export default function model(action$: Stream<Action>): Stream<Reducer> {
-  const inputReducer$ = action$.map(a =>
-    function inputReducer(old: State): State {
-      return Immutable.Map<string, any>(old).updateIn(['values'], oldVals =>
-        oldVals.set(a.row, a.col, a.val)
-      ).toJS();
-    }
-  );
-
   const initReducer$ = xs.of(function initReducer(prevState: State): State {
     if (!prevState) {
       return defaultState;
@@ -42,5 +33,14 @@ export default function model(action$: Stream<Action>): Stream<Reducer> {
     }
   });
 
-  return xs.merge(inputReducer$, initReducer$);
+  const inputReducer$ = action$
+    .map(action => function inputReducer(prevState: State): State {
+      return {
+        values: prevState.values.set(action.row, action.col, action.val),
+        editable: prevState.editable,
+        id: prevState.id,
+      };
+    });
+
+  return xs.merge(initReducer$, inputReducer$);
 }

@@ -1,5 +1,5 @@
 import xs, {Stream} from 'xstream';
-import * as Immutable from 'immutable';
+import MatrixValues from '../../../utils/MatrixValues';
 import {State, Reducer} from '../index';
 import {Action, isResizeAction} from '../actions';
 
@@ -7,26 +7,32 @@ export function resizeReducer$(action$: Stream<Action>): Stream<Reducer> {
   return action$
     .filter(isResizeAction)
     .map(action => function resizeReducer(prevState: State): State {
-      return Immutable.Map({
+      const targetMatrix = 'matrix' + action.payload.target;
+
+      const nextState: State = {
         step: prevState.step,
         canInteract: prevState.canInteract,
         fastForwardToEnd: prevState.fastForwardToEnd,
-        measurements: Immutable.Map(prevState.measurements),
-        matrixA: Immutable.Map(prevState.matrixA),
-        matrixB: Immutable.Map(prevState.matrixB),
+        measurements: prevState.measurements,
+        matrixA: prevState.matrixA,
+        matrixB: prevState.matrixB,
         matrixC: prevState.matrixC,
-      }).updateIn(['matrix' + action.payload.target, 'values'], oldVals => {
-        if (action.payload.resizeParam.direction === 'row') {
-          return oldVals.resize(
-            oldVals.numberRows + action.payload.resizeParam.amount,
-            oldVals.numberColumns
-          )
-        } else {
-          return oldVals.resize(
-            oldVals.numberRows,
-            oldVals.numberColumns + action.payload.resizeParam.amount
-          )
-        }
-      }).toJS();
+      };
+
+      const prevValues: MatrixValues = prevState[targetMatrix].values;
+
+      if (action.payload.resizeParam.direction === 'row') {
+        nextState[targetMatrix].values = prevValues.resize(
+          prevValues.numberRows + action.payload.resizeParam.amount,
+          prevValues.numberColumns
+        );
+      } else {
+        nextState[targetMatrix].values = prevValues.resize(
+          prevValues.numberRows,
+          prevValues.numberColumns + action.payload.resizeParam.amount
+        );
+      }
+
+      return nextState;
     });
 }

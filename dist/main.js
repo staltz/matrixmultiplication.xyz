@@ -481,33 +481,34 @@ exports.updateMeasurementsReducer$ = updateMeasurementsReducer$;
 
 },{}],14:[function(require,module,exports){
 "use strict";
-var Immutable = require('immutable');
 var actions_1 = require('../actions');
 function resizeReducer$(action$) {
     return action$
         .filter(actions_1.isResizeAction)
         .map(function (action) { return function resizeReducer(prevState) {
-        return Immutable.Map({
+        var targetMatrix = 'matrix' + action.payload.target;
+        var nextState = {
             step: prevState.step,
             canInteract: prevState.canInteract,
             fastForwardToEnd: prevState.fastForwardToEnd,
-            measurements: Immutable.Map(prevState.measurements),
-            matrixA: Immutable.Map(prevState.matrixA),
-            matrixB: Immutable.Map(prevState.matrixB),
+            measurements: prevState.measurements,
+            matrixA: prevState.matrixA,
+            matrixB: prevState.matrixB,
             matrixC: prevState.matrixC,
-        }).updateIn(['matrix' + action.payload.target, 'values'], function (oldVals) {
-            if (action.payload.resizeParam.direction === 'row') {
-                return oldVals.resize(oldVals.numberRows + action.payload.resizeParam.amount, oldVals.numberColumns);
-            }
-            else {
-                return oldVals.resize(oldVals.numberRows, oldVals.numberColumns + action.payload.resizeParam.amount);
-            }
-        }).toJS();
+        };
+        var prevValues = prevState[targetMatrix].values;
+        if (action.payload.resizeParam.direction === 'row') {
+            nextState[targetMatrix].values = prevValues.resize(prevValues.numberRows + action.payload.resizeParam.amount, prevValues.numberColumns);
+        }
+        else {
+            nextState[targetMatrix].values = prevValues.resize(prevValues.numberRows, prevValues.numberColumns + action.payload.resizeParam.amount);
+        }
+        return nextState;
     }; });
 }
 exports.resizeReducer$ = resizeReducer$;
 
-},{"../actions":8,"immutable":117}],15:[function(require,module,exports){
+},{"../actions":8}],15:[function(require,module,exports){
 "use strict";
 var actions_1 = require('../actions');
 var queries_1 = require('../queries');
@@ -1235,7 +1236,6 @@ exports.default = intent;
 },{}],27:[function(require,module,exports){
 "use strict";
 var xstream_1 = require('xstream');
-var Immutable = require('immutable');
 var MatrixValues_1 = require('../utils/MatrixValues');
 var defaultState = {
     values: MatrixValues_1.default.ofDimensions(1, 1),
@@ -1246,13 +1246,6 @@ var defaultState = {
  * Controls modifications to state, through the emission of reducer functions.
  */
 function model(action$) {
-    var inputReducer$ = action$.map(function (a) {
-        return function inputReducer(old) {
-            return Immutable.Map(old).updateIn(['values'], function (oldVals) {
-                return oldVals.set(a.row, a.col, a.val);
-            }).toJS();
-        };
-    });
     var initReducer$ = xstream_1.default.of(function initReducer(prevState) {
         if (!prevState) {
             return defaultState;
@@ -1261,12 +1254,20 @@ function model(action$) {
             return prevState;
         }
     });
-    return xstream_1.default.merge(inputReducer$, initReducer$);
+    var inputReducer$ = action$
+        .map(function (action) { return function inputReducer(prevState) {
+        return {
+            values: prevState.values.set(action.row, action.col, action.val),
+            editable: prevState.editable,
+            id: prevState.id,
+        };
+    }; });
+    return xstream_1.default.merge(initReducer$, inputReducer$);
 }
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = model;
 
-},{"../utils/MatrixValues":36,"immutable":117,"xstream":169}],28:[function(require,module,exports){
+},{"../utils/MatrixValues":36,"xstream":169}],28:[function(require,module,exports){
 "use strict";
 var typestyle_1 = require('typestyle');
 var styles_1 = require('../styles');
