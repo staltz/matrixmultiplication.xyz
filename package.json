@@ -20,7 +20,7 @@
     "typings": "^2.0.0"
   },
   "scripts": {
-    "prebrowserify": "mkdirp dist && tsc",
+    "prebrowserify": "mkdirp dist && typings install && tsc",
     "browserify": "browserify lib/index.js --outfile dist/main.js",
     "start": "npm install && npm run browserify && echo 'OPEN index.html IN YOUR BROWSER'"
   }
