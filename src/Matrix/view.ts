@@ -3,6 +3,8 @@ import {div, span, input, ul, li, VNode} from '@cycle/dom';
 import {State} from './model';
 import styles from './styles';
 
+const zeroWidthSpace = '\u200B';
+
 function renderLeftBracket(state: State): VNode {
   return div(`.leftBracket.${styles.leftBracket}`, {
     key: `leftBracket${state.id}`,
@@ -14,8 +16,6 @@ function renderRightBracket(state: State): VNode {
     key: `rightBracket${state.id}`,
   });
 }
-
-const zeroWidthSpace = '\u200B';
 
 function renderCellAsInput(cellValue: number | null, i: number, j: number): VNode {
   return input(`.cell.${styles.cell}`, {
@@ -47,6 +47,9 @@ function renderAllCells(state: State): Array<VNode> {
   );
 }
 
+/**
+ * Creates a visual representation ("VNode") of the state.
+ */
 export default function view(state$: MemoryStream<State>): MemoryStream<VNode> {
   return state$.map(state =>
     div(`.matrix.${styles.matrix}`, {key: state.id}, [

@@ -19,6 +19,11 @@ export interface Sinks {
 
 export type State = State;
 
+/**
+ * The Matrix component.
+ * Represents a matrix of numbers (some may be potentially null), displaying
+ * them on the DOM and allowing them to be edited.
+ */
 export default function Matrix(sources: Sources): Sinks {
   const action$ = intent(sources.DOM);
   const reducer$ = model(action$);

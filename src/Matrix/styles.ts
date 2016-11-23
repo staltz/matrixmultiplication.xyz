@@ -2,14 +2,18 @@ import {style} from 'typestyle';
 import {pallete} from '../styles';
 
 namespace Styles {
-  const insetBoxShadow = {
-    'box-shadow': 'inset 0px 1px 2px 0px rgba(0,0,0,0.5)',
-  };
+  /**
+   * Constants for sizes and colors.
+   */
 
   export const matrixBracketWidth = 2;
   export const matrixBracketWidthPx = `${matrixBracketWidth}px`;
   export const matrixBracketIngress = '9px';
   export const matrixBracketColor = pallete.black;
+
+  /**
+   * Styles for the matrix and its brackets.
+   */
 
   export const matrix = style({
     position: 'relative',
@@ -69,6 +73,14 @@ namespace Styles {
       width: matrixBracketIngress,
     },
   });
+
+  /**
+   * Styles for the rows, columns, and cells.
+   */
+
+  const insetBoxShadow = {
+    'box-shadow': 'inset 0px 1px 2px 0px rgba(0,0,0,0.5)',
+  };
 
   export const row = style({
     listStyleType: 'none',

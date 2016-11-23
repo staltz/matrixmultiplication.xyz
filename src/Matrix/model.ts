@@ -22,6 +22,9 @@ const defaultState: State = {
   id: `matrix${Math.round(Math.random()*1000)}`,
 };
 
+/**
+ * Controls modifications to state, through the emission of reducer functions.
+ */
 export default function model(action$: Stream<Action>): Stream<Reducer> {
   const inputReducer$ = action$.map(a =>
     function inputReducer(old: State): State {
