@@ -1,18 +1,16 @@
 import {div, VNode} from '@cycle/dom';
 import {State} from '../model';
 import styles from '../styles';
-import {lastCombStep} from '../queries';
+import {lastCombStep, isInCombStep} from '../queries';
 
 function mutateCellsStyle(state: State) {
-  const isCombing = (state.step === 1 && state.canInteract) || state.step > 1;
-
   return function updateHook(prev: VNode, next: VNode) {
     const all = (next.elm as Element).querySelectorAll('.cell');
     for (let i = 0, N = all.length; i < N; i++) {
       const cellElem = all.item(i) as HTMLElement;
       const rowOfCell: number = parseInt((cellElem.dataset as any).row);
       const colOfCell: number = parseInt((cellElem.dataset as any).col);
-      if (isCombing) {
+      if (isInCombStep(state)) {
         cellElem.classList.add(styles.animatedCell);
       } else {
         cellElem.classList.remove(styles.animatedCell);

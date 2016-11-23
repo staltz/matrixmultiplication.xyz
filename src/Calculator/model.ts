@@ -9,13 +9,16 @@ import {
   isAllowContinueAction,
   isNextStepAction,
   isResetAction,
+  isEndAction,
   Direction,
 } from './intent';
 import {State as MatrixState} from '../Matrix/index';
+import {lastCombStep} from './queries';
 
 export interface State {
   step: number;
   canInteract: boolean;
+  fastForwardToEnd: boolean;
   measurements: Measurements;
   matrixA: MatrixState;
   matrixB: MatrixState;
@@ -29,6 +32,7 @@ export type Reducer = (oldState: State) => State;
 let defaultState: State = {
   step: 0,
   canInteract: true,
+  fastForwardToEnd: false,
   measurements: {
     matrixAHeight: 0,
     matrixBWidth: 0,
@@ -63,6 +67,7 @@ function resizeReducer$(action$: Stream<Action>): Stream<Reducer> {
       return Immutable.Map({
         step: prevState.step,
         canInteract: prevState.canInteract,
+        fastForwardToEnd: prevState.fastForwardToEnd,
         measurements: Immutable.Map(prevState.measurements),
         matrixA: Immutable.Map(prevState.matrixA),
         matrixB: Immutable.Map(prevState.matrixB),
@@ -91,6 +96,7 @@ function startMultiplyReducer$(action$: Stream<Action>): Stream<Reducer> {
         return {
           step: 1,
           canInteract: false,
+          fastForwardToEnd: false,
           measurements: prevState.measurements,
           matrixA: {
             editable: false,
@@ -154,6 +160,7 @@ function nextStepReducer$(action$: Stream<Action>): Stream<Reducer> {
         return {
           step: nextStep,
           canInteract: false,
+          fastForwardToEnd: prevState.fastForwardToEnd,
           measurements: prevState.measurements,
           matrixA: prevState.matrixA,
           matrixB: prevState.matrixB,
@@ -178,14 +185,37 @@ function allowContinueReducer$(action$: Stream<Action>): Stream<Reducer> {
   return action$
     .filter(isAllowContinueAction)
     .map(action => function allowContinueReducer(prevState: State): State {
-      return {
-        step: prevState.step,
-        canInteract: true,
-        measurements: prevState.measurements,
-        matrixA: prevState.matrixA,
-        matrixB: prevState.matrixB,
-        matrixC: prevState.matrixC,
-      };
+      if (prevState.fastForwardToEnd && prevState.matrixC) {
+        const nextStep = prevState.step + 1;
+        return {
+          step: nextStep,
+          canInteract: false,
+          fastForwardToEnd: nextStep <= lastCombStep(prevState),
+          measurements: prevState.measurements,
+          matrixA: prevState.matrixA,
+          matrixB: prevState.matrixB,
+          matrixC: {
+            editable: prevState.matrixC.editable,
+            values: calculateNextMatrixC(
+              nextStep,
+              prevState.matrixA.values,
+              prevState.matrixB.values,
+              prevState.matrixC.values,
+            ),
+            id: prevState.matrixC.id,
+          },
+        };
+      } else {
+        return {
+          step: prevState.step,
+          canInteract: true,
+          fastForwardToEnd: false,
+          measurements: prevState.measurements,
+          matrixA: prevState.matrixA,
+          matrixB: prevState.matrixB,
+          matrixC: prevState.matrixC,
+        };
+      }
     });
 }
 
@@ -195,6 +225,7 @@ function updateMeasurementsReducer$(measurements$: Stream<Measurements>): Stream
       return {
         step: prevState.step,
         canInteract: prevState.canInteract,
+        fastForwardToEnd: prevState.fastForwardToEnd,
         measurements,
         matrixA: prevState.matrixA,
         matrixB: prevState.matrixB,
@@ -210,6 +241,7 @@ function resetReducer$(action$: Stream<Action>): Stream<Reducer> {
       return {
         step: 0,
         canInteract: true,
+        fastForwardToEnd: false,
         measurements: prevState.measurements,
         matrixA: {
           values: prevState.matrixA.values,
@@ -226,6 +258,36 @@ function resetReducer$(action$: Stream<Action>): Stream<Reducer> {
     });
 }
 
+function fastForwardToEndReducer$(action$: Stream<Action>): Stream<Reducer> {
+  return action$
+    .filter(isEndAction)
+    .map(action => function fastForwardToEndReducer(prevState: State): State {
+      if (prevState.step >= 1 && prevState.canInteract && prevState.matrixC) {
+        const nextStep = prevState.step + 1;
+        return {
+          step: nextStep,
+          canInteract: false,
+          fastForwardToEnd: true,
+          measurements: prevState.measurements,
+          matrixA: prevState.matrixA,
+          matrixB: prevState.matrixB,
+          matrixC: {
+            editable: prevState.matrixC.editable,
+            values: calculateNextMatrixC(
+              nextStep,
+              prevState.matrixA.values,
+              prevState.matrixB.values,
+              prevState.matrixC.values,
+            ),
+            id: prevState.matrixC.id,
+          },
+        };
+      } else {
+        return prevState;
+      }
+    });
+}
+
 export default function model(action$: Stream<Action>,
                               measurements$: Stream<Measurements>): Stream<Reducer> {
   return xs.merge(
@@ -236,5 +298,6 @@ export default function model(action$: Stream<Action>,
     allowContinueReducer$(action$),
     nextStepReducer$(action$),
     resetReducer$(action$),
+    fastForwardToEndReducer$(action$),
   );
 }
