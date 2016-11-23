@@ -11,7 +11,7 @@ export interface State {
 
 export type Reducer = (state: State) => State;
 
-const defaultState = {
+const defaultState: State = {
   values: MatrixValues.ofDimensions(1, 1),
   editable: true,
   id: `matrix${Math.round(Math.random()*1000)}`,

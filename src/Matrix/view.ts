@@ -17,24 +17,31 @@ function renderRightBracket(state: State): VNode {
 
 const zeroWidthSpace = '\u200B';
 
+function renderCellAsInput(cellValue: number | null, i: number, j: number): VNode {
+  return input(`.cell.${styles.cell}`, {
+    key: `cell${i}-${j}`,
+    attrs: {
+      type: 'text', 'data-row': i, 'data-col': j,
+      value: typeof cellValue === 'number' ? `${cellValue}` : void 0,
+    },
+  });
+}
+
+function renderCellAsSpan(cellValue: number | null, i: number, j: number): VNode {
+  return span(`.cell.${styles.cell}`, {
+    attrs: {
+      'data-row': i, 'data-col': j
+    },
+  }, typeof cellValue === 'number' ? [`${cellValue}`] : [zeroWidthSpace])
+}
+
 function renderAllCells(state: State): Array<VNode> {
-  console['table'](state.values.rows.map((row, i) => row.map((cell, j) => `row${i} col${j}`)));
   return state.values.rows.map((row, i) =>
     ul(`.row.${styles.row}`, {key: `row${i}`}, row.map((cellValue, j) =>
       li('.col', {key: `col${j}`}, [
         state.editable ?
-          input(`.cell.${styles.cell}`, {
-            key: `cell${i}-${j}`,
-            attrs: {
-              type: 'text', 'data-row': i, 'data-col': j,
-              value: typeof cellValue === 'number' ? `${cellValue}` : void 0,
-            },
-          }) :
-          span(`.cell.${styles.cell}`, {
-            attrs: {
-              'data-row': i, 'data-col': j
-            },
-          }, typeof cellValue === 'number' ? [`${cellValue}`] : [zeroWidthSpace])
+          renderCellAsInput(cellValue, i, j) :
+          renderCellAsSpan(cellValue, i, j)
       ])
     ))
   );

@@ -10,7 +10,7 @@ export interface Action {
 export default function intent(domSource: DOMSource): Stream<Action> {
   return domSource.select('.cell').events('input')
     .map(ev => {
-      const inputEl = <HTMLInputElement>ev.target;
+      const inputEl = ev.target as HTMLInputElement;
       return {
         row: parseInt(inputEl.attributes['data-row'].value),
         col: parseInt(inputEl.attributes['data-col'].value),

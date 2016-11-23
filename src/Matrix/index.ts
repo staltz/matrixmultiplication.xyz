@@ -3,7 +3,7 @@ import {VNode} from '@cycle/dom';
 import {DOMSource} from '@cycle/dom/xstream-typings';
 import MatrixValues from '../utils/MatrixValues';
 import {StateSource} from 'cycle-onionify';
-import model, {State} from './model';
+import model, {State, Reducer} from './model';
 import intent from './intent';
 import view from './view';
 
@@ -14,14 +14,10 @@ export interface Sources {
 
 export interface Sinks {
   DOM: Stream<VNode>;
-  onion: Stream<(a: any) => any>
+  onion: Stream<any>;
 }
 
 export type State = State;
-
-function print(x: MatrixValues) {
-  console['table'](x.rows);
-}
 
 export default function Matrix(sources: Sources): Sinks {
   let action$ = intent(sources.DOM);
