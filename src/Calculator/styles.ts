@@ -104,7 +104,16 @@ namespace Styles {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: '86px',
+    position: 'relative',
+    paddingTop: '86px',
+    paddingBottom: '40px',
+    backgroundImage: `linear-gradient(to bottom,
+      transparent 0,
+      rgba(255,255,255,0.8) 92px,
+      rgba(255,255,255,0.8) 126px,
+      transparent 100%)
+    `,
+    zIndex: 2,
     '& > * + *': {
       marginLeft: '8px',
     },
@@ -167,6 +176,7 @@ namespace Styles {
     flexDirection: 'column',
     justifyContent: 'center',
     margin: '0 10px',
+    zIndex: 3,
   });
 
   export const colsResizerContainer = style({
@@ -181,6 +191,7 @@ namespace Styles {
     flexDirection: 'row',
     justifyContent: 'center',
     margin: '10px 0',
+    zIndex: 3,
   });
 
   export const resizerButton = style({
