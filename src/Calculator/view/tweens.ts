@@ -67,7 +67,7 @@ function makeEndTransform$(state$: Stream<State>): Stream<string> {
     .filter(state => state.step === lastCombStep(state) + 1)
     .map(state => {
       const ease = tween.power2.easeInOut;
-      const duration = styles.nextCombDuration;
+      const duration = styles.finalFadeDuration;
       const timeToReset = styles.finalResultDuration - duration;
       const yLift = padding +
         state.measurements.matrixAHeight * 0.5 +
@@ -78,7 +78,7 @@ function makeEndTransform$(state$: Stream<State>): Stream<string> {
         state.measurements.rowHeight * (state.step - 2);
       const yOutside = yLastComb -
         state.measurements.rowHeight -
-        padding * 2;
+        padding * 4;
       return concat(
         tween({ from: yLastComb, to: yOutside, duration, ease }).map(y => `
           translateX(${-xMove}px)
