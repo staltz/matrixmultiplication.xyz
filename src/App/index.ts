@@ -31,11 +31,13 @@ function view(calculatorVDom: Stream<VNode>): Stream<VNode> {
 }
 
 export default function App(sources: Sources): Sinks {
-  let calculatorSinks = Calculator(sources);
-  let vdom$ = view(calculatorSinks.DOM);
-  let sinks = {
+  const calculatorSinks = Calculator(sources);
+  const vdom$ = view(calculatorSinks.DOM);
+  const reducer$ = calculatorSinks.onion;
+
+  const sinks = {
     DOM: vdom$,
-    onion: calculatorSinks.onion,
+    onion: reducer$,
   };
   return sinks;
 }
