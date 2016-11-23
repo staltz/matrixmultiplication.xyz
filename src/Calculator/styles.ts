@@ -50,6 +50,13 @@ namespace Styles {
     transitionDelay: '300ms',
   });
 
+  export const matrixCHidden = style({
+    position: 'relative',
+    transitionDuration: '0ms',
+    transitionProperty: 'opacity, margin-left',
+    transitionDelay: '0ms',
+  });
+
   export const resultEqualsSign = style({
     fontSize: '24px',
     color: pallete.grayDark,
@@ -141,6 +148,8 @@ namespace Styles {
     },
   });
   export const endButtonDisabled = commonButtonDisabled;
+
+  export const resetButton = multiplyButton;
 
   export const multiplyOrEqualsSign = style({
     margin: '1em',

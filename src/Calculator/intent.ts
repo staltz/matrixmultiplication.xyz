@@ -10,7 +10,8 @@ export type Action =
   ResizeAction |
   StartMultiplyAction |
   AllowContinueAction |
-  NextStepAction;
+  NextStepAction |
+  ResetAction;
 
 export interface ResizeAction {
   type: 'RESIZE';
@@ -35,6 +36,11 @@ export interface AllowContinueAction {
 
 export interface NextStepAction {
   type: 'NEXT_STEP';
+  payload: null;
+}
+
+export interface ResetAction {
+  type: 'RESET';
   payload: null;
 }
 
@@ -67,6 +73,10 @@ export function isAllowContinueAction(ac: Action): ac is AllowContinueAction {
 
 export function isNextStepAction(ac: Action): ac is NextStepAction {
   return ac.type === 'NEXT_STEP';
+}
+
+export function isResetAction(ac: Action): ac is ResetAction {
+  return ac.type === 'RESET';
 }
 
 function resizeIntent(domSource: DOMSource): Stream<ResizeAction> {
@@ -124,8 +134,14 @@ function stepIntent(domSource: DOMSource): Stream<Action> {
   return xs.merge(startMultiplyAction$, nextStepAction$);
 }
 
+function resetIntent(domSource: DOMSource): Stream<Action> {
+  return domSource.select('.reset').events('click')
+    .mapTo({ type: 'RESET', payload: null } as ResetAction);
+}
+
 export default function intent(domSource: DOMSource): Stream<Action> {
   const resizeAction$ = resizeIntent(domSource);
   const stepAction$ = stepIntent(domSource);
-  return xs.merge(resizeAction$, stepAction$);
+  const resetAction$ = resetIntent(domSource);
+  return xs.merge(resizeAction$, stepAction$, resetAction$);
 }

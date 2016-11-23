@@ -32,9 +32,11 @@ function mutateCellsStyle(state: State) {
 }
 
 export function maybeRenderMatrixC(matrixC: VNode | null, state: State): VNode | null {
-  if (matrixC === null || (state.step <= 1 && !state.canInteract)) {
-    return div(`.matrixC.${styles.matrixC}`, {
-      style: { opacity: '0', marginLeft: '0' },
+  const step = state.step;
+  if (matrixC === null || step === 0 || (step === 1 && !state.canInteract)) {
+    return div('.matrixC', {
+      class: { [styles.matrixCHidden]: true },
+      style: { opacity: '0.01', marginLeft: '0' },
     });
   } else {
     matrixC.data = matrixC.data || {};
@@ -42,11 +44,12 @@ export function maybeRenderMatrixC(matrixC: VNode | null, state: State): VNode |
     matrixC.data.style.position = 'absolute';
     const xDist = state.measurements.matrixBWidth + 8;
     const yDist = state.measurements.matrixAHeight * 0.5;
-    return div(`.matrixC.${styles.matrixC}`, {
+    return div('.matrixC', {
+      class: { [styles.matrixC]: true },
       style: {
         transform: `translateX(-${xDist}px) translateY(-${yDist}px)`,
         opacity: '1',
-        marginLeft: state.step === lastCombStep(state) + 1 ? `${xDist}px` : '0',
+        marginLeft: step === lastCombStep(state) + 1 ? `${xDist}px` : '0',
       },
       hook: {
         update: mutateCellsStyle(state),

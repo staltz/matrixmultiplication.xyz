@@ -18,10 +18,12 @@ function renderSign(state: State): VNode {
   }
 }
 
-function maybeRenderEqualsSign(state: State): VNode {
+function maybeRenderEqualsSign(state: State): VNode | null {
   let style = {};
   if (state.step === lastCombStep(state) + 1) {
     style = {margin: '1em', width: '12px', opacity: '1'};
+  } else if (state.step === 0) {
+    return null;
   } else {
     style = {margin: '0', width: '0', opacity: '0.01'};
   }

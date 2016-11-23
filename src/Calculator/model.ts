@@ -8,6 +8,7 @@ import {
   isStartMultiplyAction,
   isAllowContinueAction,
   isNextStepAction,
+  isResetAction,
   Direction,
 } from './intent';
 import {State as MatrixState} from '../Matrix/index';
@@ -202,6 +203,29 @@ function updateMeasurementsReducer$(measurements$: Stream<Measurements>): Stream
     });
 }
 
+function resetReducer$(action$: Stream<Action>): Stream<Reducer> {
+  return action$
+    .filter(isResetAction)
+    .map(action => function resetReducer(prevState: State): State {
+      return {
+        step: 0,
+        canInteract: true,
+        measurements: prevState.measurements,
+        matrixA: {
+          values: prevState.matrixA.values,
+          editable: true,
+          id: prevState.matrixA.id,
+        },
+        matrixB: {
+          values: prevState.matrixB.values,
+          editable: true,
+          id: prevState.matrixB.id,
+        },
+        matrixC: void 0,
+      };
+    });
+}
+
 export default function model(action$: Stream<Action>,
                               measurements$: Stream<Measurements>): Stream<Reducer> {
   return xs.merge(
@@ -211,5 +235,6 @@ export default function model(action$: Stream<Action>,
     startMultiplyReducer$(action$),
     allowContinueReducer$(action$),
     nextStepReducer$(action$),
+    resetReducer$(action$),
   );
 }
