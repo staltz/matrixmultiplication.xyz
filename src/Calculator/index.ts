@@ -21,6 +21,14 @@ export interface Sinks {
   onion: Stream<Reducer>;
 }
 
+/**
+ * The Calculator component.
+ * Contains two input matrices, A and B, and one output matrix, C.
+ * Contains also resizing controls, and a calculation control panel
+ * (start, continue, etc).
+ * Performs actual matrix calculation and visualizes the calculation
+ * as animations.
+ */
 export default function Calculator(sources: Sources): Sinks {
   const aSinks = isolate(Matrix, 'matrixA')(<any> sources);
   const bSinks = isolate(Matrix, 'matrixB')(<any> sources);
