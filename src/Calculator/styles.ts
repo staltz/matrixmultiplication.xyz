@@ -69,7 +69,9 @@ namespace Styles {
   });
 
   export const animatedCell = style({
-    transition: `all 300ms ease ${nextCombCellTransitionDelay}ms`,
+    transitionProperty: 'opacity, color, transform',
+    transitionDuration: '400ms',
+    transitionDelay: `${nextCombCellTransitionDelay}ms`,
   });
 
   export const operatorGrid = style({

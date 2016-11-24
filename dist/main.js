@@ -610,7 +610,9 @@ var Styles;
         transitionDelay: '700ms, 300ms, 300ms',
     });
     Styles.animatedCell = typestyle_1.style({
-        transition: "all 300ms ease " + Styles.nextCombCellTransitionDelay + "ms",
+        transitionProperty: 'opacity, color, transform',
+        transitionDuration: '400ms',
+        transitionDelay: Styles.nextCombCellTransitionDelay + "ms",
     });
     Styles.operatorGrid = typestyle_1.style({
         position: 'absolute',
@@ -1002,17 +1004,18 @@ function mutateCellStyles(state, transform) {
         .split(' ') // Array<string>
         .filter(function (t) { return t.match(/^rotateZ/) !== null; }) // [`rotateZ(-${...})`]
         .pop() // `rotateZ(-${...})`
-        .replace('-', '+'); // `rotateZ(+${...})`
+        .replace('-', '+') // `rotateZ(+${...})`
+        .trim();
     return function updateHook(prev, next) {
         var all = next.elm.querySelectorAll('.cell');
-        var _loop_1 = function(i, N) {
+        for (var i = 0, N = all.length; i < N; i++) {
             var cellElem = all.item(i);
             var colOfCell = parseInt(cellElem.dataset.col);
-            if (queries_1.isInCombStep(state)) {
+            if (rotateZTransform === 'rotateZ(+90deg)') {
                 cellElem.classList.add(styles_1.default.animatedCell);
             }
-            else if (state.step > queries_1.lastCombStep(state)) {
-                setTimeout(function () { return cellElem.classList.remove(styles_1.default.animatedCell); }, styles_1.default.nextCombDuration);
+            else {
+                cellElem.classList.remove(styles_1.default.animatedCell);
             }
             if (firstIntersectCol < colOfCell && colOfCell <= lastIntersectCol) {
                 cellElem.style.transform = "\n          " + rotateZTransform + "\n          scale(" + styles_1.default.cellScaleWhenIntersecting + ")\n          translateX(" + styles_1.default.cellTranslateXWhenIntersecting + "px)\n          translateY(" + -styles_1.default.cellTranslateYWhenIntersecting + "px)\n        ";
@@ -1022,9 +1025,6 @@ function mutateCellStyles(state, transform) {
                 cellElem.style.transform = rotateZTransform;
                 cellElem.style.color = null;
             }
-        };
-        for (var i = 0, N = all.length; i < N; i++) {
-            _loop_1(i, N);
         }
     };
 }

@@ -21,7 +21,8 @@ function mutateCellStyles(state: State, transform: string) {
     .split(' ') // Array<string>
     .filter(t => t.match(/^rotateZ/) !== null) // [`rotateZ(-${...})`]
     .pop() as string) // `rotateZ(-${...})`
-    .replace('-', '+'); // `rotateZ(+${...})`
+    .replace('-', '+') // `rotateZ(+${...})`
+    .trim();
 
   return function updateHook(prev: VNode, next: VNode) {
     const all = (next.elm as Element).querySelectorAll('.cell');
@@ -29,13 +30,10 @@ function mutateCellStyles(state: State, transform: string) {
       const cellElem = all.item(i) as HTMLElement;
       const colOfCell: number = parseInt((cellElem.dataset as any).col);
 
-      if (isInCombStep(state)) {
+      if (rotateZTransform === 'rotateZ(+90deg)') {
         cellElem.classList.add(styles.animatedCell);
-      } else if (state.step > lastCombStep(state)) {
-        setTimeout(
-          () => cellElem.classList.remove(styles.animatedCell),
-          styles.nextCombDuration,
-        );
+      } else {
+        cellElem.classList.remove(styles.animatedCell);
       }
 
       if (firstIntersectCol < colOfCell && colOfCell <= lastIntersectCol) {
