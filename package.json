@@ -5,13 +5,13 @@
   "author": "Andre Staltz",
   "license": "MIT",
   "dependencies": {
-    "@cycle/dom": "14.0.0",
-    "@cycle/isolate": "1.4.x",
-    "@cycle/xstream-run": "3.1.x",
+    "@cycle/dom": "14.0",
+    "@cycle/isolate": "1.4",
+    "@cycle/xstream-run": "3.1",
     "cycle-onionify": "^2.2.0",
     "immutable": "^3.8.1",
     "typestyle": "^0.7.1",
-    "xstream": "7.0.x"
+    "xstream": "8.0"
   },
   "devDependencies": {
     "browserify": "13.1.1",
