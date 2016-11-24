@@ -9,7 +9,7 @@ function view(calculatorVDom) {
             dom_1.h1(".title." + styles_1.default.title, 'Matrix Multiplication'),
             calcVNode,
             dom_1.h2(".footnote." + styles_1.default.footnote, [
-                dom_1.a({ attrs: { href: 'https://github.com/staltz/matrix-multiplication' } }, 'Built by @andrestaltz with Cycle.js')
+                dom_1.a({ attrs: { href: 'https://github.com/staltz/matrixmultiplication.xyz' } }, 'Built by @andrestaltz with Cycle.js')
             ])
         ]);
     });
@@ -118,10 +118,10 @@ function controlPanelIntent(domSource) {
         .mapTo({ type: 'START_MULTIPLY', payload: null });
     var nextStepAction$ = domSource.select('.next').events('click')
         .mapTo({ type: 'NEXT_STEP', payload: null });
-    var resetAction$ = domSource.select('.reset').events('click')
-        .mapTo({ type: 'RESET', payload: null });
     var endAction$ = domSource.select('.end').events('click')
         .mapTo({ type: 'END', payload: null });
+    var resetAction$ = domSource.select('.reset').events('click')
+        .mapTo({ type: 'RESET', payload: null });
     return xstream_1.default.merge(startMultiplyAction$, nextStepAction$, endAction$, resetAction$);
 }
 exports.controlPanelIntent = controlPanelIntent;

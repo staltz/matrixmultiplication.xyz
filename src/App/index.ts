@@ -22,7 +22,7 @@ function view(calculatorVDom: Stream<VNode>): Stream<VNode> {
       h1(`.title.${styles.title}`, 'Matrix Multiplication'),
       calcVNode,
       h2(`.footnote.${styles.footnote}`, [
-        a({attrs: {href: 'https://github.com/staltz/matrix-multiplication'}},
+        a({attrs: {href: 'https://github.com/staltz/matrixmultiplication.xyz'}},
           'Built by @andrestaltz with Cycle.js'
         )
       ])
