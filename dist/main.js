@@ -351,6 +351,7 @@ exports.isInCombStep = isInCombStep;
 var MatrixValues_1 = require('../../../utils/MatrixValues');
 var actions_1 = require('../actions');
 var calculate_1 = require('../calculate');
+var queries_1 = require('../queries');
 function startMultiplyReducer$(action$) {
     return action$
         .filter(actions_1.isStartMultiplyAction)
@@ -419,7 +420,7 @@ function fastForwardToEndReducer$(action$) {
             return {
                 step: nextStep,
                 canInteract: false,
-                fastForwardToEnd: true,
+                fastForwardToEnd: nextStep <= queries_1.lastCombStep(prevState),
                 measurements: prevState.measurements,
                 matrixA: prevState.matrixA,
                 matrixB: prevState.matrixB,
@@ -461,7 +462,7 @@ function resetReducer$(action$) {
 }
 exports.resetReducer$ = resetReducer$;
 
-},{"../../../utils/MatrixValues":36,"../actions":8,"../calculate":9}],13:[function(require,module,exports){
+},{"../../../utils/MatrixValues":36,"../actions":8,"../calculate":9,"../queries":11}],13:[function(require,module,exports){
 "use strict";
 function updateMeasurementsReducer$(measurements$) {
     return measurements$

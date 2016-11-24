@@ -9,6 +9,7 @@ import {
   isResetAction,
 } from '../actions';
 import {calculateNextMatrixC} from '../calculate';
+import {lastCombStep} from '../queries';
 
 export function startMultiplyReducer$(action$: Stream<Action>): Stream<Reducer> {
   return action$
@@ -84,7 +85,7 @@ export function fastForwardToEndReducer$(action$: Stream<Action>): Stream<Reduce
         return {
           step: nextStep,
           canInteract: false,
-          fastForwardToEnd: true,
+          fastForwardToEnd: nextStep <= lastCombStep(prevState),
           measurements: prevState.measurements,
           matrixA: prevState.matrixA,
           matrixB: prevState.matrixB,
