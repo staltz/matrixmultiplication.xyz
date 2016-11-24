@@ -25,7 +25,7 @@ namespace Styles {
       'linear-gradient(to bottom, ' +
         'white 0, ' +
         'rgba(255,255,255,0.9) 60%, ' +
-        'transparent 100%)',
+        'rgba(255,255,255,0) 100%)',
   });
 
   export const footnote = style({

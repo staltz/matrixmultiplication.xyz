@@ -101,7 +101,7 @@ namespace Styles {
     textIndent: '0',
     padding: '0',
     color: pallete.black,
-    backgroundColor: 'transparent',
+    backgroundColor: 'rgba(255,255,255,0)',
     'input&': {
       '&:hover': insetBoxShadow,
       '&:focus': insetBoxShadow,

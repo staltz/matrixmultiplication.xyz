@@ -117,10 +117,10 @@ namespace Styles {
     paddingTop: '86px',
     paddingBottom: '40px',
     backgroundImage: `linear-gradient(to bottom,
-      transparent 0,
+      rgba(255,255,255,0) 0,
       rgba(255,255,255,0.8) 92px,
       rgba(255,255,255,0.8) 126px,
-      transparent 100%)
+      rgba(255,255,255,0) 100%)
     `,
     zIndex: 2,
     '& > * + *': {

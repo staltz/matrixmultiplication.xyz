@@ -54,7 +54,7 @@ var Styles;
         backgroundImage: 'linear-gradient(to bottom, ' +
             'white 0, ' +
             'rgba(255,255,255,0.9) 60%, ' +
-            'transparent 100%)',
+            'rgba(255,255,255,0) 100%)',
     });
     Styles.footnote = typestyle_1.style({
         position: 'fixed',
@@ -652,7 +652,7 @@ var Styles;
         position: 'relative',
         paddingTop: '86px',
         paddingBottom: '40px',
-        backgroundImage: "linear-gradient(to bottom,\n      transparent 0,\n      rgba(255,255,255,0.8) 92px,\n      rgba(255,255,255,0.8) 126px,\n      transparent 100%)\n    ",
+        backgroundImage: "linear-gradient(to bottom,\n      rgba(255,255,255,0) 0,\n      rgba(255,255,255,0.8) 92px,\n      rgba(255,255,255,0.8) 126px,\n      rgba(255,255,255,0) 100%)\n    ",
         zIndex: 2,
         '& > * + *': {
             marginLeft: '8px',
@@ -1364,7 +1364,7 @@ var Styles;
         textIndent: '0',
         padding: '0',
         color: styles_1.pallete.black,
-        backgroundColor: 'transparent',
+        backgroundColor: 'rgba(255,255,255,0)',
         'input&': {
             '&:hover': insetBoxShadow,
             '&:focus': insetBoxShadow,
