@@ -1531,8 +1531,10 @@ var cycle_onionify_1 = require('cycle-onionify');
 var index_1 = require('./App/index');
 require('./styles');
 var main = cycle_onionify_1.default(index_1.default);
-xstream_run_1.run(main, {
-    DOM: dom_1.makeDOMDriver('#main-container')
+requestAnimationFrame(function () {
+    xstream_run_1.run(main, {
+        DOM: dom_1.makeDOMDriver('#main-container')
+    });
 });
 
 },{"./App/index":1,"./styles":35,"@cycle/dom":49,"@cycle/xstream-run":60,"cycle-onionify":62}],35:[function(require,module,exports){

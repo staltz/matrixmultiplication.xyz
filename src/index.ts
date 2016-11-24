@@ -6,6 +6,8 @@ import './styles';
 
 const main = onionify(App);
 
-run(main, {
-  DOM: makeDOMDriver('#main-container')
+requestAnimationFrame(() => {
+  run(main, {
+    DOM: makeDOMDriver('#main-container')
+  });
 });
