@@ -191,8 +191,9 @@ namespace Styles {
 
   export const colsResizer = style({
     position: 'absolute',
-    left: 0,
-    right: 0,
+    minWidth: '76px',
+    left: '-20px',
+    right: '-20px',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
