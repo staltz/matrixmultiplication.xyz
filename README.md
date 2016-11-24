@@ -21,7 +21,7 @@ If you're not anymore a student and your pocket allows you, please donate some s
 Send any amount of bitcoin to the address:
 
 ```
-1bc8e3R56xRkEEiTPo9z6xJR3kBGALNE7
+1MkZNzp4MKgGkUTom8CohALY1WafGvazu3
 ```
 
 (You can verify that this address is indeed mine because the git commit that created this README.md file was signed with [my PGP key](https://keybase.io/andrestaltz))
