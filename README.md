@@ -14,7 +14,7 @@ To this day, I'm not sure if this method has been discovered by others and taugh
 
 ## Donate
 
-I made this application out of my desire to help people around the world understand math. Often, students are short on budget and are in a hurry to learn. I don't want to get in their way. The website is straight-to-the-point, with no advertisements, no clutter, no sponsorships. It took me some days/weeks of work, plus the `.xyz` domain costs.
+I made this application out of my desire to help people around the world understand math. Often, students are short on budget and are in a hurry to learn. I don't want to get in their way. The website is straight-to-the-point, with no advertisements, no clutter, no sponsorships. It took me multiple days of work, plus the `.xyz` domain costs.
 
 If you're not anymore a student and your pocket allows you, please donate some symbolic amount back. Consider it a way of saying thanks. Money received from this project, no matter the amount, will "taste" better to me than any other type of salary.
 
@@ -39,6 +39,6 @@ This codebase may serve as a good learning resource on how to structure Cycle.js
 - TypeStyle (for CSS)
 - Immutable.js (just a little bit, in one file)
 
-The structure of the codebase is fractal. Directories with a capitalized name, like `App`, `Calculator`, `Matrix` are Cycle.js components. The top-level `index.ts` simply imports the App component and runs it as the top-level main function. Model-View-Intent is used in each component, but sometimes it grows large enough so that model is split into many files and grouped under a `model/` directory. Check `src/Calculator/intent`, as an example.
+The structure of the codebase is fractal. Directories with a capitalized name, like `App`, `Calculator`, `Matrix` are Cycle.js components. The top-level `index.ts` simply imports the App component and runs it as the top-level main function. Model-View-Intent is used in each component, but sometimes it grows large enough so that model is split into many files and grouped under a `model/` directory. Check `src/Calculator/model`, as an example.
 
 For more questions about this repository, open an issue or discuss in the Gitter chat. Enjoy. :)
