@@ -36,6 +36,7 @@ namespace Styles {
     fontFamily: '"Source Sans Pro", serif',
     fontSize: '14px',
     textAlign: 'center',
+    zIndex: -10,
     '& > *': {
       color: pallete.gray,
     },

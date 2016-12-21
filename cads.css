@@ -1,22 +1,21 @@
 #carbonads {
   display: block;
   overflow: hidden;
-  margin: 1rem auto 2rem;
-  padding: 1em;
+  margin: 1rem auto 4rem;
+  padding: 0.5em;
   max-width: 360px;
   border: solid 1px hsl(213, 100%, 92%);
-  border-radius: 3px;
   background-color: hsl(213, 100%, 98%);
   line-height: 1.5;
 }
 
 #carbonads a {
-  color: #288aff;
+  color: hsl(213, 100%, 59%);
   text-decoration: none;
 }
 
 #carbonads a:hover {
-  color: #59a4ff;
+  color: hsl(213, 100%, 67%);
 }
 
 #carbonads span {

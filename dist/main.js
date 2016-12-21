@@ -64,6 +64,7 @@ var Styles;
         fontFamily: '"Source Sans Pro", serif',
         fontSize: '14px',
         textAlign: 'center',
+        zIndex: -10,
         '& > *': {
             color: styles_1.pallete.gray,
         },
@@ -575,7 +576,7 @@ var Styles;
      */
     Styles.calculator = typestyle_1.style({
         marginTop: '200px',
-        marginBottom: '100px',
+        marginBottom: '10px',
     });
     Styles.matrices = typestyle_1.style({
         display: 'flex',
