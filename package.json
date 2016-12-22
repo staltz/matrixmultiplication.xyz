@@ -7,11 +7,11 @@
   "dependencies": {
     "@cycle/dom": "14.0",
     "@cycle/isolate": "1.4",
-    "@cycle/xstream-run": "3.1",
-    "cycle-onionify": "^2.2.0",
+    "@cycle/xstream-run": "4.2",
+    "cycle-onionify": "2.3",
     "immutable": "^3.8.1",
     "typestyle": "^0.7.1",
-    "xstream": "8.0"
+    "xstream": "9.3"
   },
   "devDependencies": {
     "browserify": "13.1.1",
