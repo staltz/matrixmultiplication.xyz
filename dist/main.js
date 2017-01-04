@@ -65,9 +65,11 @@ var Styles;
         fontSize: '14px',
         textAlign: 'center',
         zIndex: -10,
-        '& > *': {
-            color: styles_1.pallete.gray,
-        },
+        $nest: {
+            '& > *': {
+                color: styles_1.pallete.gray,
+            },
+        }
     });
 })(Styles || (Styles = {}));
 ;
@@ -111,7 +113,7 @@ function Calculator(sources) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Calculator;
 
-},{"../Matrix/index":25,"./intent/index":5,"./measure":7,"./model/index":10,"./timers":17,"./view/index":20,"@cycle/isolate":58,"xstream":168}],4:[function(require,module,exports){
+},{"../Matrix/index":25,"./intent/index":5,"./measure":7,"./model/index":10,"./timers":17,"./view/index":20,"@cycle/isolate":58,"xstream":170}],4:[function(require,module,exports){
 "use strict";
 var xstream_1 = require('xstream');
 function controlPanelIntent(domSource) {
@@ -127,7 +129,7 @@ function controlPanelIntent(domSource) {
 }
 exports.controlPanelIntent = controlPanelIntent;
 
-},{"xstream":168}],5:[function(require,module,exports){
+},{"xstream":170}],5:[function(require,module,exports){
 "use strict";
 var xstream_1 = require('xstream');
 var controlPanel_1 = require('./controlPanel');
@@ -143,7 +145,7 @@ function intent(domSource) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = intent;
 
-},{"./controlPanel":4,"./resize":6,"xstream":168}],6:[function(require,module,exports){
+},{"./controlPanel":4,"./resize":6,"xstream":170}],6:[function(require,module,exports){
 "use strict";
 var xstream_1 = require('xstream');
 function createResizeAction(target, direction, amount) {
@@ -179,7 +181,7 @@ function resizeIntent(domSource) {
 }
 exports.resizeIntent = resizeIntent;
 
-},{"xstream":168}],7:[function(require,module,exports){
+},{"xstream":170}],7:[function(require,module,exports){
 "use strict";
 var dropRepeats_1 = require('xstream/extra/dropRepeats');
 var delay_1 = require('xstream/extra/delay');
@@ -221,7 +223,7 @@ function measure(domSource) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = measure;
 
-},{"xstream/extra/delay":165,"xstream/extra/dropRepeats":166}],8:[function(require,module,exports){
+},{"xstream/extra/delay":167,"xstream/extra/dropRepeats":168}],8:[function(require,module,exports){
 "use strict";
 /**
  * The functions below assist TypeScript's inference to know which action
@@ -328,7 +330,7 @@ function model(action$, measurements$) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = model;
 
-},{"../../utils/MatrixValues":36,"./reducers/controlPanel":12,"./reducers/measure":13,"./reducers/resize":14,"./reducers/timers":15,"xstream":168}],11:[function(require,module,exports){
+},{"../../utils/MatrixValues":36,"./reducers/controlPanel":12,"./reducers/measure":13,"./reducers/resize":14,"./reducers/timers":15,"xstream":170}],11:[function(require,module,exports){
 "use strict";
 /**
  * This file contains some useful computed properties derivable from the state.
@@ -626,23 +628,25 @@ var Styles;
         transition: "opacity 300ms ease " + Styles.nextCombCellTransitionDelay + "ms",
     });
     Styles.plusSign = typestyle_1.style({
-        '&::after': {
-            content: '"+"',
-            display: 'block',
-            position: 'absolute',
-            top: 0,
-            left: '40px',
-            fontSize: '24px',
-            width: '2em',
-            height: '2em',
-            fontFamily: "'Source Sans Pro', sans-serif",
-            lineHeight: '49px',
-            textAlign: 'center',
-            border: 'none',
-            textIndent: '0',
-            padding: '0',
-            color: styles_2.pallete.black,
-        },
+        $nest: {
+            '&::after': {
+                content: '"+"',
+                display: 'block',
+                position: 'absolute',
+                top: 0,
+                left: '40px',
+                fontSize: '24px',
+                width: '2em',
+                height: '2em',
+                fontFamily: "'Source Sans Pro', sans-serif",
+                lineHeight: '49px',
+                textAlign: 'center',
+                border: 'none',
+                textIndent: '0',
+                padding: '0',
+                color: styles_2.pallete.black,
+            },
+        }
     });
     /**
      * Styles for the control panel.
@@ -656,19 +660,23 @@ var Styles;
         paddingBottom: '40px',
         backgroundImage: "linear-gradient(to bottom,\n      rgba(255,255,255,0) 0,\n      rgba(255,255,255,0.8) 92px,\n      rgba(255,255,255,0.8) 126px,\n      rgba(255,255,255,0) 100%)\n    ",
         zIndex: 2,
-        '& > * + *': {
-            marginLeft: '8px',
-        },
+        $nest: {
+            '& > * + *': {
+                marginLeft: '8px',
+            }
+        }
     });
     var commonButton = {
         color: styles_2.pallete.white,
         border: 'none',
         fontSize: '24px',
         padding: '8px 16px',
-        '& > svg': {
-            marginBottom: '-2px',
-            marginRight: '8px',
-        },
+        $nest: {
+            '& > svg': {
+                marginBottom: '-2px',
+                marginRight: '8px',
+            },
+        }
     };
     var commonButtonEnabled = {
         boxShadow: "0 1px 1px 0 " + styles_2.pallete.gray,
@@ -679,18 +687,22 @@ var Styles;
     });
     Styles.multiplyButton = typestyle_1.style(commonButton, commonButtonEnabled, {
         backgroundColor: styles_2.pallete.blue,
-        '&:hover': {
-            backgroundColor: styles_2.pallete.blueWeak,
-        },
+        $nest: {
+            '&:hover': {
+                backgroundColor: styles_2.pallete.blueWeak,
+            },
+        }
     });
     Styles.multiplyButtonDisabled = commonButtonDisabled;
     Styles.nextButton = Styles.multiplyButton;
     Styles.nextButtonDisabled = commonButtonDisabled;
     Styles.endButton = typestyle_1.style(commonButton, commonButtonEnabled, {
         backgroundColor: styles_2.pallete.orange,
-        '&:hover': {
-            backgroundColor: styles_2.pallete.orangeWeak,
-        },
+        $nest: {
+            '&:hover': {
+                backgroundColor: styles_2.pallete.orangeWeak,
+            }
+        }
     });
     Styles.endButtonDisabled = commonButtonDisabled;
     Styles.resetButton = Styles.multiplyButton;
@@ -735,9 +747,11 @@ var Styles;
         lineHeight: '30px',
         margin: '4px',
         cursor: 'pointer',
-        '&:hover': {
-            backgroundColor: styles_2.pallete.grayLight,
-        },
+        $nest: {
+            '&:hover': {
+                backgroundColor: styles_2.pallete.grayLight,
+            },
+        }
     });
 })(Styles || (Styles = {}));
 ;
@@ -780,7 +794,7 @@ function timers(state$) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = timers;
 
-},{"./model/queries":11,"./styles":16,"xstream":168,"xstream/extra/delay":165,"xstream/extra/dropRepeats":166}],18:[function(require,module,exports){
+},{"./model/queries":11,"./styles":16,"xstream":170,"xstream/extra/delay":167,"xstream/extra/dropRepeats":168}],18:[function(require,module,exports){
 "use strict";
 var dom_1 = require('@cycle/dom');
 var styles_1 = require('../styles');
@@ -904,7 +918,7 @@ function view(state$, vdomA$, vdomB$, vdomC$) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = view;
 
-},{"../model/queries":11,"../styles":16,"./common":18,"./controlPanel":19,"./matrixA":21,"./matrixB":22,"./matrixC":23,"./tweens":24,"@cycle/dom":49,"xstream":168}],21:[function(require,module,exports){
+},{"../model/queries":11,"../styles":16,"./common":18,"./controlPanel":19,"./matrixA":21,"./matrixB":22,"./matrixC":23,"./tweens":24,"@cycle/dom":49,"xstream":170}],21:[function(require,module,exports){
 "use strict";
 var dom_1 = require('@cycle/dom');
 var queries_1 = require('../model/queries');
@@ -1193,7 +1207,7 @@ function makeTransform$(state$) {
 }
 exports.makeTransform$ = makeTransform$;
 
-},{"../model/queries":11,"../styles":16,"xstream":168,"xstream/extra/concat":164,"xstream/extra/delay":165,"xstream/extra/dropRepeats":166,"xstream/extra/tween":167}],25:[function(require,module,exports){
+},{"../model/queries":11,"../styles":16,"xstream":170,"xstream/extra/concat":166,"xstream/extra/delay":167,"xstream/extra/dropRepeats":168,"xstream/extra/tween":169}],25:[function(require,module,exports){
 "use strict";
 var intent_1 = require('./intent');
 var model_1 = require('./model');
@@ -1270,7 +1284,7 @@ function model(action$) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = model;
 
-},{"../utils/MatrixValues":36,"xstream":168}],28:[function(require,module,exports){
+},{"../utils/MatrixValues":36,"xstream":170}],28:[function(require,module,exports){
 "use strict";
 var typestyle_1 = require('typestyle');
 var styles_1 = require('../styles');
@@ -1297,24 +1311,26 @@ var Styles;
         top: 0,
         width: Styles.matrixBracketWidth,
         backgroundColor: Styles.matrixBracketColor,
-        '&::before': {
-            content: "''",
-            backgroundColor: Styles.matrixBracketColor,
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            height: Styles.matrixBracketWidth,
-            width: Styles.matrixBracketIngress,
-        },
-        '&::after': {
-            content: "''",
-            backgroundColor: Styles.matrixBracketColor,
-            position: 'absolute',
-            bottom: 0,
-            left: 0,
-            height: Styles.matrixBracketWidth,
-            width: Styles.matrixBracketIngress,
-        },
+        $nest: {
+            '&::before': {
+                content: "''",
+                backgroundColor: Styles.matrixBracketColor,
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                height: Styles.matrixBracketWidth,
+                width: Styles.matrixBracketIngress,
+            },
+            '&::after': {
+                content: "''",
+                backgroundColor: Styles.matrixBracketColor,
+                position: 'absolute',
+                bottom: 0,
+                left: 0,
+                height: Styles.matrixBracketWidth,
+                width: Styles.matrixBracketIngress,
+            },
+        }
     });
     Styles.rightBracket = typestyle_1.style({
         position: 'absolute',
@@ -1323,24 +1339,26 @@ var Styles;
         top: 0,
         width: Styles.matrixBracketWidth,
         backgroundColor: Styles.matrixBracketColor,
-        '&::before': {
-            content: "''",
-            backgroundColor: Styles.matrixBracketColor,
-            position: 'absolute',
-            top: 0,
-            right: 0,
-            height: Styles.matrixBracketWidth,
-            width: Styles.matrixBracketIngress,
-        },
-        '&::after': {
-            content: "''",
-            backgroundColor: Styles.matrixBracketColor,
-            position: 'absolute',
-            bottom: 0,
-            right: 0,
-            height: Styles.matrixBracketWidth,
-            width: Styles.matrixBracketIngress,
-        },
+        $nest: {
+            '&::before': {
+                content: "''",
+                backgroundColor: Styles.matrixBracketColor,
+                position: 'absolute',
+                top: 0,
+                right: 0,
+                height: Styles.matrixBracketWidth,
+                width: Styles.matrixBracketIngress,
+            },
+            '&::after': {
+                content: "''",
+                backgroundColor: Styles.matrixBracketColor,
+                position: 'absolute',
+                bottom: 0,
+                right: 0,
+                height: Styles.matrixBracketWidth,
+                width: Styles.matrixBracketIngress,
+            },
+        }
     });
     /**
      * Styles for the rows, columns, and cells.
@@ -1367,10 +1385,14 @@ var Styles;
         padding: '0',
         color: styles_1.pallete.black,
         backgroundColor: 'rgba(255,255,255,0)',
-        'input&': {
-            '&:hover': insetBoxShadow,
-            '&:focus': insetBoxShadow,
-        },
+        $nest: {
+            'input&': {
+                $nest: {
+                    '&:hover': insetBoxShadow,
+                    '&:focus': insetBoxShadow,
+                }
+            }
+        }
     });
 })(Styles || (Styles = {}));
 ;
@@ -1534,10 +1556,8 @@ var cycle_onionify_1 = require('cycle-onionify');
 var index_1 = require('./App/index');
 require('./styles');
 var main = cycle_onionify_1.default(index_1.default);
-requestAnimationFrame(function () {
-    xstream_run_1.run(main, {
-        DOM: dom_1.makeDOMDriver('#main-container')
-    });
+xstream_run_1.run(main, {
+    DOM: dom_1.makeDOMDriver('#main-container')
 });
 
 },{"./App/index":1,"./styles":35,"@cycle/dom":49,"@cycle/xstream-run":60,"cycle-onionify":62}],35:[function(require,module,exports){
@@ -1847,7 +1867,7 @@ var BodyDOMSource = (function () {
 }());
 exports.BodyDOMSource = BodyDOMSource;
 
-},{"./fromEvent":46,"@cycle/xstream-adapter":59,"xstream":168}],39:[function(require,module,exports){
+},{"./fromEvent":46,"@cycle/xstream-adapter":59,"xstream":170}],39:[function(require,module,exports){
 "use strict";
 var xstream_1 = require('xstream');
 var xstream_adapter_1 = require('@cycle/xstream-adapter');
@@ -1884,7 +1904,7 @@ var DocumentDOMSource = (function () {
 }());
 exports.DocumentDOMSource = DocumentDOMSource;
 
-},{"./fromEvent":46,"@cycle/xstream-adapter":59,"xstream":168}],40:[function(require,module,exports){
+},{"./fromEvent":46,"@cycle/xstream-adapter":59,"xstream":170}],40:[function(require,module,exports){
 "use strict";
 var ScopeChecker_1 = require('./ScopeChecker');
 var utils_1 = require('./utils');
@@ -2090,7 +2110,7 @@ var HTMLSource = (function () {
 }());
 exports.HTMLSource = HTMLSource;
 
-},{"@cycle/xstream-adapter":59,"xstream":168}],43:[function(require,module,exports){
+},{"@cycle/xstream-adapter":59,"xstream":170}],43:[function(require,module,exports){
 "use strict";
 var xstream_adapter_1 = require('@cycle/xstream-adapter');
 var DocumentDOMSource_1 = require('./DocumentDOMSource');
@@ -2293,7 +2313,7 @@ var MainDOMSource = (function () {
 }());
 exports.MainDOMSource = MainDOMSource;
 
-},{"./BodyDOMSource":38,"./DocumentDOMSource":39,"./ElementFinder":40,"./EventDelegator":41,"./fromEvent":46,"./isolate":50,"./utils":57,"@cycle/xstream-adapter":59,"matches-selector":137,"xstream":168}],44:[function(require,module,exports){
+},{"./BodyDOMSource":38,"./DocumentDOMSource":39,"./ElementFinder":40,"./EventDelegator":41,"./fromEvent":46,"./isolate":50,"./utils":57,"@cycle/xstream-adapter":59,"matches-selector":137,"xstream":170}],44:[function(require,module,exports){
 "use strict";
 var ScopeChecker = (function () {
     function ScopeChecker(scope, isolateModule) {
@@ -2368,7 +2388,7 @@ function fromEvent(element, eventName, useCapture) {
 }
 exports.fromEvent = fromEvent;
 
-},{"xstream":168}],47:[function(require,module,exports){
+},{"xstream":170}],47:[function(require,module,exports){
 "use strict";
 var hyperscript_1 = require('./hyperscript');
 function isValidString(param) {
@@ -2982,7 +3002,7 @@ function makeDOMDriver(container, options) {
 }
 exports.makeDOMDriver = makeDOMDriver;
 
-},{"./MainDOMSource":43,"./VNodeWrapper":45,"./isolateModule":51,"./modules":55,"./transposition":56,"./utils":57,"@cycle/xstream-adapter":59,"es6-map":104,"snabbdom":157,"xstream":168}],53:[function(require,module,exports){
+},{"./MainDOMSource":43,"./VNodeWrapper":45,"./isolateModule":51,"./modules":55,"./transposition":56,"./utils":57,"@cycle/xstream-adapter":59,"es6-map":104,"snabbdom":157,"xstream":170}],53:[function(require,module,exports){
 "use strict";
 var xstream_adapter_1 = require('@cycle/xstream-adapter');
 var transposition_1 = require('./transposition');
@@ -3082,7 +3102,7 @@ function mockDOMSource(streamAdapter, mockConfig) {
 }
 exports.mockDOMSource = mockDOMSource;
 
-},{"@cycle/xstream-adapter":59,"xstream":168}],55:[function(require,module,exports){
+},{"@cycle/xstream-adapter":59,"xstream":170}],55:[function(require,module,exports){
 "use strict";
 var ClassModule = require('snabbdom/modules/class');
 exports.ClassModule = ClassModule;
@@ -3151,7 +3171,7 @@ function makeTransposeVNode(runStreamAdapter) {
 }
 exports.makeTransposeVNode = makeTransposeVNode;
 
-},{"@cycle/xstream-adapter":59,"xstream":168}],57:[function(require,module,exports){
+},{"@cycle/xstream-adapter":59,"xstream":170}],57:[function(require,module,exports){
 "use strict";
 function isElement(obj) {
     return typeof HTMLElement === "object" ?
@@ -3324,7 +3344,7 @@ var XStreamAdapter = {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = XStreamAdapter;
 
-},{"xstream":168}],60:[function(require,module,exports){
+},{"xstream":170}],60:[function(require,module,exports){
 "use strict";
 var base_1 = require('@cycle/base');
 var xstream_adapter_1 = require('@cycle/xstream-adapter');
@@ -3608,7 +3628,7 @@ function onionify(main, name) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = onionify;
 
-},{"xstream":168,"xstream/extra/dropRepeats":166}],63:[function(require,module,exports){
+},{"xstream":170,"xstream/extra/dropRepeats":168}],63:[function(require,module,exports){
 'use strict';
 
 var copy       = require('es5-ext/object/copy')
@@ -4943,12 +4963,23 @@ var __extends = (this && this.__extends) || function (d, b) {
  */
 var instanceId = 0;
 /**
+ * The unique id is used to get a unique hash on styles (no merging).
+ */
+var uniqueId = 0;
+/**
+ * Tag styles with this string to get unique hash outputs.
+ */
+exports.IS_UNIQUE = '__DO_NOT_DEDUPE_STYLE__';
+/**
  * CSS properties that are valid unit-less numbers.
  */
 var CSS_NUMBER = {
+    'animation-iteration-count': true,
     'box-flex': true,
     'box-flex-group': true,
     'column-count': true,
+    'counter-increment': true,
+    'counter-reset': true,
     'flex': true,
     'flex-grow': true,
     'flex-positive': true,
@@ -5016,7 +5047,7 @@ exports.stringHash = stringHash;
  */
 function styleToString(name, value) {
     if (typeof value === 'number' && value !== 0 && !CSS_NUMBER[name]) {
-        value += 'px';
+        value = value + "px";
     }
     return name + ":" + String(value).replace(/([\{\}\[\]])/g, '\\$1');
 }
@@ -5032,11 +5063,15 @@ function sortTuples(value) {
 function parseUserStyles(styles, hasNestedStyles) {
     var properties = [];
     var nestedStyles = [];
+    var isUnique = false;
     // Sort keys before adding to styles.
     for (var _i = 0, _a = Object.keys(styles); _i < _a.length; _i++) {
         var key = _a[_i];
         var value = styles[key];
-        if (isNestedStyle(value)) {
+        if (key === exports.IS_UNIQUE) {
+            isUnique = !!value;
+        }
+        else if (isNestedStyle(value)) {
             nestedStyles.push([key.trim(), value]);
         }
         else {
@@ -5045,7 +5080,8 @@ function parseUserStyles(styles, hasNestedStyles) {
     }
     return {
         properties: sortTuples(properties),
-        nestedStyles: hasNestedStyles ? nestedStyles : sortTuples(nestedStyles)
+        nestedStyles: hasNestedStyles ? nestedStyles : sortTuples(nestedStyles),
+        isUnique: isUnique
     };
 }
 /**
@@ -5053,7 +5089,7 @@ function parseUserStyles(styles, hasNestedStyles) {
  */
 function stringifyProperties(properties) {
     var result = [];
-    var _loop_1 = function(name_1, value) {
+    var _loop_1 = function (name_1, value) {
         if (value != null) {
             if (Array.isArray(value)) {
                 result.push(value.filter(function (x) { return x != null; }).map(function (x) { return styleToString(name_1, x); }).join(';'));
@@ -5084,12 +5120,12 @@ function interpolate(selector, parent) {
 function collectHashedStyles(container, userStyles, isStyle, displayName) {
     var styles = [];
     function stylize(cache, userStyles, selector) {
-        var _a = parseUserStyles(userStyles, isStyle), properties = _a.properties, nestedStyles = _a.nestedStyles;
+        var _a = parseUserStyles(userStyles, isStyle), properties = _a.properties, nestedStyles = _a.nestedStyles, isUnique = _a.isUnique;
         var styleString = stringifyProperties(properties);
         var pid = styleString;
         // Only create style instances when styles exists.
         if (styleString) {
-            var style = new Style(styleString, cache.hash);
+            var style = new Style(styleString, cache.hash, isUnique ? "u" + (++uniqueId).toString(36) : undefined);
             cache.add(style);
             styles.push([cache, selector, style]);
         }
@@ -5129,13 +5165,13 @@ function registerUserStyles(container, styles, displayName) {
  * Create user rule. Simplified collection of styles, since it doesn't need a unique id hash.
  */
 function registerUserRule(container, selector, styles) {
-    var _a = parseUserStyles(styles, false), properties = _a.properties, nestedStyles = _a.nestedStyles;
+    var _a = parseUserStyles(styles, false), properties = _a.properties, nestedStyles = _a.nestedStyles, isUnique = _a.isUnique;
     // Throw when using properties and nested styles together in rule.
     if (properties.length && nestedStyles.length) {
         throw new TypeError("Registering a CSS rule can not use properties with nested styles");
     }
     var styleString = stringifyProperties(properties);
-    var rule = new Rule(selector, styleString, container.hash);
+    var rule = new Rule(selector, styleString, container.hash, isUnique ? "u" + (++uniqueId).toString(36) : undefined);
     for (var _i = 0, nestedStyles_2 = nestedStyles; _i < nestedStyles_2.length; _i++) {
         var _b = nestedStyles_2[_i], name_3 = _b[0], value = _b[1];
         registerUserRule(rule, name_3, value);
@@ -5274,10 +5310,11 @@ var Style = (function (_super) {
     __extends(Style, _super);
     function Style(style, hash, id) {
         if (id === void 0) { id = "c" + hash(style); }
-        _super.call(this, hash);
-        this.style = style;
-        this.hash = hash;
-        this.id = id;
+        var _this = _super.call(this, hash) || this;
+        _this.style = style;
+        _this.hash = hash;
+        _this.id = id;
+        return _this;
     }
     Style.prototype.getStyles = function () {
         return this.values().map(function (x) { return x.selector; }).join(',') + "{" + this.style + "}";
@@ -5300,12 +5337,13 @@ var Rule = (function (_super) {
         if (style === void 0) { style = ''; }
         if (id === void 0) { id = "a" + hash(rule + "." + style); }
         if (pid === void 0) { pid = ''; }
-        _super.call(this, hash);
-        this.rule = rule;
-        this.style = style;
-        this.hash = hash;
-        this.id = id;
-        this.pid = pid;
+        var _this = _super.call(this, hash) || this;
+        _this.rule = rule;
+        _this.style = style;
+        _this.hash = hash;
+        _this.id = id;
+        _this.pid = pid;
+        return _this;
     }
     Rule.prototype.getStyles = function () {
         return this.rule + "{" + this.style + getStyles(this) + "}";
@@ -5326,10 +5364,11 @@ var FreeStyle = (function (_super) {
     __extends(FreeStyle, _super);
     function FreeStyle(hash, debug, id) {
         if (id === void 0) { id = "f" + (++instanceId).toString(36); }
-        _super.call(this, hash);
-        this.hash = hash;
-        this.debug = debug;
-        this.id = id;
+        var _this = _super.call(this, hash) || this;
+        _this.hash = hash;
+        _this.debug = debug;
+        _this.id = id;
+        return _this;
     }
     FreeStyle.prototype.registerStyle = function (styles, displayName) {
         return registerUserStyles(this, styles, this.debug ? displayName : undefined);
@@ -13938,8 +13977,13 @@ function symbolObservablePonyfill(root) {
 	return result;
 };
 },{}],163:[function(require,module,exports){
-/// <reference path="./css.d.ts"/>
 "use strict";
+var formatting_1 = require("./internal/formatting");
+/**
+ * All the CSS types in the 'types' namespace
+ */
+var types = require("./types");
+exports.types = types;
 /**
  * @module Maintains a single stylesheet and keeps it in sync with requested styles
  */
@@ -13966,35 +14010,39 @@ var afterAllSync = (new (function () {
     return class_1;
 }())).afterAllSync;
 /**
- * Before we send styles to freeStyle we should convert any CSSType<T> to string
- * Call this whenever something might be a CSSType.
- */
-function ensureString(x) {
-    return typeof x.type === 'string'
-        ? x.toString()
-        : x;
-}
-exports.ensureString = ensureString;
-/**
- * Ensures string for all values of an object
- */
-function ensureStringObj(object) {
-    var result = {};
-    for (var key in object) {
-        var val = object[key];
-        result[key] = ensureString(val);
-    }
-    return result;
-}
-exports.ensureStringObj = ensureStringObj;
-/**
  * We have a single stylesheet that we update as components register themselves
  */
 var freeStyle = FreeStyle.create();
 var lastFreeStyleChangeId = freeStyle.changeId;
-var singletonTag = typeof window === 'undefined' ? { innerHTML: '' } : document.createElement('style');
-if (typeof document !== 'undefined')
-    document.head.appendChild(singletonTag);
+/**
+ * We create a tag on first request or return the one that was hydrated
+ */
+var _a = new (function () {
+    function class_2() {
+        var _this = this;
+        this.singletonTag = undefined;
+        this.getTag = function () {
+            if (!_this.singletonTag) {
+                _this.singletonTag = typeof window === 'undefined' ? { textContent: '' } : document.createElement('style');
+                if (typeof document !== 'undefined')
+                    document.head.appendChild(_this.singletonTag);
+            }
+            return _this.singletonTag;
+        };
+        this.setTag = function (tag) {
+            /** Clear any data in any previous tag */
+            if (_this.singletonTag) {
+                _this.singletonTag.textContent = '';
+            }
+            _this.singletonTag = tag;
+            /** This special time buffer immediately */
+            forceRenderStyles();
+        };
+    }
+    return class_2;
+}()), setTag = _a.setTag, getTag = _a.getTag;
+/** Sets the target tag where we write the css on style updates */
+exports.setStylesTarget = setTag;
 /** Checks if the style tag needs updating and if so queues up the change */
 var styleUpdated = function () {
     if (freeStyle.changeId === lastFreeStyleChangeId
@@ -14002,7 +14050,7 @@ var styleUpdated = function () {
         return;
     lastFreeStyleChangeId = freeStyle.changeId;
     pendingRawChange = false;
-    afterAllSync(flush);
+    afterAllSync(forceRenderStyles);
 };
 var pendingRawChange = false;
 var raw = '';
@@ -14021,11 +14069,14 @@ function cssRaw(mustBeValidCSS) {
 }
 exports.cssRaw = cssRaw;
 /**
- * Flushes styles to the singleton tag
+ * Renders styles to the singleton tag imediately
+ * NOTE: You should only call it on initial render to prevent any non CSS flash.
+ * After that it is kept sync using `requestAnimationFrame` and we haven't noticed any bad flashes.
  **/
-function flush() {
-    singletonTag.innerHTML = exports.css();
+function forceRenderStyles() {
+    getTag().textContent = exports.getStyles();
 }
+exports.forceRenderStyles = forceRenderStyles;
 /**
  * Helps with testing. Reinitializes FreeStyle + raw
  */
@@ -14037,27 +14088,43 @@ function reinit() {
     raw = '';
     pendingRawChange = false;
     /** Clear any styles that were flushed */
-    singletonTag.innerHTML = '';
+    getTag().textContent = '';
 }
 exports.reinit = reinit;
 /**
  * Allows use to use the stylesheet in a node.js environment
  */
-exports.css = function () { return raw ? raw + freeStyle.getStyles() : freeStyle.getStyles(); };
+exports.getStyles = function () { return raw ? raw + freeStyle.getStyles() : freeStyle.getStyles(); };
 /**
  * Takes CSSProperties and return a generated className you can use on your component
  */
 function style() {
     var objects = [];
     for (var _i = 0; _i < arguments.length; _i++) {
-        objects[_i - 0] = arguments[_i];
+        objects[_i] = arguments[_i];
     }
-    var object = extend.apply(void 0, objects);
-    var className = freeStyle.registerStyle(object);
+    var _a = formatting_1.ensureStringObj(extend.apply(void 0, objects)), result = _a.result, debugName = _a.debugName;
+    var className = debugName ? freeStyle.registerStyle(result, debugName) : freeStyle.registerStyle(result);
     styleUpdated();
     return className;
 }
 exports.style = style;
+/**
+ * Utility function to register an @font-face
+ */
+function fontFace() {
+    var fontFace = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        fontFace[_i] = arguments[_i];
+    }
+    for (var _a = 0, fontFace_1 = fontFace; _a < fontFace_1.length; _a++) {
+        var face = fontFace_1[_a];
+        freeStyle.registerRule('@font-face', face);
+    }
+    styleUpdated();
+    return;
+}
+exports.fontFace = fontFace;
 /**
  * Takes CSSProperties and registers it to a global selector (body, html, etc.)
  */
@@ -14066,42 +14133,23 @@ function cssRule(selector) {
     for (var _i = 1; _i < arguments.length; _i++) {
         objects[_i - 1] = arguments[_i];
     }
-    var object = extend.apply(void 0, objects);
+    var object = formatting_1.ensureStringObj(extend.apply(void 0, objects)).result;
     freeStyle.registerRule(selector, object);
     styleUpdated();
     return;
 }
 exports.cssRule = cssRule;
 /**
- * Takes Keyframes and returns a generated animation name
+ * Takes keyframes and returns a generated animationName
  */
 function keyframes(frames) {
-    // resolve keyframe css property helpers
-    for (var key in frames) {
-        var frame = frames[key];
-        for (var prop in frame) {
-            frame[prop] = ensureString(frame[prop]);
-        }
-    }
-    var animationName = freeStyle.registerKeyframes(frames);
+    var _a = formatting_1.explodeKeyframes(frames), keyframes = _a.keyframes, $debugName = _a.$debugName;
+    // TODO: replace $debugName with display name
+    var animationName = freeStyle.registerKeyframes(keyframes, $debugName);
     styleUpdated();
     return animationName;
 }
 exports.keyframes = keyframes;
-/**
- * Helper for you to create a CSSFunction
- * Assumption is that most css function fall into this pattern:
- * `function-name(param [, param])`
- */
-function cssFunction(functionName) {
-    var params = [];
-    for (var _i = 1; _i < arguments.length; _i++) {
-        params[_i - 1] = arguments[_i];
-    }
-    var parts = params.map(ensureString).join(',');
-    return functionName + "(" + parts + ")";
-}
-exports.cssFunction = cssFunction;
 /**
  * Merges various styles into a single style object.
  * Note: if two objects have the same property the last one wins
@@ -14109,28 +14157,27 @@ exports.cssFunction = cssFunction;
 function extend() {
     var objects = [];
     for (var _i = 0; _i < arguments.length; _i++) {
-        objects[_i - 0] = arguments[_i];
+        objects[_i] = arguments[_i];
     }
     /** The final result we will return */
     var result = {};
     for (var _a = 0, objects_1 = objects; _a < objects_1.length; _a++) {
         var object = objects_1[_a];
         for (var key in object) {
+            /** Falsy values except a explicit 0 is ignored */
             var val = object[key];
-            if (
-            // Some psuedo state or media query
-            (key.indexOf('&') !== -1 || key.indexOf('@media') === 0)) {
-                // And we already have something for this key
-                if (result[key]) {
-                    // Then extend in the final result
-                    result[key] = extend(result[key], object);
-                }
-                else {
-                    result[key] = ensureStringObj(val);
-                }
+            if (!val && val !== 0) {
+                continue;
+            }
+            /** if nested media or pseudo selector */
+            if (key === '$nest' && val) {
+                result[key] = result['$nest'] ? extend(result['$nest'], val) : val;
+            }
+            else if ((key.indexOf('&') !== -1 || key.indexOf('@media') === 0)) {
+                result[key] = result[key] ? extend(result[key], val) : val;
             }
             else {
-                result[key] = ensureString(val);
+                result[key] = val;
             }
         }
     }
@@ -14143,13 +14190,101 @@ exports.extend = extend;
 function classes() {
     var classes = [];
     for (var _i = 0; _i < arguments.length; _i++) {
-        classes[_i - 0] = arguments[_i];
+        classes[_i] = arguments[_i];
     }
     return classes.filter(function (c) { return !!c; }).join(' ');
 }
 exports.classes = classes;
+/**
+ * Utility to help customize styles with media queries. e.g.
+ * ```
+ * style(
+ *  media({maxWidth:500}, {color:'red'})
+ * )
+ * ```
+ */
+exports.media = function (mediaQuery) {
+    var objects = [];
+    for (var _i = 1; _i < arguments.length; _i++) {
+        objects[_i - 1] = arguments[_i];
+    }
+    var mediaQuerySections = [];
+    if (mediaQuery.type)
+        mediaQuerySections.push(mediaQuery.type);
+    if (mediaQuery.orientation)
+        mediaQuerySections.push(mediaQuery.orientation);
+    if (mediaQuery.minWidth)
+        mediaQuerySections.push("(min-width: " + mediaQuery.minWidth + "px)");
+    if (mediaQuery.maxWidth)
+        mediaQuerySections.push("(max-width: " + mediaQuery.maxWidth + "px)");
+    var stringMediaQuery = "@media " + mediaQuerySections.join(' and ');
+    var object = {
+        $nest: (_a = {},
+            _a[stringMediaQuery] = extend.apply(void 0, objects),
+            _a)
+    };
+    return object;
+    var _a;
+};
 
-},{"free-style":116}],164:[function(require,module,exports){
+},{"./internal/formatting":164,"./types":165,"free-style":116}],164:[function(require,module,exports){
+"use strict";
+var FreeStyle = require("free-style");
+/**
+ * We need to do the following to *our* objects before passing to freestyle:
+ * - Convert any CSSType to their string value
+ * - For any `$nest` directive move up to FreeStyle style nesting
+ * - For any `$unique` directive map to FreeStyle Unique
+ * - For any `$debugName` directive return the debug name
+ */
+function ensureStringObj(object) {
+    /** The final result we will return */
+    var result = {};
+    var debugName = '';
+    for (var key in object) {
+        /** Grab the value upfront */
+        var val = object[key];
+        /** TypeStyle configuration options */
+        if (key === '$unique') {
+            result[FreeStyle.IS_UNIQUE] = val;
+        }
+        else if (key === '$nest') {
+            var nested = val;
+            for (var selector in nested) {
+                var subproperties = nested[selector];
+                result[selector] = ensureStringObj(subproperties).result;
+            }
+        }
+        else if (key === '$debugName') {
+            debugName = val;
+        }
+        else {
+            result[key] = val;
+        }
+    }
+    return { result: result, debugName: debugName };
+}
+exports.ensureStringObj = ensureStringObj;
+// todo: better name here
+function explodeKeyframes(frames) {
+    var result = { $debugName: undefined, keyframes: {} };
+    for (var offset in frames) {
+        var val = frames[offset];
+        if (offset === '$debugName') {
+            result.$debugName = val;
+        }
+        else {
+            result.keyframes[offset] = val;
+        }
+    }
+    return result;
+}
+exports.explodeKeyframes = explodeKeyframes;
+
+},{"free-style":116}],165:[function(require,module,exports){
+"use strict";
+
+},{}],166:[function(require,module,exports){
 "use strict";
 var index_1 = require('../index');
 var ConcatProducer = (function () {
@@ -14246,7 +14381,7 @@ function concat() {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = concat;
 
-},{"../index":168}],165:[function(require,module,exports){
+},{"../index":170}],167:[function(require,module,exports){
 "use strict";
 var index_1 = require('../index');
 var DelayOperator = (function () {
@@ -14340,7 +14475,7 @@ function delay(period) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = delay;
 
-},{"../index":168}],166:[function(require,module,exports){
+},{"../index":170}],168:[function(require,module,exports){
 "use strict";
 var index_1 = require('../index');
 var empty = {};
@@ -14463,7 +14598,7 @@ function dropRepeats(isEqual) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = dropRepeats;
 
-},{"../index":168}],167:[function(require,module,exports){
+},{"../index":170}],169:[function(require,module,exports){
 "use strict";
 var index_1 = require('../index');
 var concat_1 = require('./concat');
@@ -14646,7 +14781,7 @@ tweenFactory.sine = easingSine;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = tweenFactory;
 
-},{"../index":168,"./concat":164}],168:[function(require,module,exports){
+},{"../index":170,"./concat":166}],170:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
