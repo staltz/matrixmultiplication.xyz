@@ -37,9 +37,11 @@ namespace Styles {
     fontSize: '14px',
     textAlign: 'center',
     zIndex: -10,
-    '& > *': {
-      color: pallete.gray,
-    },
+    $nest: {
+      '& > *': {
+        color: pallete.gray,
+      },
+    }
   });
 };
 

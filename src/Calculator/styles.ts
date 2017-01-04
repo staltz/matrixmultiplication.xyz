@@ -1,4 +1,4 @@
-import {style, keyframes} from 'typestyle';
+import {style, keyframes, types} from 'typestyle';
 import MatrixStyles from '../Matrix/styles';
 import {pallete} from '../styles';
 
@@ -86,23 +86,25 @@ namespace Styles {
   });
 
   export const plusSign = style({
-    '&::after': {
-      content: '"+"',
-      display: 'block',
-      position: 'absolute',
-      top: 0,
-      left: '40px',
-      fontSize: '24px',
-      width: '2em',
-      height: '2em',
-      fontFamily: `'Source Sans Pro', sans-serif`,
-      lineHeight: '49px',
-      textAlign: 'center',
-      border: 'none',
-      textIndent: '0',
-      padding: '0',
-      color: pallete.black,
-    },
+    $nest: {
+      '&::after': {
+        content: '"+"',
+        display: 'block',
+        position: 'absolute',
+        top: 0,
+        left: '40px',
+        fontSize: '24px',
+        width: '2em',
+        height: '2em',
+        fontFamily: `'Source Sans Pro', sans-serif`,
+        lineHeight: '49px',
+        textAlign: 'center',
+        border: 'none',
+        textIndent: '0',
+        padding: '0',
+        color: pallete.black,
+      },
+    }
   });
 
   /**
@@ -123,23 +125,27 @@ namespace Styles {
       rgba(255,255,255,0) 100%)
     `,
     zIndex: 2,
-    '& > * + *': {
+    $nest: {
+      '& > * + *': {
       marginLeft: '8px',
-    },
+      }
+    }
   });
 
-  const commonButton: NestedCSSProperties = {
+  const commonButton: types.NestedCSSProperties = {
     color: pallete.white,
     border: 'none',
     fontSize: '24px',
     padding: '8px 16px',
-    '& > svg': {
-      marginBottom: '-2px',
-      marginRight: '8px',
-    },
+    $nest: {
+      '& > svg': {
+        marginBottom: '-2px',
+        marginRight: '8px',
+      },
+    }
   };
 
-  const commonButtonEnabled: NestedCSSProperties = {
+  const commonButtonEnabled: types.NestedCSSProperties = {
     boxShadow: `0 1px 1px 0 ${pallete.gray}`,
     cursor: 'pointer',
   };
@@ -150,9 +156,11 @@ namespace Styles {
 
   export const multiplyButton = style(commonButton, commonButtonEnabled, {
     backgroundColor: pallete.blue,
-    '&:hover': {
+    $nest: {
+      '&:hover': {
       backgroundColor: pallete.blueWeak,
-    },
+      },
+    }
   });
   export const multiplyButtonDisabled = commonButtonDisabled;
 
@@ -161,9 +169,11 @@ namespace Styles {
 
   export const endButton = style(commonButton, commonButtonEnabled, {
     backgroundColor: pallete.orange,
-    '&:hover': {
-      backgroundColor: pallete.orangeWeak,
-    },
+    $nest: {
+      '&:hover': {
+        backgroundColor: pallete.orangeWeak,
+      }
+    }
   });
   export const endButtonDisabled = commonButtonDisabled;
 
@@ -215,9 +225,11 @@ namespace Styles {
     lineHeight: '30px',
     margin: '4px',
     cursor: 'pointer',
-    '&:hover': {
-      backgroundColor: pallete.grayLight,
-    },
+    $nest: {
+      '&:hover': {
+        backgroundColor: pallete.grayLight,
+      },
+    }
   });
 };
 
