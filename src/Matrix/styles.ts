@@ -27,24 +27,26 @@ namespace Styles {
     top: 0,
     width: matrixBracketWidth,
     backgroundColor: matrixBracketColor,
-    '&::before': {
-      content: `''`,
-      backgroundColor: matrixBracketColor,
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      height: matrixBracketWidth,
-      width: matrixBracketIngress,
-    },
-    '&::after': {
-      content: `''`,
-      backgroundColor: matrixBracketColor,
-      position: 'absolute',
-      bottom: 0,
-      left: 0,
-      height: matrixBracketWidth,
-      width: matrixBracketIngress,
-    },
+    $nest: {
+      '&::before': {
+        content: `''`,
+        backgroundColor: matrixBracketColor,
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        height: matrixBracketWidth,
+        width: matrixBracketIngress,
+      },
+      '&::after': {
+        content: `''`,
+        backgroundColor: matrixBracketColor,
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        height: matrixBracketWidth,
+        width: matrixBracketIngress,
+      },
+    }
   });
 
   export const rightBracket = style({
@@ -54,24 +56,26 @@ namespace Styles {
     top: 0,
     width: matrixBracketWidth,
     backgroundColor: matrixBracketColor,
-    '&::before': {
-      content: `''`,
-      backgroundColor: matrixBracketColor,
-      position: 'absolute',
-      top: 0,
-      right: 0,
-      height: matrixBracketWidth,
-      width: matrixBracketIngress,
-    },
-    '&::after': {
-      content: `''`,
-      backgroundColor: matrixBracketColor,
-      position: 'absolute',
-      bottom: 0,
-      right: 0,
-      height: matrixBracketWidth,
-      width: matrixBracketIngress,
-    },
+    $nest: {
+      '&::before': {
+        content: `''`,
+        backgroundColor: matrixBracketColor,
+        position: 'absolute',
+        top: 0,
+        right: 0,
+        height: matrixBracketWidth,
+        width: matrixBracketIngress,
+      },
+      '&::after': {
+        content: `''`,
+        backgroundColor: matrixBracketColor,
+        position: 'absolute',
+        bottom: 0,
+        right: 0,
+        height: matrixBracketWidth,
+        width: matrixBracketIngress,
+      },
+    }
   });
 
   /**
@@ -102,10 +106,14 @@ namespace Styles {
     padding: '0',
     color: pallete.black,
     backgroundColor: 'rgba(255,255,255,0)',
-    'input&': {
-      '&:hover': insetBoxShadow,
-      '&:focus': insetBoxShadow,
-    },
+    $nest: {
+      'input&': {
+        $nest: {
+          '&:hover': insetBoxShadow,
+          '&:focus': insetBoxShadow,
+        }
+      }
+    }
   });
 };
 

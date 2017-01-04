@@ -10,7 +10,7 @@
     "@cycle/xstream-run": "4.2",
     "cycle-onionify": "2.3",
     "immutable": "^3.8.1",
-    "typestyle": "^0.7.1",
+    "typestyle": "^0.22.3",
     "xstream": "9.3"
   },
   "devDependencies": {

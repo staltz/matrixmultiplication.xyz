@@ -3,11 +3,11 @@ import {makeDOMDriver} from '@cycle/dom';
 import onionify from 'cycle-onionify';
 import App from './App/index';
 import './styles';
+import {forceRenderStyles} from 'typestyle';
 
 const main = onionify(App);
 
-requestAnimationFrame(() => {
-  run(main, {
-    DOM: makeDOMDriver('#main-container')
-  });
+run(main, {
+  DOM: makeDOMDriver('#main-container')
 });
+forceRenderStyles();
