@@ -1555,12 +1555,14 @@ var dom_1 = require('@cycle/dom');
 var cycle_onionify_1 = require('cycle-onionify');
 var index_1 = require('./App/index');
 require('./styles');
+var typestyle_1 = require('typestyle');
 var main = cycle_onionify_1.default(index_1.default);
 xstream_run_1.run(main, {
     DOM: dom_1.makeDOMDriver('#main-container')
 });
+typestyle_1.forceRenderStyles();
 
-},{"./App/index":1,"./styles":35,"@cycle/dom":49,"@cycle/xstream-run":60,"cycle-onionify":62}],35:[function(require,module,exports){
+},{"./App/index":1,"./styles":35,"@cycle/dom":49,"@cycle/xstream-run":60,"cycle-onionify":62,"typestyle":163}],35:[function(require,module,exports){
 "use strict";
 var typestyle_1 = require('typestyle');
 typestyle_1.cssRule('@font-face', {
