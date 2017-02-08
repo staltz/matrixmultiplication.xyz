@@ -1,5 +1,5 @@
 import xs, {Stream} from 'xstream';
-import {DOMSource} from '@cycle/dom/xstream-typings';
+import {DOMSource} from '@cycle/dom';
 import {
   Action,
   StartMultiplyAction,

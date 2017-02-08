@@ -1,6 +1,5 @@
 import xs, {Stream, MemoryStream} from 'xstream';
-import {VNode} from '@cycle/dom';
-import {DOMSource} from '@cycle/dom/xstream-typings';
+import {VNode, DOMSource} from '@cycle/dom';
 import {StateSource} from 'cycle-onionify';
 import MatrixValues from '../utils/MatrixValues';
 import intent from './intent';

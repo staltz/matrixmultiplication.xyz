@@ -1,7 +1,7 @@
 import xs, {Stream} from 'xstream';
 import dropRepeats from 'xstream/extra/dropRepeats';
 import delay from 'xstream/extra/delay';
-import {DOMSource} from '@cycle/dom/xstream-typings';
+import {DOMSource} from '@cycle/dom';
 
 export interface Measurements {
   matrixAHeight: number;
@@ -22,20 +22,25 @@ export default function measure(domSource: DOMSource): Stream<Measurements> {
   return domSource.select('.calculator').elements()
     .map((e: Element | Array<Element>) => {
       const actualElement = (Array.isArray(e) ? e[0] : e) as Element | undefined;
-      if (actualElement) {
-        const matrixAElem = actualElement.querySelector('.matrixA *');
-        const matrixBElem = actualElement.querySelector('.matrixB *');
-        const someRow = matrixAElem.querySelector('.row');
-        const measurements: Measurements = {
-          matrixAHeight: matrixAElem.clientHeight,
-          matrixBWidth: matrixBElem.clientWidth,
-          matrixBHeight: matrixBElem.clientHeight,
-          rowHeight: someRow.clientHeight,
-        };
-        return measurements;
-      } else {
+      if (!actualElement) {
         return null;
       }
+      const matrixAElem = actualElement.querySelector('.matrixA *');
+      const matrixBElem = actualElement.querySelector('.matrixB *');
+      if (!matrixAElem || !matrixBElem) {
+        return null;
+      }
+      const someRow = matrixAElem.querySelector('.row');
+      if (!someRow) {
+        return null;
+      }
+      const measurements: Measurements = {
+        matrixAHeight: matrixAElem.clientHeight,
+        matrixBWidth: matrixBElem.clientWidth,
+        matrixBHeight: matrixBElem.clientHeight,
+        rowHeight: someRow.clientHeight,
+      };
+      return measurements;
     })
     .filter(isNotNull)
     .compose(dropRepeats((m1: Measurements, m2: Measurements) =>
