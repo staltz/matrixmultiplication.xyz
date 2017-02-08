@@ -1,6 +1,5 @@
 import xs, {Stream, MemoryStream} from 'xstream';
-import {div, h1, h2, a, VNode} from '@cycle/dom';
-import {DOMSource} from '@cycle/dom/xstream-typings';
+import {div, h1, h2, a, VNode, DOMSource} from '@cycle/dom';
 import {StateSource} from 'cycle-onionify';
 import MatrixValues from '../utils/MatrixValues';
 import Calculator from '../Calculator/index';

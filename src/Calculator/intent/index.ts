@@ -1,6 +1,6 @@
 import xs, {Stream, MemoryStream} from 'xstream';
 import delay from 'xstream/extra/delay';
-import {DOMSource} from '@cycle/dom/xstream-typings';
+import {DOMSource} from '@cycle/dom';
 import Matrix from '../../Matrix/index';
 import {MatrixID} from '../model/index';
 import {Action} from '../model/actions';

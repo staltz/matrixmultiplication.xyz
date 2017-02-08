@@ -1,6 +1,5 @@
 import xs, {Stream} from 'xstream';
-import {VNode} from '@cycle/dom';
-import {DOMSource} from '@cycle/dom/xstream-typings';
+import {VNode, DOMSource} from '@cycle/dom';
 import isolate from '@cycle/isolate';
 import {StateSource} from 'cycle-onionify';
 import MatrixValues from '../utils/MatrixValues';
@@ -30,9 +29,9 @@ export interface Sinks {
  * as animations.
  */
 export default function Calculator(sources: Sources): Sinks {
-  const aSinks = isolate(Matrix, 'matrixA')(<any> sources);
-  const bSinks = isolate(Matrix, 'matrixB')(<any> sources);
-  const cSinks = isolate(Matrix, 'matrixC')(<any> sources);
+  const aSinks: Sinks = isolate(Matrix, 'matrixA')(sources);
+  const bSinks: Sinks = isolate(Matrix, 'matrixB')(sources);
+  const cSinks: Sinks = isolate(Matrix, 'matrixC')(sources);
 
   const state$ = sources.onion.state$;
   const measurements$ = measure(sources.DOM);

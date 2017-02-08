@@ -5,23 +5,22 @@
   "author": "Andre Staltz",
   "license": "MIT",
   "dependencies": {
-    "@cycle/dom": "14.0",
-    "@cycle/isolate": "1.4",
-    "@cycle/xstream-run": "4.2",
-    "cycle-onionify": "2.3",
+    "@cycle/dom": "15.0.0-rc.4",
+    "@cycle/isolate": "2.0.0-rc.2",
+    "@cycle/run": "1.0.0-rc.9",
+    "cycle-onionify": "3.0.0-rc.1",
     "immutable": "^3.8.1",
-    "typestyle": "^0.22.3",
-    "xstream": "9.3"
+    "typestyle": "1.0.0",
+    "xstream": "10.2"
   },
   "devDependencies": {
     "browserify": "13.1.1",
     "mkdirp": "0.5.x",
-    "typescript": "2.0.9",
-    "typings": "^2.0.0",
+    "typescript": "2.1.5",
     "uglify-js": "^2.7.4"
   },
   "scripts": {
-    "prebrowserify": "mkdirp dist && typings install && tsc",
+    "prebrowserify": "mkdirp dist && tsc",
     "browserify": "browserify lib/index.js --outfile dist/main.js",
     "postbrowserify": "uglifyjs dist/main.js -o dist/main.min.js",
     "start": "npm install && npm run browserify && echo 'OPEN index.html IN YOUR BROWSER'"
