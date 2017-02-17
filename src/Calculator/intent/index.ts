@@ -3,19 +3,19 @@ import delay from 'xstream/extra/delay';
 import {DOMSource} from '@cycle/dom';
 import Matrix from '../../Matrix/index';
 import {MatrixID} from '../model/index';
-import {Action} from '../model/actions';
+import {ResizeAction} from '../model/actions';
 import {controlPanelIntent} from './controlPanel';
 import {resizeIntent} from './resize';
 
 /**
  * Interprets user events as actions that can affect the state in the model.
  */
-export default function intent(domSource: DOMSource): Stream<Action> {
+export default function intent(domSource: DOMSource) {
   const resizeAction$ = resizeIntent(domSource);
-  const controlPanelAction$ = controlPanelIntent(domSource);
+  const controlPanelActions = controlPanelIntent(domSource);
 
-  return xs.merge(
+  return {
     resizeAction$,
-    controlPanelAction$,
-  );
+    ...controlPanelActions,
+  }
 }

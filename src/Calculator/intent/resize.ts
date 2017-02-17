@@ -1,19 +1,16 @@
 import xs, {Stream} from 'xstream';
 import {DOMSource} from '@cycle/dom';
 import {MatrixID} from '../model/index';
-import {ResizeAction, Direction} from '../model/actions';
+import {Direction, ResizeAction} from '../model/actions';
 
 function createResizeAction(target: MatrixID,
                             direction: Direction,
                             amount: number): ResizeAction {
   return {
-    type: 'RESIZE',
-    payload: {
-      target,
-      resizeParam: {
-        direction,
-        amount,
-      },
+    target,
+    resizeParam: {
+      direction,
+      amount,
     },
   };
 }

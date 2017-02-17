@@ -35,8 +35,8 @@ export default function Calculator(sources: Sources): Sinks {
 
   const state$ = sources.onion.state$;
   const measurements$ = measure(sources.DOM);
-  const action$ = xs.merge(intent(sources.DOM), timers(state$));
-  const reducer$ = model(action$, measurements$);
+  const actions = {...intent(sources.DOM), allowContinueAction$: timers(state$)};
+  const reducer$ = model(actions, measurements$);
   const allReducer$ = xs.merge(reducer$, aSinks.onion, bSinks.onion);
   const vdom$ = view(state$, aSinks.DOM, bSinks.DOM, cSinks.DOM);
 

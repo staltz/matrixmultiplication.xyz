@@ -1,13 +1,11 @@
 import xs, {Stream} from 'xstream';
 import {State, Reducer} from '../index';
-import {Action, isAllowContinueAction} from '../actions';
 import {lastCombStep} from '../queries';
 import {calculateNextMatrixC} from '../calculate';
 
-export function allowContinueReducer$(action$: Stream<Action>): Stream<Reducer> {
+export function allowContinueReducer$(action$: Stream<null>): Stream<Reducer> {
   return action$
-    .filter(isAllowContinueAction)
-    .map(action => function allowContinueReducer(prevState: State): State {
+    .map(() => function allowContinueReducer(prevState: State): State {
       if (prevState.fastForwardToEnd && prevState.matrixC) {
         const nextStep = prevState.step + 1;
         return {

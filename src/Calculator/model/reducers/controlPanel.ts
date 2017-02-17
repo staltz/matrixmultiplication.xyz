@@ -1,20 +1,12 @@
 import xs, {Stream} from 'xstream';
 import MatrixValues from '../../../utils/MatrixValues';
 import {State, Reducer} from '../index';
-import {
-  Action,
-  isStartMultiplyAction,
-  isNextStepAction,
-  isEndAction,
-  isResetAction,
-} from '../actions';
 import {calculateNextMatrixC} from '../calculate';
 import {lastCombStep} from '../queries';
 
-export function startMultiplyReducer$(action$: Stream<Action>): Stream<Reducer> {
+export function startMultiplyReducer$(action$: Stream<null>): Stream<Reducer> {
   return action$
-    .filter(isStartMultiplyAction)
-    .map(action => function startMultiplyReducer(prevState: State): State {
+    .map(() => function startMultiplyReducer(prevState: State): State {
       if (prevState.step === 0) {
         return {
           step: 1,
@@ -46,10 +38,9 @@ export function startMultiplyReducer$(action$: Stream<Action>): Stream<Reducer> 
     });
 }
 
-export function nextStepReducer$(action$: Stream<Action>): Stream<Reducer> {
+export function nextStepReducer$(action$: Stream<null>): Stream<Reducer> {
   return action$
-    .filter(isNextStepAction)
-    .map(action => function nextStepReducer(prevState: State): State {
+    .map(() => function nextStepReducer(prevState: State): State {
       if (prevState.step >= 1 && prevState.canInteract && prevState.matrixC) {
         const nextStep = prevState.step + 1;
         return {
@@ -76,10 +67,9 @@ export function nextStepReducer$(action$: Stream<Action>): Stream<Reducer> {
     });
 }
 
-export function fastForwardToEndReducer$(action$: Stream<Action>): Stream<Reducer> {
+export function fastForwardToEndReducer$(action$: Stream<null>): Stream<Reducer> {
   return action$
-    .filter(isEndAction)
-    .map(action => function fastForwardToEndReducer(prevState: State): State {
+    .map(() => function fastForwardToEndReducer(prevState: State): State {
       if (prevState.step >= 1 && prevState.canInteract && prevState.matrixC) {
         const nextStep = prevState.step + 1;
         return {
@@ -106,10 +96,9 @@ export function fastForwardToEndReducer$(action$: Stream<Action>): Stream<Reduce
     });
 }
 
-export function resetReducer$(action$: Stream<Action>): Stream<Reducer> {
+export function resetReducer$(action$: Stream<null>): Stream<Reducer> {
   return action$
-    .filter(isResetAction)
-    .map(action => function resetReducer(prevState: State): State {
+    .map(() => function resetReducer(prevState: State): State {
       return {
         step: 0,
         canInteract: true,

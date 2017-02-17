@@ -1,13 +1,12 @@
 import xs, {Stream} from 'xstream';
 import MatrixValues from '../../../utils/MatrixValues';
 import {State, Reducer} from '../index';
-import {Action, isResizeAction} from '../actions';
+import {ResizeAction} from '../actions';
 
-export function resizeReducer$(action$: Stream<Action>): Stream<Reducer> {
+export function resizeReducer$(action$: Stream<ResizeAction>): Stream<Reducer> {
   return action$
-    .filter(isResizeAction)
     .map(action => function resizeReducer(prevState: State): State {
-      const targetMatrix = 'matrix' + action.payload.target;
+      const targetMatrix = 'matrix' + action.target;
 
       const nextState: State = {
         step: prevState.step,
@@ -21,15 +20,15 @@ export function resizeReducer$(action$: Stream<Action>): Stream<Reducer> {
 
       const prevValues: MatrixValues = prevState[targetMatrix].values;
 
-      if (action.payload.resizeParam.direction === 'row') {
+      if (action.resizeParam.direction === 'row') {
         nextState[targetMatrix].values = prevValues.resize(
-          prevValues.numberRows + action.payload.resizeParam.amount,
+          prevValues.numberRows + action.resizeParam.amount,
           prevValues.numberColumns
         );
       } else {
         nextState[targetMatrix].values = prevValues.resize(
           prevValues.numberRows,
-          prevValues.numberColumns + action.payload.resizeParam.amount
+          prevValues.numberColumns + action.resizeParam.amount
         );
       }
 

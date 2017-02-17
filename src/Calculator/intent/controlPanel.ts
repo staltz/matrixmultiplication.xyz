@@ -1,30 +1,27 @@
 import xs, {Stream} from 'xstream';
 import {DOMSource} from '@cycle/dom';
-import {
-  Action,
-  StartMultiplyAction,
-  NextStepAction,
-  ResetAction,
-  EndAction,
-} from '../model/actions';
 
-export function controlPanelIntent(domSource: DOMSource): Stream<Action> {
-  const startMultiplyAction$ = domSource.select('.multiply').events('click')
-    .mapTo({ type: 'START_MULTIPLY', payload: null } as StartMultiplyAction);
+export function controlPanelIntent(domSource: DOMSource) {
+  const startMultiplyAction$ = domSource
+    .select('.multiply').events('click')
+    .mapTo(null);
 
-  const nextStepAction$ = domSource.select('.next').events('click')
-    .mapTo({ type: 'NEXT_STEP', payload: null } as NextStepAction);
+  const nextStepAction$ = domSource
+    .select('.next').events('click')
+    .mapTo(null);
 
-  const endAction$ = domSource.select('.end').events('click')
-    .mapTo({ type: 'END', payload: null } as EndAction);
+  const endAction$ = domSource
+    .select('.end').events('click')
+    .mapTo(null);
 
-  const resetAction$ = domSource.select('.reset').events('click')
-    .mapTo({ type: 'RESET', payload: null } as ResetAction);
+  const resetAction$ = domSource
+    .select('.reset').events('click')
+    .mapTo(null);
 
-  return xs.merge(
+  return {
     startMultiplyAction$,
     nextStepAction$,
     endAction$,
     resetAction$,
-  );
+  };
 }

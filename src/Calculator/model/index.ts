@@ -1,7 +1,7 @@
 import xs, {Stream} from 'xstream';
 import MatrixValues from '../../utils/MatrixValues';
 import {State as MatrixState} from '../../Matrix/index';
-import {Action} from './actions';
+import {ResizeAction} from './actions';
 import {updateMeasurementsReducer$} from './reducers/measure';
 import {resizeReducer$} from './reducers/resize';
 import {
@@ -66,19 +66,28 @@ const initReducer$ = xs.of(
   }
 );
 
+export interface Actions {
+  allowContinueAction$: xs<null>;
+  startMultiplyAction$: xs<null>;
+  nextStepAction$: xs<null>;
+  endAction$: xs<null>;
+  resetAction$: xs<null>;
+  resizeAction$: xs<ResizeAction>;
+}
+
 /**
  * Controls modifications to state, through the emission of reducer functions.
  */
-export default function model(action$: Stream<Action>,
+export default function model(actions: Actions,
                               measurements$: Stream<Measurements>): Stream<Reducer> {
   return xs.merge(
     initReducer$,
     updateMeasurementsReducer$(measurements$),
-    resizeReducer$(action$),
-    startMultiplyReducer$(action$),
-    nextStepReducer$(action$),
-    fastForwardToEndReducer$(action$),
-    resetReducer$(action$),
-    allowContinueReducer$(action$),
+    resizeReducer$(actions.resizeAction$),
+    startMultiplyReducer$(actions.startMultiplyAction$),
+    nextStepReducer$(actions.nextStepAction$),
+    fastForwardToEndReducer$(actions.endAction$),
+    resetReducer$(actions.resetAction$),
+    allowContinueReducer$(actions.allowContinueAction$),
   );
 }
