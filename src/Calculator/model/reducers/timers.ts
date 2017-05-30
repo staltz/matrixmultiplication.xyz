@@ -9,32 +9,25 @@ export function allowContinueReducer$(action$: Stream<null>): Stream<Reducer> {
       if (prevState.fastForwardToEnd && prevState.matrixC) {
         const nextStep = prevState.step + 1;
         return {
+          ...prevState,
           step: nextStep,
           canInteract: false,
           fastForwardToEnd: nextStep <= lastCombStep(prevState),
-          measurements: prevState.measurements,
-          matrixA: prevState.matrixA,
-          matrixB: prevState.matrixB,
           matrixC: {
-            editable: prevState.matrixC.editable,
+            ...prevState.matrixC,
             values: calculateNextMatrixC(
               nextStep,
               prevState.matrixA.values,
               prevState.matrixB.values,
               prevState.matrixC.values,
             ),
-            id: prevState.matrixC.id,
           },
         };
       } else {
         return {
-          step: prevState.step,
+          ...prevState,
           canInteract: true,
           fastForwardToEnd: false,
-          measurements: prevState.measurements,
-          matrixA: prevState.matrixA,
-          matrixB: prevState.matrixB,
-          matrixC: prevState.matrixC,
         };
       }
     });

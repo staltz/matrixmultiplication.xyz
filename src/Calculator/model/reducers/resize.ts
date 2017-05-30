@@ -21,15 +21,21 @@ export function resizeReducer$(action$: Stream<ResizeAction>): Stream<Reducer> {
       const prevValues: MatrixValues = prevState[targetMatrix].values;
 
       if (action.resizeParam.direction === 'row') {
-        nextState[targetMatrix].values = prevValues.resize(
-          prevValues.numberRows + action.resizeParam.amount,
-          prevValues.numberColumns
-        );
+        nextState[targetMatrix] = {
+          ...prevState[targetMatrix],
+          values: prevValues.resize(
+            prevValues.numberRows + action.resizeParam.amount,
+            prevValues.numberColumns
+          ),
+        };
       } else {
-        nextState[targetMatrix].values = prevValues.resize(
-          prevValues.numberRows,
-          prevValues.numberColumns + action.resizeParam.amount
-        );
+        nextState[targetMatrix] = {
+          ...prevState[targetMatrix],
+          values: prevValues.resize(
+            prevValues.numberRows,
+            prevValues.numberColumns + action.resizeParam.amount
+          ),
+        }
       }
 
       return nextState;
