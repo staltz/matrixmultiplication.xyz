@@ -48,11 +48,11 @@ export default class MatrixValues {
     // Override the new values using the old MatrixValues
     mv.values = this.values
       .setSize(nR)
-      .map((rows, rowIndex) => {
+      .map((rows, rowIndex: number) => {
         if (rowIndex >= oldNumRows) {
           return makeRow(nC);
         } else {
-          return (rows as List<number>).setSize(nC).map((v, colIndex) =>
+          return (rows as List<number>).setSize(nC).map((v, colIndex: number) =>
             colIndex >= oldNumCols ? 1 : v
           );
         }

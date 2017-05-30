@@ -7,7 +7,7 @@ function calculateCellMatrixC(i: number,
   const m = matrixA.numberColumns;
   let acc = 0;
   for (let k = 0; k < m; k++) {
-    acc += matrixA.get(i, k) * matrixB.get(k, j);
+    acc += (matrixA.get(i, k) || 1) * (matrixB.get(k, j) || 1)
   }
   return acc;
 }

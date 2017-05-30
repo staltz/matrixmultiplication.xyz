@@ -36,9 +36,8 @@ export default function model(action$: Stream<Action>): Stream<Reducer> {
   const inputReducer$ = action$
     .map(action => function inputReducer(prevState: State): State {
       return {
+        ...prevState,
         values: prevState.values.set(action.row, action.col, action.val),
-        editable: prevState.editable,
-        id: prevState.id,
       };
     });
 
