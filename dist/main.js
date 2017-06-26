@@ -76,7 +76,7 @@ var Styles;
 ;
 exports.default = Styles;
 
-},{"../styles":34,"typestyle":138}],3:[function(require,module,exports){
+},{"../styles":34,"typestyle":141}],3:[function(require,module,exports){
 "use strict";
 var __assign = (this && this.__assign) || Object.assign || function(t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -121,7 +121,7 @@ function Calculator(sources) {
 }
 exports.default = Calculator;
 
-},{"../Matrix/index":24,"./intent/index":5,"./measure":7,"./model/index":9,"./timers":16,"./view/index":19,"@cycle/isolate":54,"xstream":147}],4:[function(require,module,exports){
+},{"../Matrix/index":24,"./intent/index":5,"./measure":7,"./model/index":9,"./timers":16,"./view/index":19,"@cycle/isolate":54,"xstream":150}],4:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 function controlPanelIntent(domSource) {
@@ -203,7 +203,7 @@ function resizeIntent(domSource) {
 }
 exports.resizeIntent = resizeIntent;
 
-},{"xstream":147}],7:[function(require,module,exports){
+},{"xstream":150}],7:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var dropRepeats_1 = require("xstream/extra/dropRepeats");
@@ -249,14 +249,22 @@ function measure(domSource) {
 }
 exports.default = measure;
 
-},{"xstream/extra/delay":144,"xstream/extra/dropRepeats":145}],8:[function(require,module,exports){
+},{"xstream/extra/delay":147,"xstream/extra/dropRepeats":148}],8:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 function calculateCellMatrixC(i, j, matrixA, matrixB) {
     var m = matrixA.numberColumns;
     var acc = 0;
     for (var k = 0; k < m; k++) {
-        acc += (matrixA.get(i, k) || 1) * (matrixB.get(k, j) || 1);
+        var a = matrixA.get(i, k);
+        var b = matrixB.get(k, j);
+        if (a == null) {
+            a = 1;
+        }
+        if (b == null) {
+            b = 1;
+        }
+        acc += a * b;
     }
     return acc;
 }
@@ -326,7 +334,7 @@ function model(actions, measurements$) {
 }
 exports.default = model;
 
-},{"../../utils/MatrixValues":35,"./reducers/controlPanel":11,"./reducers/measure":12,"./reducers/resize":13,"./reducers/timers":14,"xstream":147}],10:[function(require,module,exports){
+},{"../../utils/MatrixValues":35,"./reducers/controlPanel":11,"./reducers/measure":12,"./reducers/resize":13,"./reducers/timers":14,"xstream":150}],10:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
@@ -698,7 +706,7 @@ var Styles;
 ;
 exports.default = Styles;
 
-},{"../Matrix/styles":27,"../styles":34,"typestyle":138}],16:[function(require,module,exports){
+},{"../Matrix/styles":27,"../styles":34,"typestyle":141}],16:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var xstream_1 = require("xstream");
@@ -734,7 +742,7 @@ function timers(state$) {
 }
 exports.default = timers;
 
-},{"./model/queries":10,"./styles":15,"xstream":147,"xstream/extra/delay":144,"xstream/extra/dropRepeats":145}],17:[function(require,module,exports){
+},{"./model/queries":10,"./styles":15,"xstream":150,"xstream/extra/delay":147,"xstream/extra/dropRepeats":148}],17:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var dom_1 = require("@cycle/dom");
@@ -860,7 +868,7 @@ function view(state$, vdomA$, vdomB$, vdomC$) {
 }
 exports.default = view;
 
-},{"../model/queries":10,"../styles":15,"./common":17,"./controlPanel":18,"./matrixA":20,"./matrixB":21,"./matrixC":22,"./tweens":23,"@cycle/dom":46,"xstream":147}],20:[function(require,module,exports){
+},{"../model/queries":10,"../styles":15,"./common":17,"./controlPanel":18,"./matrixA":20,"./matrixB":21,"./matrixC":22,"./tweens":23,"@cycle/dom":46,"xstream":150}],20:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var dom_1 = require("@cycle/dom");
@@ -1152,7 +1160,7 @@ function makeTransform$(state$) {
 }
 exports.makeTransform$ = makeTransform$;
 
-},{"../model/queries":10,"../styles":15,"xstream":147,"xstream/extra/concat":143,"xstream/extra/delay":144,"xstream/extra/dropRepeats":145,"xstream/extra/tween":146}],24:[function(require,module,exports){
+},{"../model/queries":10,"../styles":15,"xstream":150,"xstream/extra/concat":146,"xstream/extra/delay":147,"xstream/extra/dropRepeats":148,"xstream/extra/tween":149}],24:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var intent_1 = require("./intent");
@@ -1233,7 +1241,7 @@ function model(action$) {
 }
 exports.default = model;
 
-},{"../utils/MatrixValues":35,"xstream":147}],27:[function(require,module,exports){
+},{"../utils/MatrixValues":35,"xstream":150}],27:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var typestyle_1 = require("typestyle");
@@ -1348,7 +1356,7 @@ var Styles;
 ;
 exports.default = Styles;
 
-},{"../styles":34,"typestyle":138}],28:[function(require,module,exports){
+},{"../styles":34,"typestyle":141}],28:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var dom_1 = require("@cycle/dom");
@@ -1512,7 +1520,7 @@ run_1.run(main, {
 });
 typestyle_1.forceRenderStyles();
 
-},{"./App/index":1,"./styles":34,"@cycle/dom":46,"@cycle/run":56,"cycle-onionify":57,"typestyle":138}],34:[function(require,module,exports){
+},{"./App/index":1,"./styles":34,"@cycle/dom":46,"@cycle/run":56,"cycle-onionify":59,"typestyle":141}],34:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var typestyle_1 = require("typestyle");
@@ -1539,7 +1547,7 @@ exports.pallete = {
     black: '#323232',
 };
 
-},{"typestyle":138}],35:[function(require,module,exports){
+},{"typestyle":141}],35:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var immutable_1 = require("immutable");
@@ -1649,7 +1657,7 @@ function makeRow(numColumns, val) {
     return immutable_1.List(row);
 }
 
-},{"immutable":119}],36:[function(require,module,exports){
+},{"immutable":122}],36:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var xstream_1 = require("xstream");
@@ -1680,7 +1688,7 @@ var BodyDOMSource = (function () {
 }());
 exports.BodyDOMSource = BodyDOMSource;
 
-},{"./fromEvent":44,"@cycle/run/lib/adapt":55,"xstream":147}],37:[function(require,module,exports){
+},{"./fromEvent":44,"@cycle/run/lib/adapt":55,"xstream":150}],37:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var xstream_1 = require("xstream");
@@ -1711,7 +1719,7 @@ var DocumentDOMSource = (function () {
 }());
 exports.DocumentDOMSource = DocumentDOMSource;
 
-},{"./fromEvent":44,"@cycle/run/lib/adapt":55,"xstream":147}],38:[function(require,module,exports){
+},{"./fromEvent":44,"@cycle/run/lib/adapt":55,"xstream":150}],38:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var ScopeChecker_1 = require("./ScopeChecker");
@@ -1925,7 +1933,7 @@ var EventDelegator = (function () {
 }());
 exports.EventDelegator = EventDelegator;
 
-},{"./ScopeChecker":42,"./matchesSelector":49,"./utils":53,"xstream":147}],40:[function(require,module,exports){
+},{"./ScopeChecker":42,"./matchesSelector":49,"./utils":53,"xstream":150}],40:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var MapPolyfill = require('es6-map');
@@ -2038,7 +2046,7 @@ var IsolateModule = (function () {
 }());
 exports.IsolateModule = IsolateModule;
 
-},{"es6-map":106}],41:[function(require,module,exports){
+},{"es6-map":109}],41:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var adapt_1 = require("@cycle/run/lib/adapt");
@@ -2300,7 +2308,7 @@ var VNodeWrapper = (function () {
 }());
 exports.VNodeWrapper = VNodeWrapper;
 
-},{"snabbdom-selector/lib/commonjs/classNameFromVNode":121,"snabbdom-selector/lib/commonjs/selectorParser":122,"snabbdom/h":123}],44:[function(require,module,exports){
+},{"snabbdom-selector/lib/commonjs/classNameFromVNode":124,"snabbdom-selector/lib/commonjs/selectorParser":125,"snabbdom/h":126}],44:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var xstream_1 = require("xstream");
@@ -2329,7 +2337,7 @@ function fromEvent(element, eventName, useCapture, preventDefault) {
 }
 exports.fromEvent = fromEvent;
 
-},{"xstream":147}],45:[function(require,module,exports){
+},{"xstream":150}],45:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var h_1 = require("snabbdom/h");
@@ -2408,7 +2416,7 @@ TAG_NAMES.forEach(function (n) {
 });
 exports.default = exported;
 
-},{"snabbdom/h":123}],46:[function(require,module,exports){
+},{"snabbdom/h":126}],46:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var thunk_1 = require("./thunk");
@@ -2651,7 +2659,7 @@ exports.u = hyperscript_helpers_1.default.u;
 exports.ul = hyperscript_helpers_1.default.ul;
 exports.video = hyperscript_helpers_1.default.video;
 
-},{"./MainDOMSource":41,"./hyperscript-helpers":45,"./makeDOMDriver":48,"./mockDOMSource":50,"./thunk":52,"snabbdom/h":123}],47:[function(require,module,exports){
+},{"./MainDOMSource":41,"./hyperscript-helpers":45,"./makeDOMDriver":48,"./mockDOMSource":50,"./thunk":52,"snabbdom/h":126}],47:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var vnode_1 = require("snabbdom/vnode");
@@ -2709,7 +2717,7 @@ function totalIsolateSink(sink, fullScope) {
 }
 exports.totalIsolateSink = totalIsolateSink;
 
-},{"./utils":53,"snabbdom/vnode":134}],48:[function(require,module,exports){
+},{"./utils":53,"snabbdom/vnode":137}],48:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var snabbdom_1 = require("snabbdom");
@@ -2785,7 +2793,7 @@ function makeDOMDriver(container, options) {
 }
 exports.makeDOMDriver = makeDOMDriver;
 
-},{"./IsolateModule":40,"./MainDOMSource":41,"./VNodeWrapper":43,"./modules":51,"./utils":53,"es6-map":106,"snabbdom":131,"snabbdom/tovnode":133,"xstream":147}],49:[function(require,module,exports){
+},{"./IsolateModule":40,"./MainDOMSource":41,"./VNodeWrapper":43,"./modules":51,"./utils":53,"es6-map":109,"snabbdom":134,"snabbdom/tovnode":136,"xstream":150}],49:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 function createMatchesSelector() {
@@ -2870,7 +2878,7 @@ function mockDOMSource(mockConfig) {
 }
 exports.mockDOMSource = mockDOMSource;
 
-},{"@cycle/run/lib/adapt":55,"xstream":147}],51:[function(require,module,exports){
+},{"@cycle/run/lib/adapt":55,"xstream":150}],51:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var class_1 = require("snabbdom/modules/class");
@@ -2886,7 +2894,7 @@ exports.DatasetModule = dataset_1.default;
 var modules = [style_1.default, class_1.default, props_1.default, attributes_1.default, dataset_1.default];
 exports.default = modules;
 
-},{"snabbdom/modules/attributes":126,"snabbdom/modules/class":127,"snabbdom/modules/dataset":128,"snabbdom/modules/props":129,"snabbdom/modules/style":130}],52:[function(require,module,exports){
+},{"snabbdom/modules/attributes":129,"snabbdom/modules/class":130,"snabbdom/modules/dataset":131,"snabbdom/modules/props":132,"snabbdom/modules/style":133}],52:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var h_1 = require("snabbdom/h");
@@ -2935,7 +2943,7 @@ exports.thunk = function thunk(sel, key, fn, args) {
 };
 exports.default = exports.thunk;
 
-},{"snabbdom/h":123}],53:[function(require,module,exports){
+},{"snabbdom/h":126}],53:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 function isElement(obj) {
@@ -3020,9 +3028,10 @@ function isolateAllSources(outerSources, scopes) {
     var innerSources = {};
     for (var channel in outerSources) {
         var outerSource = outerSources[channel];
-        if (outerSources.hasOwnProperty(channel)
-            && outerSource
-            && typeof outerSource.isolateSource === 'function') {
+        if (outerSources.hasOwnProperty(channel) &&
+            outerSource &&
+            scopes[channel] !== null &&
+            typeof outerSource.isolateSource === 'function') {
             innerSources[channel] = outerSource.isolateSource(outerSource, scopes[channel]);
         }
         else if (outerSources.hasOwnProperty(channel)) {
@@ -3036,9 +3045,10 @@ function isolateAllSinks(sources, innerSinks, scopes) {
     for (var channel in innerSinks) {
         var source = sources[channel];
         var innerSink = innerSinks[channel];
-        if (innerSinks.hasOwnProperty(channel)
-            && source
-            && typeof source.isolateSink === 'function') {
+        if (innerSinks.hasOwnProperty(channel) &&
+            source &&
+            scopes[channel] !== null &&
+            typeof source.isolateSink === 'function') {
             outerSinks[channel] = source.isolateSink(innerSink, scopes[channel]);
         }
         else if (innerSinks.hasOwnProperty(channel)) {
@@ -3052,21 +3062,47 @@ function newScope() {
     return "cycle" + ++counter;
 }
 /**
- * Takes a `component` function and an optional `scope` string, and returns a
- * scoped version of the `component` function.
+ * Takes a `component` function and a `scope`, and returns an isolated version
+ * of the `component` function.
  *
- * When the scoped component is invoked, each source provided to the scoped
- * component is isolated to the given `scope` using
- * `source.isolateSource(source, scope)`, if possible. Likewise, the sinks
- * returned from the scoped component are isolated to the `scope` using
- * `source.isolateSink(sink, scope)`.
+ * When the isolated component is invoked, each source provided to it is
+ * isolated to the given `scope` using `source.isolateSource(source, scope)`,
+ * if possible. Likewise, the sinks returned from the isolated component are
+ * isolated to the given `scope` using `source.isolateSink(sink, scope)`.
  *
- * If the `scope` is not provided, a new scope will be automatically created.
- * This means that while **`isolate(component, scope)` is pure**
- * (referentially transparent), **`isolate(component)` is impure**
- * (not referentially transparent). Two calls to `isolate(Foo, bar)` will
- * generate the same component. But, two calls to `isolate(Foo)` will generate
- * two distinct components.
+ * The `scope` can be a string or an object. If it is anything else than those
+ * two types, it will be converted to a string. If `scope` is an object, it
+ * represents "scopes per channel", allowing you to specify a different scope
+ * for each key of sources/sinks. For instance
+ *
+ * ```js
+ * const childSinks = isolate(Child, {DOM: 'foo', HTTP: 'bar'})(sources);
+ * ```
+ *
+ * You can also use a wildcard `'*'` to use as a default for source/sinks
+ * channels that did not receive a specific scope:
+ *
+ * ```js
+ * // Uses 'bar' as the isolation scope for HTTP and other channels
+ * const childSinks = isolate(Child, {DOM: 'foo', '*': 'bar'})(sources);
+ * ```
+ *
+ * If a channel's value is null, then that channel's sources and sinks won't be
+ * isolated. If the wildcard is null and some channels are unspecified, those
+ * channels won't be isolated. If you don't have a wildcard and some channels
+ * are unspecified, then `isolate` will generate a random scope.
+ *
+ * ```js
+ * // Uses some arbitrary string as the isolation scope for HTTP and other channels
+ * const childSinks = isolate(Child, {DOM: 'foo'})(sources);
+ * ```
+ *
+ * If the `scope` argument is not provided at all, a new scope will be
+ * automatically created. This means that while **`isolate(component, scope)` is
+ * pure** (referentially transparent), **`isolate(component)` is impure** (not
+ * referentially transparent). Two calls to `isolate(Foo, bar)` will generate
+ * the same component. But, two calls to `isolate(Foo)` will generate two
+ * distinct components.
  *
  * Note that both `isolateSource()` and `isolateSink()` are static members of
  * `source`. The reason for this is that drivers produce `source` while the
@@ -3085,9 +3121,9 @@ function isolate(component, scope) {
     if (scope === void 0) { scope = newScope(); }
     checkIsolateArgs(component, scope);
     var randomScope = typeof scope === 'object' ? newScope() : '';
-    var scopes = typeof scope === 'string' || typeof scope === 'object' ?
-        scope :
-        scope.toString();
+    var scopes = typeof scope === 'string' || typeof scope === 'object'
+        ? scope
+        : scope.toString();
     return function wrappedComponent(outerSources) {
         var rest = [];
         for (var _i = 1; _i < arguments.length; _i++) {
@@ -3100,7 +3136,7 @@ function isolate(component, scope) {
         return outerSinks;
     };
 }
-isolate.reset = function () { return counter = 0; };
+isolate.reset = function () { return (counter = 0); };
 exports.default = isolate;
 
 },{}],55:[function(require,module,exports){
@@ -3302,8 +3338,18 @@ function run(main, drivers) {
 exports.run = run;
 exports.default = run;
 
-},{"./adapt":55,"xstream":147}],57:[function(require,module,exports){
+},{"./adapt":55,"xstream":150}],57:[function(require,module,exports){
 "use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var __assign = (this && this.__assign) || Object.assign || function(t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
         s = arguments[i];
@@ -3313,17 +3359,14 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
     return t;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var xstream_1 = require("xstream");
-var dropRepeats_1 = require("xstream/extra/dropRepeats");
-var isolate_1 = require("@cycle/isolate");
 var adapt_1 = require("@cycle/run/lib/adapt");
-var pickCombine_1 = require("./pickCombine");
-exports.pickCombine = pickCombine_1.pickCombine;
+var isolate_1 = require("@cycle/isolate");
 var pickMerge_1 = require("./pickMerge");
-exports.pickMerge = pickMerge_1.pickMerge;
-function defaultGetKey(statePiece) {
-    return statePiece.key;
-}
+var pickCombine_1 = require("./pickCombine");
+var identityLens = {
+    get: function (outer) { return outer; },
+    set: function (outer, inner) { return inner; },
+};
 function instanceLens(getKey, key) {
     return {
         get: function (arr) {
@@ -3359,6 +3402,217 @@ function instanceLens(getKey, key) {
         },
     };
 }
+/**
+ * An object representing all instances in a collection of components. Has the
+ * methods pickCombine and pickMerge to get the combined sinks of all instances.
+ */
+var Instances = (function () {
+    function Instances(instances$) {
+        this._instances$ = instances$;
+    }
+    /**
+     * Like `merge` in xstream, this operator blends multiple streams together, but
+     * picks those streams from a collection of component instances.
+     *
+     * Use the `selector` string to pick a stream from the sinks object of each
+     * component instance, then pickMerge will merge all those picked streams.
+     *
+     * @param {String} selector a name of a channel in a sinks object belonging to
+     * each component in the collection of components.
+     * @return {Function} an operator to be used with xstream's `compose` method.
+     */
+    Instances.prototype.pickMerge = function (selector) {
+        return adapt_1.adapt(this._instances$.compose(pickMerge_1.pickMerge(selector)));
+    };
+    /**
+     * Like `combine` in xstream, this operator combines multiple streams together,
+     * but picks those streams from a collection of component instances.
+     *
+     * Use the `selector` string to pick a stream from the sinks object of each
+     * component instance, then pickCombine will combine all those picked streams.
+     *
+     * @param {String} selector a name of a channel in a sinks object belonging to
+     * each component in the collection of components.
+     * @return {Function} an operator to be used with xstream's `compose` method.
+     */
+    Instances.prototype.pickCombine = function (selector) {
+        return adapt_1.adapt(this._instances$.compose(pickCombine_1.pickCombine(selector)));
+    };
+    return Instances;
+}());
+exports.Instances = Instances;
+function defaultMakeScopes(key) {
+    return { '*': null };
+}
+/**
+ * Represents a collection of many child components of the same component type.
+ *
+ * Behaves somewhat like a typical Cycle.js component because you can pass
+ * sources to it using the method `build()`.
+ */
+var Collection = (function () {
+    function Collection(itemComp, state$, name, makeScopes) {
+        if (makeScopes === void 0) { makeScopes = defaultMakeScopes; }
+        this._itemComp = itemComp;
+        this._state$ = state$;
+        this._name = name;
+        this._makeScopes = makeScopes;
+        this._getKey = null;
+    }
+    /**
+     * Give an identifier to each entry in the collection, to avoid bugs when the
+     * collection grows or shrinks, as well as to improve performance of the
+     * management of instances.
+     *
+     * Example:
+     *
+     * ```js
+     * collection.uniqueBy(state => state.key)
+     * ```
+     *
+     * @param {Function} getKey a function that takes the child object state and
+     * should return the unique identifier for that child.
+     * @return {UniqueCollection} a collection of unique children
+     */
+    Collection.prototype.uniqueBy = function (getKey) {
+        return new UniqueCollection(this._itemComp, this._state$, this._name, getKey, this._makeScopes);
+    };
+    /**
+     * Isolate each child component in the collection.
+     *
+     * Pass a function which describes how to create the isolation scopes for each
+     * child component, given that child component's unique identifier. The unique
+     * id for each child is the array index (a number) of the entry corresponding
+     * to that child.
+     *
+     * @param {Function} makeScopes a function that takes the child's unique
+     * identifier and should return the isolation scopes for that child.
+     * @return {Collection} a new collection where children will be isolated
+     */
+    Collection.prototype.isolateEach = function (makeScopes) {
+        return new Collection(this._itemComp, this._state$, this._name, makeScopes);
+    };
+    /**
+     * Build this collection by creating instances of each child component in the
+     * collection.
+     *
+     * Pass the sources object to be given to each child component.
+     *
+     * @param {Object} sources
+     * @return {Instances} an object represeting all instances, which has the
+     * methods pickCombine and pickMerge to get the combined sinks of all
+     * instances.
+     */
+    Collection.prototype.build = function (sources) {
+        var _this = this;
+        var instances$ = this._state$.fold(function (acc, nextState) {
+            var dict = acc.dict;
+            if (Array.isArray(nextState)) {
+                var nextInstArray = Array(nextState.length);
+                var nextKeys_1 = new Set();
+                // add
+                for (var i = 0, n = nextState.length; i < n; ++i) {
+                    var key = _this._getKey === null ? "" + i : _this._getKey(nextState[i]);
+                    nextKeys_1.add(key);
+                    if (_this._getKey === null || !dict.has(key)) {
+                        var onionScope = _this._getKey === null ?
+                            i :
+                            instanceLens(_this._getKey, key);
+                        var otherScopes = _this._makeScopes(key);
+                        var scopes = typeof otherScopes === 'string' ? (_a = { '*': otherScopes }, _a[_this._name] = onionScope, _a) : __assign({}, otherScopes, (_b = {}, _b[_this._name] = onionScope, _b));
+                        var sinks = isolate_1.default(_this._itemComp, scopes)(sources);
+                        dict.set(key, sinks);
+                        nextInstArray[i] = sinks;
+                    }
+                    else {
+                        nextInstArray[i] = dict.get(key);
+                    }
+                    nextInstArray[i]._key = key;
+                }
+                // remove
+                dict.forEach(function (_, key) {
+                    if (!nextKeys_1.has(key)) {
+                        dict.delete(key);
+                    }
+                });
+                nextKeys_1.clear();
+                return { dict: dict, arr: nextInstArray };
+            }
+            else {
+                dict.clear();
+                var key = _this._getKey === null ? 'this' : _this._getKey(nextState);
+                var onionScope = identityLens;
+                var otherScopes = _this._makeScopes(key);
+                var scopes = typeof otherScopes === 'string' ? (_c = { '*': otherScopes }, _c[_this._name] = onionScope, _c) : __assign({}, otherScopes, (_d = {}, _d[_this._name] = onionScope, _d));
+                var sinks = isolate_1.default(_this._itemComp, scopes)(sources);
+                dict.set(key, sinks);
+                return { dict: dict, arr: [sinks] };
+            }
+            var _a, _b, _c, _d;
+        }, { dict: new Map(), arr: [] });
+        return new Instances(instances$);
+    };
+    return Collection;
+}());
+exports.Collection = Collection;
+/**
+ * Represents a collection of many child components of the same component type,
+ * where each child is uniquely identified.
+ *
+ * Behaves somewhat like a typical Cycle.js component because you can pass
+ * sources to it using the method `build()`.
+ */
+var UniqueCollection = (function (_super) {
+    __extends(UniqueCollection, _super);
+    function UniqueCollection(itemComp, state$, name, getKey, makeScopes) {
+        if (makeScopes === void 0) { makeScopes = defaultMakeScopes; }
+        var _this = _super.call(this, itemComp, state$, name, makeScopes) || this;
+        _this._getKey = getKey;
+        return _this;
+    }
+    /**
+     * Isolate each child component in the collection.
+     *
+     * Pass a function which describes how to create the isolation scopes for each
+     * child component, given that child component's unique identifier. The unique
+     * id for each child is a string and it comes from the function you used in
+     * `uniqueBy`.
+     *
+     * @param {Function} makeScopes a function that takes the child's unique
+     * identifier and should return the isolation scopes for that child.
+     * @return {Collection} a new collection where children will be isolated
+     */
+    UniqueCollection.prototype.isolateEach = function (makeScopes) {
+        return new UniqueCollection(this._itemComp, this._state$, this._name, this._getKey, makeScopes);
+    };
+    return UniqueCollection;
+}(Collection));
+exports.UniqueCollection = UniqueCollection;
+
+},{"./pickCombine":61,"./pickMerge":62,"@cycle/isolate":54,"@cycle/run/lib/adapt":55}],58:[function(require,module,exports){
+"use strict";
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var dropRepeats_1 = require("xstream/extra/dropRepeats");
+var adapt_1 = require("@cycle/run/lib/adapt");
+var Collection_1 = require("./Collection");
+function updateArrayEntry(array, scope, newVal) {
+    if (newVal === array[scope]) {
+        return array;
+    }
+    var index = parseInt(scope);
+    if (typeof newVal === 'undefined') {
+        return array.filter(function (val, i) { return i !== index; });
+    }
+    return array.map(function (val, i) { return i === index ? newVal : val; });
+}
 function makeGetter(scope) {
     if (typeof scope === 'string' || typeof scope === 'number') {
         return function lensGet(state) {
@@ -3393,16 +3647,6 @@ function makeSetter(scope) {
         return scope.set;
     }
 }
-function updateArrayEntry(array, scope, newVal) {
-    if (newVal === array[scope]) {
-        return array;
-    }
-    var index = parseInt(scope);
-    if (typeof newVal === 'undefined') {
-        return array.filter(function (val, i) { return i !== index; });
-    }
-    return array.map(function (val, i) { return i === index ? newVal : val; });
-}
 function isolateSource(source, scope) {
     return source.select(scope);
 }
@@ -3423,6 +3667,9 @@ function isolateSink(innerReducer$, scope) {
     }; });
 }
 exports.isolateSink = isolateSink;
+/**
+ * Represents a piece of application state dynamically changing over time.
+ */
 var StateSource = (function () {
     function StateSource(stream, name) {
         this.isolateSource = isolateSource;
@@ -3435,48 +3682,112 @@ var StateSource = (function () {
         this.state$ = adapt_1.adapt(this._state$);
         this._state$._isCycleSource = name;
     }
+    /**
+     * Selects a part (or scope) of the state object and returns a new StateSource
+     * dynamically representing that selected part of the state.
+     *
+     * @param {string|number|lens} scope as a string, this argument represents the
+     * property you want to select from the state object. As a number, this
+     * represents the array index you want to select from the state array. As a
+     * lens object (an object with get() and set()), this argument represents any
+     * custom way of selecting something from the state object.
+     */
     StateSource.prototype.select = function (scope) {
         var get = makeGetter(scope);
         return new StateSource(this._state$.map(get), this._name);
     };
-    StateSource.prototype.asCollection = function (itemComp, sources, getKey) {
-        if (getKey === void 0) { getKey = defaultGetKey; }
-        var array$ = this._state$;
-        var name = this._name;
-        var collection$ = array$.fold(function (acc, nextStateArray) {
-            var dict = acc.dict;
-            var nextInstArray = Array(nextStateArray.length);
-            var nextKeys = new Set();
-            // add
-            for (var i = 0, n = nextStateArray.length; i < n; ++i) {
-                var key = getKey(nextStateArray[i]);
-                nextKeys.add(key);
-                if (dict.has(key)) {
-                    nextInstArray[i] = dict.get(key);
-                }
-                else {
-                    var scopes = (_a = { '*': '$' + key }, _a[name] = instanceLens(getKey, key), _a);
-                    var sinks = isolate_1.default(itemComp, scopes)(sources);
-                    dict.set(key, sinks);
-                    nextInstArray[i] = sinks;
-                }
-                nextInstArray[i]._key = key;
-            }
-            // remove
-            dict.forEach(function (_, key) {
-                if (!nextKeys.has(key)) {
-                    dict.delete(key);
-                }
-            });
-            nextKeys.clear();
-            return { dict: dict, arr: nextInstArray };
-            var _a;
-        }, { dict: new Map(), arr: [] });
-        return collection$;
+    /**
+     * Treats the state in this StateSource as a dynamic collection of many child
+     * components of the same type, returning a Collection object.
+     *
+     * Typically you use this function when the state$ emits arrays, and each
+     * entry in the array is an object holding the state for each child component.
+     * When the state array grows, the collection will automatically instantiate
+     * a new child component. Similarly, when the state array gets smaller, the
+     * collection will handle removal of the corresponding child component.
+     *
+     * The input argument is the child Cycle.js component function to use for each
+     * entry in the array. This returned value is a Collection, which resembles a
+     * Cycle.js component: you can call its build(sources) method to instantiate
+     * the collection.
+     *
+     * @param {Function} itemComp a function that takes `sources` as input and
+     * returns `sinks`, representing the component to be used for each child in
+     * the collection.
+     * @return {Collection}
+     */
+    StateSource.prototype.toCollection = function (itemComp) {
+        return new Collection_1.Collection(itemComp, this._state$, this._name);
     };
     return StateSource;
 }());
 exports.StateSource = StateSource;
+
+},{"./Collection":57,"@cycle/run/lib/adapt":55,"xstream/extra/dropRepeats":148}],59:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var onionify_1 = require("./onionify");
+var StateSource_1 = require("./StateSource");
+exports.StateSource = StateSource_1.StateSource;
+exports.isolateSource = StateSource_1.isolateSource;
+exports.isolateSink = StateSource_1.isolateSink;
+var Collection_1 = require("./Collection");
+exports.Collection = Collection_1.Collection;
+exports.UniqueCollection = Collection_1.UniqueCollection;
+exports.Instances = Collection_1.Instances;
+/**
+ * Like `merge` in xstream, this operator blends multiple streams together, but
+ * picks those streams from a stream of instances.
+ *
+ * The instances data structure has a sinks object for each instance. Use the
+ * `selector` string to pick a stream from the sinks object of each instance,
+ * then pickMerge will merge all those picked streams.
+ *
+ * @param {String} selector a name of a channel in a sinks object belonging to
+ * each component in the collection of instances.
+ * @return {Function} an operator to be used with xstream's `compose` method.
+ */
+var pickMerge_1 = require("./pickMerge");
+exports.pickMerge = pickMerge_1.pickMerge;
+/**
+ * Like `combine` in xstream, this operator combines multiple streams together,
+ * but picks those streams from a stream of instances.
+ *
+ * The instances data structure has a sinks object for each instance. Use the
+ * `selector` string to pick a stream from the sinks object of each instance,
+ * then pickCombine will combine all those picked streams.
+ *
+ * @param {String} selector a name of a channel in a sinks object belonging to
+ * each component in the collection of instances.
+ * @return {Function} an operator to be used with xstream's `compose` method.
+ */
+var pickCombine_1 = require("./pickCombine");
+exports.pickCombine = pickCombine_1.pickCombine;
+/**
+ * Given a Cycle.js component that expects an onion state *source* and will
+ * output onion reducer *sink*, this function sets up the state management
+ * mechanics to accumulate state over time and provide the state source. It
+ * returns a Cycle.js component which wraps the component given as input.
+ * Essentially, it hooks up the onion sink with the onion source as a cycle.
+ *
+ * Optionally, you can pass a custom name for the onion channel. By default,
+ * the name is 'onion' in sources and sinks, but you can change that to be
+ * whatever string you wish.
+ *
+ * @param {Function} main a function that takes `sources` as input and outputs
+ * `sinks`.
+ * @param {String} name an optional string for the custom name given to the
+ * onion channel. By default, it is 'onion'.
+ * @return {Function} a component that wraps the main function given as input,
+ * adding state accumulation logic to it.
+ */
+exports.default = onionify_1.onionify;
+
+},{"./Collection":57,"./StateSource":58,"./onionify":60,"./pickCombine":61,"./pickMerge":62}],60:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var xstream_1 = require("xstream");
+var StateSource_1 = require("./StateSource");
 function onionify(main, name) {
     if (name === void 0) { name = 'onion'; }
     return function mainOnionified(sources) {
@@ -3484,7 +3795,7 @@ function onionify(main, name) {
         var state$ = reducerMimic$
             .fold(function (state, reducer) { return reducer(state); }, void 0)
             .drop(1);
-        sources[name] = new StateSource(state$, name);
+        sources[name] = new StateSource_1.StateSource(state$, name);
         var sinks = main(sources);
         if (sinks[name]) {
             var stream$ = xstream_1.default.fromObservable(sinks[name]);
@@ -3493,9 +3804,9 @@ function onionify(main, name) {
         return sinks;
     };
 }
-exports.default = onionify;
+exports.onionify = onionify;
 
-},{"./pickCombine":58,"./pickMerge":59,"@cycle/isolate":54,"@cycle/run/lib/adapt":55,"xstream":147,"xstream/extra/dropRepeats":145}],58:[function(require,module,exports){
+},{"./StateSource":58,"xstream":150}],61:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var xstream_1 = require("xstream");
@@ -3540,6 +3851,7 @@ var PickCombine = (function () {
         this.ins._add(this);
     };
     PickCombine.prototype._stop = function () {
+        this.ins._remove(this);
         var ils = this.ils;
         ils.forEach(function (il) {
             il.ins._remove(il);
@@ -3555,8 +3867,8 @@ var PickCombine = (function () {
     PickCombine.prototype.up = function () {
         var arr = this.inst.arr;
         var n = arr.length;
-        var outArr = Array(n);
         var ils = this.ils;
+        var outArr = Array(n);
         for (var i = 0; i < n; ++i) {
             var sinks = arr[i];
             var key = sinks._key;
@@ -3643,7 +3955,7 @@ function pickCombine(selector) {
 }
 exports.pickCombine = pickCombine;
 
-},{"xstream":147}],59:[function(require,module,exports){
+},{"xstream":150}],62:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var xstream_1 = require("xstream");
@@ -3685,6 +3997,7 @@ var PickMerge = (function () {
         this.ins._add(this);
     };
     PickMerge.prototype._stop = function () {
+        this.ins._remove(this);
         var ils = this.ils;
         ils.forEach(function (il, key) {
             il.ins._remove(il);
@@ -3752,7 +4065,7 @@ function pickMerge(selector) {
 }
 exports.pickMerge = pickMerge;
 
-},{"xstream":147}],60:[function(require,module,exports){
+},{"xstream":150}],63:[function(require,module,exports){
 'use strict';
 
 var copy             = require('es5-ext/object/copy')
@@ -3786,7 +4099,7 @@ module.exports = function (props/*, options*/) {
 	return map(props, function (desc, name) { return define(name, desc, options); });
 };
 
-},{"es5-ext/object/copy":79,"es5-ext/object/map":87,"es5-ext/object/normalize-options":88,"es5-ext/object/valid-callable":93,"es5-ext/object/valid-value":94}],61:[function(require,module,exports){
+},{"es5-ext/object/copy":82,"es5-ext/object/map":90,"es5-ext/object/normalize-options":91,"es5-ext/object/valid-callable":96,"es5-ext/object/valid-value":97}],64:[function(require,module,exports){
 'use strict';
 
 var assign        = require('es5-ext/object/assign')
@@ -3851,7 +4164,7 @@ d.gs = function (dscr, get, set/*, options*/) {
 	return !options ? desc : assign(normalizeOpts(options), desc);
 };
 
-},{"es5-ext/object/assign":76,"es5-ext/object/is-callable":82,"es5-ext/object/normalize-options":88,"es5-ext/string/#/contains":95}],62:[function(require,module,exports){
+},{"es5-ext/object/assign":79,"es5-ext/object/is-callable":85,"es5-ext/object/normalize-options":91,"es5-ext/string/#/contains":98}],65:[function(require,module,exports){
 // Inspired by Google Closure:
 // http://closure-library.googlecode.com/svn/docs/
 // closure_goog_array_array.js.html#goog.array.clear
@@ -3865,7 +4178,7 @@ module.exports = function () {
 	return this;
 };
 
-},{"../../object/valid-value":94}],63:[function(require,module,exports){
+},{"../../object/valid-value":97}],66:[function(require,module,exports){
 'use strict';
 
 var toPosInt = require('../../number/to-pos-integer')
@@ -3896,14 +4209,14 @@ module.exports = function (searchElement/*, fromIndex*/) {
 	return -1;
 };
 
-},{"../../number/to-pos-integer":74,"../../object/valid-value":94}],64:[function(require,module,exports){
+},{"../../number/to-pos-integer":77,"../../object/valid-value":97}],67:[function(require,module,exports){
 'use strict';
 
 module.exports = require('./is-implemented')()
 	? Array.from
 	: require('./shim');
 
-},{"./is-implemented":65,"./shim":66}],65:[function(require,module,exports){
+},{"./is-implemented":68,"./shim":69}],68:[function(require,module,exports){
 'use strict';
 
 module.exports = function () {
@@ -3914,7 +4227,7 @@ module.exports = function () {
 	return Boolean(result && (result !== arr) && (result[1] === 'dwa'));
 };
 
-},{}],66:[function(require,module,exports){
+},{}],69:[function(require,module,exports){
 'use strict';
 
 var iteratorSymbol = require('es6-symbol').iterator
@@ -4022,7 +4335,7 @@ module.exports = function (arrayLike/*, mapFn, thisArg*/) {
 	return arr;
 };
 
-},{"../../function/is-arguments":67,"../../function/is-function":68,"../../number/to-pos-integer":74,"../../object/valid-callable":93,"../../object/valid-value":94,"../../string/is-string":98,"es6-symbol":112}],67:[function(require,module,exports){
+},{"../../function/is-arguments":70,"../../function/is-function":71,"../../number/to-pos-integer":77,"../../object/valid-callable":96,"../../object/valid-value":97,"../../string/is-string":101,"es6-symbol":115}],70:[function(require,module,exports){
 'use strict';
 
 var toString = Object.prototype.toString
@@ -4031,7 +4344,7 @@ var toString = Object.prototype.toString
 
 module.exports = function (x) { return (toString.call(x) === id); };
 
-},{}],68:[function(require,module,exports){
+},{}],71:[function(require,module,exports){
 'use strict';
 
 var toString = Object.prototype.toString
@@ -4042,19 +4355,19 @@ module.exports = function (f) {
 	return (typeof f === "function") && (toString.call(f) === id);
 };
 
-},{"./noop":69}],69:[function(require,module,exports){
+},{"./noop":72}],72:[function(require,module,exports){
 'use strict';
 
 module.exports = function () {};
 
-},{}],70:[function(require,module,exports){
+},{}],73:[function(require,module,exports){
 'use strict';
 
 module.exports = require('./is-implemented')()
 	? Math.sign
 	: require('./shim');
 
-},{"./is-implemented":71,"./shim":72}],71:[function(require,module,exports){
+},{"./is-implemented":74,"./shim":75}],74:[function(require,module,exports){
 'use strict';
 
 module.exports = function () {
@@ -4063,7 +4376,7 @@ module.exports = function () {
 	return ((sign(10) === 1) && (sign(-20) === -1));
 };
 
-},{}],72:[function(require,module,exports){
+},{}],75:[function(require,module,exports){
 'use strict';
 
 module.exports = function (value) {
@@ -4072,7 +4385,7 @@ module.exports = function (value) {
 	return (value > 0) ? 1 : -1;
 };
 
-},{}],73:[function(require,module,exports){
+},{}],76:[function(require,module,exports){
 'use strict';
 
 var sign = require('../math/sign')
@@ -4086,7 +4399,7 @@ module.exports = function (value) {
 	return sign(value) * floor(abs(value));
 };
 
-},{"../math/sign":70}],74:[function(require,module,exports){
+},{"../math/sign":73}],77:[function(require,module,exports){
 'use strict';
 
 var toInteger = require('./to-integer')
@@ -4095,7 +4408,7 @@ var toInteger = require('./to-integer')
 
 module.exports = function (value) { return max(0, toInteger(value)); };
 
-},{"./to-integer":73}],75:[function(require,module,exports){
+},{"./to-integer":76}],78:[function(require,module,exports){
 // Internal method, used by iteration functions.
 // Calls a function for each key-value pair found in object
 // Optionally takes compareFn to iterate object in specific order
@@ -4126,14 +4439,14 @@ module.exports = function (method, defVal) {
 	};
 };
 
-},{"./valid-callable":93,"./valid-value":94}],76:[function(require,module,exports){
+},{"./valid-callable":96,"./valid-value":97}],79:[function(require,module,exports){
 'use strict';
 
 module.exports = require('./is-implemented')()
 	? Object.assign
 	: require('./shim');
 
-},{"./is-implemented":77,"./shim":78}],77:[function(require,module,exports){
+},{"./is-implemented":80,"./shim":81}],80:[function(require,module,exports){
 'use strict';
 
 module.exports = function () {
@@ -4144,7 +4457,7 @@ module.exports = function () {
 	return (obj.foo + obj.bar + obj.trzy) === 'razdwatrzy';
 };
 
-},{}],78:[function(require,module,exports){
+},{}],81:[function(require,module,exports){
 'use strict';
 
 var keys  = require('../keys')
@@ -4168,7 +4481,7 @@ module.exports = function (dest, src/*, …srcn*/) {
 	return dest;
 };
 
-},{"../keys":84,"../valid-value":94}],79:[function(require,module,exports){
+},{"../keys":87,"../valid-value":97}],82:[function(require,module,exports){
 'use strict';
 
 var aFrom  = require('../array/from')
@@ -4189,7 +4502,7 @@ module.exports = function (obj/*, propertyNames, options*/) {
 	return result;
 };
 
-},{"../array/from":64,"./assign":76,"./valid-value":94}],80:[function(require,module,exports){
+},{"../array/from":67,"./assign":79,"./valid-value":97}],83:[function(require,module,exports){
 // Workaround for http://code.google.com/p/v8/issues/detail?id=2804
 
 'use strict';
@@ -4227,19 +4540,19 @@ module.exports = (function () {
 	};
 }());
 
-},{"./set-prototype-of/is-implemented":91,"./set-prototype-of/shim":92}],81:[function(require,module,exports){
+},{"./set-prototype-of/is-implemented":94,"./set-prototype-of/shim":95}],84:[function(require,module,exports){
 'use strict';
 
 module.exports = require('./_iterate')('forEach');
 
-},{"./_iterate":75}],82:[function(require,module,exports){
+},{"./_iterate":78}],85:[function(require,module,exports){
 // Deprecated
 
 'use strict';
 
 module.exports = function (obj) { return typeof obj === 'function'; };
 
-},{}],83:[function(require,module,exports){
+},{}],86:[function(require,module,exports){
 'use strict';
 
 var map = { 'function': true, object: true };
@@ -4248,14 +4561,14 @@ module.exports = function (x) {
 	return ((x != null) && map[typeof x]) || false;
 };
 
-},{}],84:[function(require,module,exports){
+},{}],87:[function(require,module,exports){
 'use strict';
 
 module.exports = require('./is-implemented')()
 	? Object.keys
 	: require('./shim');
 
-},{"./is-implemented":85,"./shim":86}],85:[function(require,module,exports){
+},{"./is-implemented":88,"./shim":89}],88:[function(require,module,exports){
 'use strict';
 
 module.exports = function () {
@@ -4265,7 +4578,7 @@ module.exports = function () {
 	} catch (e) { return false; }
 };
 
-},{}],86:[function(require,module,exports){
+},{}],89:[function(require,module,exports){
 'use strict';
 
 var keys = Object.keys;
@@ -4274,7 +4587,7 @@ module.exports = function (object) {
 	return keys(object == null ? object : Object(object));
 };
 
-},{}],87:[function(require,module,exports){
+},{}],90:[function(require,module,exports){
 'use strict';
 
 var callable = require('./valid-callable')
@@ -4291,7 +4604,7 @@ module.exports = function (obj, cb/*, thisArg*/) {
 	return o;
 };
 
-},{"./for-each":81,"./valid-callable":93}],88:[function(require,module,exports){
+},{"./for-each":84,"./valid-callable":96}],91:[function(require,module,exports){
 'use strict';
 
 var forEach = Array.prototype.forEach, create = Object.create;
@@ -4310,7 +4623,7 @@ module.exports = function (options/*, …options*/) {
 	return result;
 };
 
-},{}],89:[function(require,module,exports){
+},{}],92:[function(require,module,exports){
 'use strict';
 
 var forEach = Array.prototype.forEach, create = Object.create;
@@ -4321,14 +4634,14 @@ module.exports = function (arg/*, …args*/) {
 	return set;
 };
 
-},{}],90:[function(require,module,exports){
+},{}],93:[function(require,module,exports){
 'use strict';
 
 module.exports = require('./is-implemented')()
 	? Object.setPrototypeOf
 	: require('./shim');
 
-},{"./is-implemented":91,"./shim":92}],91:[function(require,module,exports){
+},{"./is-implemented":94,"./shim":95}],94:[function(require,module,exports){
 'use strict';
 
 var create = Object.create, getPrototypeOf = Object.getPrototypeOf
@@ -4341,7 +4654,7 @@ module.exports = function (/*customCreate*/) {
 	return getPrototypeOf(setPrototypeOf(customCreate(null), x)) === x;
 };
 
-},{}],92:[function(require,module,exports){
+},{}],95:[function(require,module,exports){
 // Big thanks to @WebReflection for sorting this out
 // https://gist.github.com/WebReflection/5593554
 
@@ -4416,7 +4729,7 @@ module.exports = (function (status) {
 
 require('../create');
 
-},{"../create":80,"../is-object":83,"../valid-value":94}],93:[function(require,module,exports){
+},{"../create":83,"../is-object":86,"../valid-value":97}],96:[function(require,module,exports){
 'use strict';
 
 module.exports = function (fn) {
@@ -4424,7 +4737,7 @@ module.exports = function (fn) {
 	return fn;
 };
 
-},{}],94:[function(require,module,exports){
+},{}],97:[function(require,module,exports){
 'use strict';
 
 module.exports = function (value) {
@@ -4432,14 +4745,14 @@ module.exports = function (value) {
 	return value;
 };
 
-},{}],95:[function(require,module,exports){
+},{}],98:[function(require,module,exports){
 'use strict';
 
 module.exports = require('./is-implemented')()
 	? String.prototype.contains
 	: require('./shim');
 
-},{"./is-implemented":96,"./shim":97}],96:[function(require,module,exports){
+},{"./is-implemented":99,"./shim":100}],99:[function(require,module,exports){
 'use strict';
 
 var str = 'razdwatrzy';
@@ -4449,7 +4762,7 @@ module.exports = function () {
 	return ((str.contains('dwa') === true) && (str.contains('foo') === false));
 };
 
-},{}],97:[function(require,module,exports){
+},{}],100:[function(require,module,exports){
 'use strict';
 
 var indexOf = String.prototype.indexOf;
@@ -4458,7 +4771,7 @@ module.exports = function (searchString/*, position*/) {
 	return indexOf.call(this, searchString, arguments[1]) > -1;
 };
 
-},{}],98:[function(require,module,exports){
+},{}],101:[function(require,module,exports){
 'use strict';
 
 var toString = Object.prototype.toString
@@ -4470,7 +4783,7 @@ module.exports = function (x) {
 		((x instanceof String) || (toString.call(x) === id))) || false;
 };
 
-},{}],99:[function(require,module,exports){
+},{}],102:[function(require,module,exports){
 'use strict';
 
 var setPrototypeOf = require('es5-ext/object/set-prototype-of')
@@ -4502,7 +4815,7 @@ ArrayIterator.prototype = Object.create(Iterator.prototype, {
 	toString: d(function () { return '[object Array Iterator]'; })
 });
 
-},{"./":102,"d":61,"es5-ext/object/set-prototype-of":90,"es5-ext/string/#/contains":95}],100:[function(require,module,exports){
+},{"./":105,"d":64,"es5-ext/object/set-prototype-of":93,"es5-ext/string/#/contains":98}],103:[function(require,module,exports){
 'use strict';
 
 var isArguments = require('es5-ext/function/is-arguments')
@@ -4550,7 +4863,7 @@ module.exports = function (iterable, cb/*, thisArg*/) {
 	}
 };
 
-},{"./get":101,"es5-ext/function/is-arguments":67,"es5-ext/object/valid-callable":93,"es5-ext/string/is-string":98}],101:[function(require,module,exports){
+},{"./get":104,"es5-ext/function/is-arguments":70,"es5-ext/object/valid-callable":96,"es5-ext/string/is-string":101}],104:[function(require,module,exports){
 'use strict';
 
 var isArguments    = require('es5-ext/function/is-arguments')
@@ -4567,7 +4880,7 @@ module.exports = function (obj) {
 	return new ArrayIterator(obj);
 };
 
-},{"./array":99,"./string":104,"./valid-iterable":105,"es5-ext/function/is-arguments":67,"es5-ext/string/is-string":98,"es6-symbol":112}],102:[function(require,module,exports){
+},{"./array":102,"./string":107,"./valid-iterable":108,"es5-ext/function/is-arguments":70,"es5-ext/string/is-string":101,"es6-symbol":115}],105:[function(require,module,exports){
 'use strict';
 
 var clear    = require('es5-ext/array/#/clear')
@@ -4659,7 +4972,7 @@ defineProperty(Iterator.prototype, Symbol.iterator, d(function () {
 }));
 defineProperty(Iterator.prototype, Symbol.toStringTag, d('', 'Iterator'));
 
-},{"d":61,"d/auto-bind":60,"es5-ext/array/#/clear":62,"es5-ext/object/assign":76,"es5-ext/object/valid-callable":93,"es5-ext/object/valid-value":94,"es6-symbol":112}],103:[function(require,module,exports){
+},{"d":64,"d/auto-bind":63,"es5-ext/array/#/clear":65,"es5-ext/object/assign":79,"es5-ext/object/valid-callable":96,"es5-ext/object/valid-value":97,"es6-symbol":115}],106:[function(require,module,exports){
 'use strict';
 
 var isArguments    = require('es5-ext/function/is-arguments')
@@ -4676,7 +4989,7 @@ module.exports = function (value) {
 	return (typeof value[iteratorSymbol] === 'function');
 };
 
-},{"es5-ext/function/is-arguments":67,"es5-ext/string/is-string":98,"es6-symbol":112}],104:[function(require,module,exports){
+},{"es5-ext/function/is-arguments":70,"es5-ext/string/is-string":101,"es6-symbol":115}],107:[function(require,module,exports){
 // Thanks @mathiasbynens
 // http://mathiasbynens.be/notes/javascript-unicode#iterating-over-symbols
 
@@ -4715,7 +5028,7 @@ StringIterator.prototype = Object.create(Iterator.prototype, {
 	toString: d(function () { return '[object String Iterator]'; })
 });
 
-},{"./":102,"d":61,"es5-ext/object/set-prototype-of":90}],105:[function(require,module,exports){
+},{"./":105,"d":64,"es5-ext/object/set-prototype-of":93}],108:[function(require,module,exports){
 'use strict';
 
 var isIterable = require('./is-iterable');
@@ -4725,12 +5038,12 @@ module.exports = function (value) {
 	return value;
 };
 
-},{"./is-iterable":103}],106:[function(require,module,exports){
+},{"./is-iterable":106}],109:[function(require,module,exports){
 'use strict';
 
 module.exports = require('./is-implemented')() ? Map : require('./polyfill');
 
-},{"./is-implemented":107,"./polyfill":111}],107:[function(require,module,exports){
+},{"./is-implemented":110,"./polyfill":114}],110:[function(require,module,exports){
 'use strict';
 
 module.exports = function () {
@@ -4764,7 +5077,7 @@ module.exports = function () {
 	return true;
 };
 
-},{}],108:[function(require,module,exports){
+},{}],111:[function(require,module,exports){
 // Exports true if environment provides native `Map` implementation,
 // whatever that is.
 
@@ -4775,13 +5088,13 @@ module.exports = (function () {
 	return (Object.prototype.toString.call(new Map()) === '[object Map]');
 }());
 
-},{}],109:[function(require,module,exports){
+},{}],112:[function(require,module,exports){
 'use strict';
 
 module.exports = require('es5-ext/object/primitive-set')('key',
 	'value', 'key+value');
 
-},{"es5-ext/object/primitive-set":89}],110:[function(require,module,exports){
+},{"es5-ext/object/primitive-set":92}],113:[function(require,module,exports){
 'use strict';
 
 var setPrototypeOf    = require('es5-ext/object/set-prototype-of')
@@ -4821,7 +5134,7 @@ MapIterator.prototype = Object.create(Iterator.prototype, {
 Object.defineProperty(MapIterator.prototype, toStringTagSymbol,
 	d('c', 'Map Iterator'));
 
-},{"./iterator-kinds":109,"d":61,"es5-ext/object/set-prototype-of":90,"es6-iterator":102,"es6-symbol":112}],111:[function(require,module,exports){
+},{"./iterator-kinds":112,"d":64,"es5-ext/object/set-prototype-of":93,"es6-iterator":105,"es6-symbol":115}],114:[function(require,module,exports){
 'use strict';
 
 var clear          = require('es5-ext/array/#/clear')
@@ -4927,12 +5240,12 @@ Object.defineProperty(MapPoly.prototype, Symbol.iterator, d(function () {
 }));
 Object.defineProperty(MapPoly.prototype, Symbol.toStringTag, d('c', 'Map'));
 
-},{"./is-native-implemented":108,"./lib/iterator":110,"d":61,"es5-ext/array/#/clear":62,"es5-ext/array/#/e-index-of":63,"es5-ext/object/set-prototype-of":90,"es5-ext/object/valid-callable":93,"es5-ext/object/valid-value":94,"es6-iterator/for-of":100,"es6-iterator/valid-iterable":105,"es6-symbol":112,"event-emitter":117}],112:[function(require,module,exports){
+},{"./is-native-implemented":111,"./lib/iterator":113,"d":64,"es5-ext/array/#/clear":65,"es5-ext/array/#/e-index-of":66,"es5-ext/object/set-prototype-of":93,"es5-ext/object/valid-callable":96,"es5-ext/object/valid-value":97,"es6-iterator/for-of":103,"es6-iterator/valid-iterable":108,"es6-symbol":115,"event-emitter":120}],115:[function(require,module,exports){
 'use strict';
 
 module.exports = require('./is-implemented')() ? Symbol : require('./polyfill');
 
-},{"./is-implemented":113,"./polyfill":115}],113:[function(require,module,exports){
+},{"./is-implemented":116,"./polyfill":118}],116:[function(require,module,exports){
 'use strict';
 
 var validTypes = { object: true, symbol: true };
@@ -4951,7 +5264,7 @@ module.exports = function () {
 	return true;
 };
 
-},{}],114:[function(require,module,exports){
+},{}],117:[function(require,module,exports){
 'use strict';
 
 module.exports = function (x) {
@@ -4962,7 +5275,7 @@ module.exports = function (x) {
 	return (x[x.constructor.toStringTag] === 'Symbol');
 };
 
-},{}],115:[function(require,module,exports){
+},{}],118:[function(require,module,exports){
 // ES2015 Symbol polyfill for environments that do not (or partially) support it
 
 'use strict';
@@ -5082,7 +5395,7 @@ defineProperty(HiddenSymbol.prototype, SymbolPolyfill.toStringTag,
 defineProperty(HiddenSymbol.prototype, SymbolPolyfill.toPrimitive,
 	d('c', SymbolPolyfill.prototype[SymbolPolyfill.toPrimitive]));
 
-},{"./validate-symbol":116,"d":61}],116:[function(require,module,exports){
+},{"./validate-symbol":119,"d":64}],119:[function(require,module,exports){
 'use strict';
 
 var isSymbol = require('./is-symbol');
@@ -5092,7 +5405,7 @@ module.exports = function (value) {
 	return value;
 };
 
-},{"./is-symbol":114}],117:[function(require,module,exports){
+},{"./is-symbol":117}],120:[function(require,module,exports){
 'use strict';
 
 var d        = require('d')
@@ -5226,7 +5539,7 @@ module.exports = exports = function (o) {
 };
 exports.methods = methods;
 
-},{"d":61,"es5-ext/object/valid-callable":93}],118:[function(require,module,exports){
+},{"d":64,"es5-ext/object/valid-callable":96}],121:[function(require,module,exports){
 (function (process){
 "use strict";
 var __extends = (this && this.__extends) || function (d, b) {
@@ -5678,7 +5991,7 @@ function create(hash, debug) {
 exports.create = create;
 
 }).call(this,require('_process'))
-},{"_process":120}],119:[function(require,module,exports){
+},{"_process":123}],122:[function(require,module,exports){
 /**
  *  Copyright (c) 2014-2015, Facebook, Inc.
  *  All rights reserved.
@@ -10658,7 +10971,7 @@ exports.create = create;
   return Immutable;
 
 }));
-},{}],120:[function(require,module,exports){
+},{}],123:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -10844,7 +11157,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],121:[function(require,module,exports){
+},{}],124:[function(require,module,exports){
 "use strict";
 var selectorParser_1 = require('./selectorParser');
 function classNameFromVNode(vNode) {
@@ -10865,7 +11178,7 @@ function classNameFromVNode(vNode) {
 }
 exports.classNameFromVNode = classNameFromVNode;
 
-},{"./selectorParser":122}],122:[function(require,module,exports){
+},{"./selectorParser":125}],125:[function(require,module,exports){
 "use strict";
 function selectorParser(node) {
     if (!node.sel) {
@@ -10893,7 +11206,7 @@ function selectorParser(node) {
 }
 exports.selectorParser = selectorParser;
 
-},{}],123:[function(require,module,exports){
+},{}],126:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var vnode_1 = require("./vnode");
@@ -10953,7 +11266,7 @@ exports.h = h;
 ;
 exports.default = h;
 
-},{"./is":125,"./vnode":134}],124:[function(require,module,exports){
+},{"./is":128,"./vnode":137}],127:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 function createElement(tagName) {
@@ -11020,7 +11333,7 @@ exports.htmlDomApi = {
 };
 exports.default = exports.htmlDomApi;
 
-},{}],125:[function(require,module,exports){
+},{}],128:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.array = Array.isArray;
@@ -11029,7 +11342,7 @@ function primitive(s) {
 }
 exports.primitive = primitive;
 
-},{}],126:[function(require,module,exports){
+},{}],129:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var booleanAttrs = ["allowfullscreen", "async", "autofocus", "autoplay", "checked", "compact", "controls", "declare",
@@ -11097,7 +11410,7 @@ function updateAttrs(oldVnode, vnode) {
 exports.attributesModule = { create: updateAttrs, update: updateAttrs };
 exports.default = exports.attributesModule;
 
-},{}],127:[function(require,module,exports){
+},{}],130:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 function updateClass(oldVnode, vnode) {
@@ -11123,7 +11436,7 @@ function updateClass(oldVnode, vnode) {
 exports.classModule = { create: updateClass, update: updateClass };
 exports.default = exports.classModule;
 
-},{}],128:[function(require,module,exports){
+},{}],131:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var CAPS_REGEX = /[A-Z]/g;
@@ -11160,7 +11473,7 @@ function updateDataset(oldVnode, vnode) {
 exports.datasetModule = { create: updateDataset, update: updateDataset };
 exports.default = exports.datasetModule;
 
-},{}],129:[function(require,module,exports){
+},{}],132:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 function updateProps(oldVnode, vnode) {
@@ -11187,7 +11500,7 @@ function updateProps(oldVnode, vnode) {
 exports.propsModule = { create: updateProps, update: updateProps };
 exports.default = exports.propsModule;
 
-},{}],130:[function(require,module,exports){
+},{}],133:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var raf = (typeof window !== 'undefined' && window.requestAnimationFrame) || setTimeout;
@@ -11274,7 +11587,7 @@ exports.styleModule = {
 };
 exports.default = exports.styleModule;
 
-},{}],131:[function(require,module,exports){
+},{}],134:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var vnode_1 = require("./vnode");
@@ -11582,7 +11895,7 @@ function init(modules, domApi) {
 }
 exports.init = init;
 
-},{"./h":123,"./htmldomapi":124,"./is":125,"./thunk":132,"./vnode":134}],132:[function(require,module,exports){
+},{"./h":126,"./htmldomapi":127,"./is":128,"./thunk":135,"./vnode":137}],135:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var h_1 = require("./h");
@@ -11630,7 +11943,7 @@ exports.thunk = function thunk(sel, key, fn, args) {
 };
 exports.default = exports.thunk;
 
-},{"./h":123}],133:[function(require,module,exports){
+},{"./h":126}],136:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var vnode_1 = require("./vnode");
@@ -11675,7 +11988,7 @@ function toVNode(node, domApi) {
 exports.toVNode = toVNode;
 exports.default = toVNode;
 
-},{"./htmldomapi":124,"./vnode":134}],134:[function(require,module,exports){
+},{"./htmldomapi":127,"./vnode":137}],137:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 function vnode(sel, data, children, text, elm) {
@@ -11686,10 +11999,10 @@ function vnode(sel, data, children, text, elm) {
 exports.vnode = vnode;
 exports.default = vnode;
 
-},{}],135:[function(require,module,exports){
+},{}],138:[function(require,module,exports){
 module.exports = require('./lib/index');
 
-},{"./lib/index":136}],136:[function(require,module,exports){
+},{"./lib/index":139}],139:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -11721,7 +12034,7 @@ if (typeof self !== 'undefined') {
 var result = (0, _ponyfill2['default'])(root);
 exports['default'] = result;
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./ponyfill":137}],137:[function(require,module,exports){
+},{"./ponyfill":140}],140:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -11745,7 +12058,7 @@ function symbolObservablePonyfill(root) {
 
 	return result;
 };
-},{}],138:[function(require,module,exports){
+},{}],141:[function(require,module,exports){
 "use strict";
 var typestyle_1 = require("./internal/typestyle");
 /**
@@ -11818,7 +12131,7 @@ function createTypeStyle(target) {
 }
 exports.createTypeStyle = createTypeStyle;
 
-},{"./internal/typestyle":140,"./internal/utilities":141,"./types":142}],139:[function(require,module,exports){
+},{"./internal/typestyle":143,"./internal/utilities":144,"./types":145}],142:[function(require,module,exports){
 "use strict";
 var FreeStyle = require("free-style");
 /**
@@ -11871,7 +12184,7 @@ function explodeKeyframes(frames) {
 }
 exports.explodeKeyframes = explodeKeyframes;
 
-},{"free-style":118}],140:[function(require,module,exports){
+},{"free-style":121}],143:[function(require,module,exports){
 "use strict";
 var formatting_1 = require("./formatting");
 var utilities_1 = require("./utilities");
@@ -12050,7 +12363,7 @@ var TypeStyle = (function () {
 }());
 exports.TypeStyle = TypeStyle;
 
-},{"./formatting":139,"./utilities":141,"free-style":118}],141:[function(require,module,exports){
+},{"./formatting":142,"./utilities":144,"free-style":121}],144:[function(require,module,exports){
 "use strict";
 /** Raf for node + browser */
 exports.raf = typeof requestAnimationFrame === 'undefined' ? setTimeout : requestAnimationFrame.bind(window);
@@ -12134,10 +12447,10 @@ exports.media = function (mediaQuery) {
     var _a;
 };
 
-},{}],142:[function(require,module,exports){
+},{}],145:[function(require,module,exports){
 "use strict";
 
-},{}],143:[function(require,module,exports){
+},{}],146:[function(require,module,exports){
 "use strict";
 var index_1 = require("../index");
 var ConcatProducer = (function () {
@@ -12234,7 +12547,7 @@ function concat() {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = concat;
 
-},{"../index":147}],144:[function(require,module,exports){
+},{"../index":150}],147:[function(require,module,exports){
 "use strict";
 var index_1 = require("../index");
 var DelayOperator = (function () {
@@ -12328,7 +12641,7 @@ function delay(period) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = delay;
 
-},{"../index":147}],145:[function(require,module,exports){
+},{"../index":150}],148:[function(require,module,exports){
 "use strict";
 var index_1 = require("../index");
 var empty = {};
@@ -12451,7 +12764,7 @@ function dropRepeats(isEqual) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = dropRepeats;
 
-},{"../index":147}],146:[function(require,module,exports){
+},{"../index":150}],149:[function(require,module,exports){
 "use strict";
 var index_1 = require("../index");
 var concat_1 = require("./concat");
@@ -12634,7 +12947,7 @@ tweenFactory.sine = easingSine;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = tweenFactory;
 
-},{"../index":147,"./concat":143}],147:[function(require,module,exports){
+},{"../index":150,"./concat":146}],150:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -14389,4 +14702,4 @@ exports.MemoryStream = MemoryStream;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Stream;
 
-},{"symbol-observable":135}]},{},[33]);
+},{"symbol-observable":138}]},{},[33]);
