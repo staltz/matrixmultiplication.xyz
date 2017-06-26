@@ -6,9 +6,9 @@
   "license": "MIT",
   "dependencies": {
     "@cycle/dom": "17.4",
-    "@cycle/isolate": "2.1",
+    "@cycle/isolate": "3.0",
     "@cycle/run": "3.1",
-    "cycle-onionify": "4.0.0-rc.8",
+    "cycle-onionify": "4.0.0-rc.13",
     "immutable": "^3.8.1",
     "typestyle": "1.0.0",
     "xstream": "10.8"
