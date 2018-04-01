@@ -4,3 +4,5 @@
 /lib
 /typings
 .alm
+.datignore
+dat.json
