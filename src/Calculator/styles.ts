@@ -25,7 +25,7 @@ namespace Styles {
 
   export const calculator = style({
     marginTop: '200px',
-    marginBottom: '10px',
+    marginBottom: '100px',
   });
 
   export const matrices = style({
