@@ -112,7 +112,7 @@ namespace Styles {
           '&:hover': insetBoxShadow,
           '&:focus': insetBoxShadow,
         }
-      }
+      } as any
     }
   });
 };

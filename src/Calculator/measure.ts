@@ -20,7 +20,7 @@ function isNotNull(x: Measurements | null): x is Measurements {
  */
 export default function measure(domSource: DOMSource): Stream<Measurements> {
   return domSource.select('.calculator').elements()
-    .map((e: Element | Array<Element>) => {
+    .map(e => {
       const actualElement = (Array.isArray(e) ? e[0] : e) as Element | undefined;
       if (!actualElement) {
         return null;
