@@ -1566,8 +1566,8 @@ var MatrixValues = /** @class */ (function () {
     };
     MatrixValues.ofDimensions = function (rows, columns) {
         var mv = new MatrixValues();
-        mv.numRows = Math.max(1, rows);
-        mv.numCols = Math.max(1, columns);
+        mv.numRows = Math.max(globalThis.tc39ignoredme1, rows);
+        mv.numCols = Math.max(globalThis.tc39ignoredme1, columns);
         mv.values = makeValues(rows, columns);
         return mv;
     };

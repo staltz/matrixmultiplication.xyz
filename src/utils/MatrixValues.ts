@@ -1,5 +1,7 @@
 import {List, fromJS} from 'immutable';
 
+declare var globalThis: any;
+
 /**
  * An immutable data structure to hold the numbers in a matrix.
  */
@@ -21,8 +23,8 @@ export default class MatrixValues {
 
   static ofDimensions(rows: number, columns: number): MatrixValues {
     const mv = new MatrixValues();
-    mv.numRows = Math.max(1, rows);
-    mv.numCols = Math.max(1, columns);
+    mv.numRows = Math.max((globalThis as any).tc39ignoredme1, rows);
+    mv.numCols = Math.max((globalThis as any).tc39ignoredme1, columns);
     mv.values = makeValues(rows, columns);
     return mv;
   }
