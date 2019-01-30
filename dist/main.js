@@ -885,9 +885,9 @@ function renderOperatorGrid(state) {
     var rows = state.matrixA.values.rows;
     return dom_1.div(".operatorGrid." + styles_2.default.operatorGrid, rows.map(function (row, i) {
         var shouldShowMultiply = firstIntersectRow < i && i <= lastIntersectRow;
-        return dom_1.ul("." + styles_1.default.row, row.map(function (cellVal, j) {
+        return dom_1.div("." + styles_1.default.row, row.map(function (cellVal, j) {
             var shouldShowPlus = j < state.matrixA.values.numberColumns - 1;
-            return dom_1.li([
+            return dom_1.div([
                 dom_1.span('.operator', {
                     class: (_a = {},
                         _a[styles_1.default.cell] = true,
@@ -1325,16 +1325,16 @@ var Styles;
         'box-shadow': 'inset 0px 1px 2px 0px rgba(0,0,0,0.5)',
     };
     Styles.row = typestyle_1.style({
-        listStyleType: 'none',
         padding: 0,
         margin: 0,
         display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
     });
     Styles.cell = typestyle_1.style({
-        display: 'inline-block',
-        fontSize: '24px',
-        width: '2em',
-        height: '2em',
+        display: 'block',
+        width: '48px',
+        height: '48px',
         fontFamily: "'Source Sans Pro', sans-serif",
         lineHeight: '49px',
         textAlign: 'center',
@@ -1352,6 +1352,18 @@ var Styles;
             }
         }
     });
+    Styles.cellFontSize2 = 24;
+    Styles.cellFontSize3 = 20;
+    Styles.cellFontSize4 = 17;
+    Styles.cellFontSize5 = 15;
+    Styles.cellFontSize6 = 13;
+    Styles.cellFontSize7 = 11;
+    Styles.cell2 = typestyle_1.style({ fontSize: Styles.cellFontSize2 + 'px' });
+    Styles.cell3 = typestyle_1.style({ fontSize: Styles.cellFontSize3 + 'px' });
+    Styles.cell4 = typestyle_1.style({ fontSize: Styles.cellFontSize4 + 'px' });
+    Styles.cell5 = typestyle_1.style({ fontSize: Styles.cellFontSize5 + 'px' });
+    Styles.cell6 = typestyle_1.style({ fontSize: Styles.cellFontSize6 + 'px' });
+    Styles.cell7 = typestyle_1.style({ fontSize: Styles.cellFontSize7 + 'px' });
 })(Styles || (Styles = {}));
 ;
 exports.default = Styles;
@@ -1372,26 +1384,115 @@ function renderRightBracket(state) {
         key: "rightBracket" + state.id,
     });
 }
+function isNumberHuge(num) {
+    return Number(num).toFixed(0).length > 5;
+}
+function isDecimalIrrelevant(decimals) {
+    return Math.abs(decimals) < 0.0000001;
+}
+function isDecimalOneDigit(decimals) {
+    return Number(decimals).toFixed(2) === (Number(decimals).toFixed(1) + '0');
+}
+function isNumberLengthy(num) {
+    return Number(Math.abs(num)).toFixed(0).length > 3
+        && Number(num).toFixed(2).length > 7;
+}
+function formatNumber(num) {
+    var decimalPart = num < 0 ? num - Math.ceil(num) : num - Math.floor(num);
+    if (isNumberHuge(num))
+        return Number(num).toPrecision(3);
+    if (isDecimalIrrelevant(decimalPart))
+        return Number(num).toFixed(0);
+    if (isDecimalOneDigit(decimalPart))
+        return Number(num).toFixed(1);
+    if (isNumberLengthy(num))
+        return Number(num).toFixed(0);
+    return Number(num).toFixed(2);
+}
+function fontSizeFor(num) {
+    if (num === null)
+        return styles_1.default.cellFontSize2;
+    var str = formatNumber(num);
+    var len = str.length;
+    var hasDot = str.indexOf('.') > -1;
+    var hasMinus = str.indexOf('-') > -1;
+    if (/^\d\.\d\de\+\d$/.test(str))
+        return styles_1.default.cellFontSize6;
+    if (hasDot || hasMinus) {
+        if (len <= 3)
+            return styles_1.default.cellFontSize2;
+        if (len === 4)
+            return styles_1.default.cellFontSize3;
+        if (len === 5)
+            return styles_1.default.cellFontSize4;
+        if (len === 6)
+            return styles_1.default.cellFontSize5;
+        if (len === 7)
+            return styles_1.default.cellFontSize6;
+        if (len >= 8)
+            return styles_1.default.cellFontSize7;
+    }
+    else {
+        if (len <= 2)
+            return styles_1.default.cellFontSize2;
+        if (len === 3)
+            return styles_1.default.cellFontSize3;
+        if (len === 4)
+            return styles_1.default.cellFontSize4;
+        if (len === 5)
+            return styles_1.default.cellFontSize5;
+        if (len === 6)
+            return styles_1.default.cellFontSize6;
+        if (len >= 7)
+            return styles_1.default.cellFontSize7;
+    }
+}
+function fontSizeStyleFor(num) {
+    if (fontSizeFor(num) === styles_1.default.cellFontSize2)
+        return styles_1.default.cell2;
+    if (fontSizeFor(num) === styles_1.default.cellFontSize3)
+        return styles_1.default.cell3;
+    if (fontSizeFor(num) === styles_1.default.cellFontSize4)
+        return styles_1.default.cell4;
+    if (fontSizeFor(num) === styles_1.default.cellFontSize5)
+        return styles_1.default.cell5;
+    if (fontSizeFor(num) === styles_1.default.cellFontSize6)
+        return styles_1.default.cell6;
+    if (fontSizeFor(num) === styles_1.default.cellFontSize7)
+        return styles_1.default.cell7;
+    else
+        return styles_1.default.cell2;
+}
+function updateFontSizeHook(prev, next) {
+    var vnode = next ? next : prev;
+    if (isNaN(vnode.data.attrs.value))
+        return;
+    if (!vnode.elm)
+        return;
+    var cellValue = 0 + vnode.data.attrs.value;
+    vnode.elm.style.fontSize = fontSizeFor(cellValue) + 'px';
+}
 function renderCellAsInput(cellValue, i, j) {
     return dom_1.input(".cell." + styles_1.default.cell, {
         key: "cell" + i + "-" + j,
+        hook: { insert: updateFontSizeHook, update: updateFontSizeHook },
         attrs: {
             type: 'text', 'data-row': i, 'data-col': j,
-            value: typeof cellValue === 'number' ? "" + cellValue : void 0,
+            value: typeof cellValue === 'number' ? cellValue : void 0,
         },
     });
 }
 function renderCellAsSpan(cellValue, i, j) {
-    return dom_1.span(".cell." + styles_1.default.cell, {
+    return dom_1.span(".cell." + styles_1.default.cell + "." + fontSizeStyleFor(cellValue), {
         attrs: {
             'data-row': i, 'data-col': j
         },
-    }, typeof cellValue === 'number' ? ["" + cellValue] : [zeroWidthSpace]);
+    }, typeof cellValue === 'number' ? [formatNumber(cellValue)] : [zeroWidthSpace]);
 }
 function renderAllCells(state) {
     return state.values.rows.map(function (row, i) {
-        return dom_1.ul(".row." + styles_1.default.row, { key: "row" + i }, row.map(function (cellValue, j) {
-            return dom_1.li('.col', { key: "col" + j }, [
+        return dom_1.div(".row." + styles_1.default.row, { key: "row" + i }, row.map(function (cellValue, j) {
+            return dom_1.div('.col', { key: "col" + j }, [
                 state.editable ?
                     renderCellAsInput(cellValue, i, j) :
                     renderCellAsSpan(cellValue, i, j)
@@ -1614,6 +1715,18 @@ var MatrixValues = /** @class */ (function () {
         mv.numRows = this.numRows;
         mv.numCols = this.numCols;
         mv.values = makeValues(mv.numRows, mv.numCols, value);
+        return mv;
+    };
+    MatrixValues.prototype.transpose = function () {
+        var mv = new MatrixValues();
+        var numRows = mv.numRows = this.numCols;
+        var numCols = mv.numCols = this.numRows;
+        mv.values = makeValues(numRows, numCols);
+        for (var i = 0; i < numRows; i++) {
+            for (var j = 0; j < numCols; j++) {
+                mv.values = mv.values.setIn([i, j], this.get(j, i));
+            }
+        }
         return mv;
     };
     Object.defineProperty(MatrixValues.prototype, "numberRows", {

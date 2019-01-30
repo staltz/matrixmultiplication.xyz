@@ -15,9 +15,9 @@ function renderOperatorGrid(state: State): VNode | null {
 
   return div(`.operatorGrid.${styles.operatorGrid}`, rows.map((row, i) => {
     const shouldShowMultiply = firstIntersectRow < i && i <= lastIntersectRow;
-    return ul(`.${matrixStyles.row}`, row.map((cellVal, j) => {
+    return div(`.${matrixStyles.row}`, row.map((cellVal, j) => {
       const shouldShowPlus = j < state.matrixA.values.numberColumns - 1;
-      return li([
+      return div([
         span('.operator', {
           class: {
             [matrixStyles.cell]: true,

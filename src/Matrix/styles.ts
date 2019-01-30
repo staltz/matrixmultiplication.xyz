@@ -87,17 +87,17 @@ namespace Styles {
   };
 
   export const row = style({
-    listStyleType: 'none',
     padding: 0,
     margin: 0,
     display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   });
 
   export const cell = style({
-    display: 'inline-block',
-    fontSize: '24px',
-    width: '2em',
-    height: '2em',
+    display: 'block',
+    width: '48px',
+    height: '48px',
     fontFamily: `'Source Sans Pro', sans-serif`,
     lineHeight: '49px',
     textAlign: 'center',
@@ -115,6 +115,20 @@ namespace Styles {
       } as any
     }
   });
+
+  export const cellFontSize2 = 24;
+  export const cellFontSize3 = 20;
+  export const cellFontSize4 = 17;
+  export const cellFontSize5 = 15;
+  export const cellFontSize6 = 13;
+  export const cellFontSize7 = 11;
+
+  export const cell2 = style({fontSize: cellFontSize2 + 'px'});
+  export const cell3 = style({fontSize: cellFontSize3 + 'px'});
+  export const cell4 = style({fontSize: cellFontSize4 + 'px'});
+  export const cell5 = style({fontSize: cellFontSize5 + 'px'});
+  export const cell6 = style({fontSize: cellFontSize6 + 'px'});
+  export const cell7 = style({fontSize: cellFontSize7 + 'px'});
 };
 
 export default Styles;
