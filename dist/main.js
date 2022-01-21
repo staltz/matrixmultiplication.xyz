@@ -1026,7 +1026,7 @@ function mutateCellStyles(state, transform) {
                 cellElem.style.transform = intersectionTransform;
             }
             else {
-                cellElem.style.transform = null;
+                cellElem.style.transform = rotateZTransform;
             }
         }
     };

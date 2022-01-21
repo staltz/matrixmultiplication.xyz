@@ -54,7 +54,7 @@ function mutateCellStyles(state: State, transform: string) {
       if (firstIntersectCol < colOfCell && colOfCell <= lastIntersectCol) {
         cellElem.style.transform = intersectionTransform;
       } else {
-        cellElem.style.transform = null;
+        cellElem.style.transform = rotateZTransform;
       }
     }
   }
