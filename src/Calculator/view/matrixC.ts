@@ -2,8 +2,11 @@ import {div, VNode} from '@cycle/dom';
 import {State} from '../model/index';
 import {lastCombStep, isInCombStep} from '../model/queries';
 import styles from '../styles';
+import {getHighlightColors} from "./common";
 
 function mutateCellStyles(state: State) {
+  const highlightColors = getHighlightColors(state.matrixB.values.numberColumns);
+
   return function updateHook(prev: VNode, next: VNode) {
     const all = (next.elm as Element).querySelectorAll('.cell');
     for (let i = 0, N = all.length; i < N; i++) {
@@ -21,7 +24,12 @@ function mutateCellStyles(state: State) {
         cellElem.style.color = null;
         cellElem.style.opacity = '0.01';
       } else if (rowOfCell + colOfCell === state.step - 2) {
-        cellElem.style.color = styles.colorPallete.blue;
+        let maxColorIndex = state.matrixB.values.numberColumns-1;
+        for (let i=0; i <= maxColorIndex; i++){
+          if (colOfCell == i){
+            cellElem.style.color = highlightColors[i];
+          }
+        }
         cellElem.style.opacity = '1';
       } else {
         cellElem.style.color = null;

@@ -2,7 +2,7 @@ import {table, tr, td, VNode} from '@cycle/dom';
 import {State} from '../model/index';
 import {isInCombStep, lastCombStep} from '../model/queries';
 import styles from '../styles';
-import {renderRowsResizer, renderColsResizer} from './common';
+import {renderRowsResizer, renderColsResizer, getHighlightColors} from './common';
 
 function getOpacity(state: State): string {
   if (state.step === lastCombStep(state) + 1 && !state.canInteract) {
@@ -23,12 +23,14 @@ function mutateCellStyles(state: State, transform: string) {
     .pop() as string) // `rotateZ(-${...})`
     .replace('-', '+') // `rotateZ(+${...})`
     .trim();
+  const highlightColors = getHighlightColors(state.matrixB.values.numberColumns);
+
 
   return function updateHook(prev: VNode, next: VNode) {
     const all = (next.elm as Element).querySelectorAll('.cell');
     for (let i = 0, N = all.length; i < N; i++) {
       const cellElem = all.item(i) as HTMLElement;
-      const colOfCell: number = parseInt((cellElem.dataset as any).col);
+        const colOfCell: number = parseInt((cellElem.dataset as any).col);
 
       if (rotateZTransform === 'rotateZ(+90deg)') {
         cellElem.classList.add(styles.animatedCell);
@@ -36,17 +38,23 @@ function mutateCellStyles(state: State, transform: string) {
         cellElem.classList.remove(styles.animatedCell);
       }
 
-      if (firstIntersectCol < colOfCell && colOfCell <= lastIntersectCol) {
-        cellElem.style.transform = `
+      const intersectionTransform = `
           ${rotateZTransform}
           scale(${styles.cellScaleWhenIntersecting})
           translateX(${styles.cellTranslateXWhenIntersecting}px)
           translateY(${-styles.cellTranslateYWhenIntersecting}px)
         `;
-        cellElem.style.color = styles.colorPallete.blue;
+      cellElem.style.color = null;
+      let maxColorIndex = state.matrixB.values.numberColumns-1;
+      for (let i = 0; i <= maxColorIndex; i++){
+        if (firstIntersectCol < colOfCell && colOfCell <= lastIntersectCol && colOfCell === i) {
+          cellElem.style.color = highlightColors[i];
+        }
+      }
+      if (firstIntersectCol < colOfCell && colOfCell <= lastIntersectCol) {
+        cellElem.style.transform = intersectionTransform;
       } else {
         cellElem.style.transform = rotateZTransform;
-        cellElem.style.color = null;
       }
     }
   }
