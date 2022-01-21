@@ -24,7 +24,7 @@ function mutateCellStyles(state: State) {
         cellElem.style.color = null;
         cellElem.style.opacity = '0.01';
       } else if (rowOfCell + colOfCell === state.step - 2) {
-        let maxColorIndex = Math.min(highlightColors.length-1, state.matrixB.values.numberColumns-1)
+        let maxColorIndex = state.matrixB.values.numberColumns-1;
         for (let i=0; i <= maxColorIndex; i++){
           if (colOfCell == i){
             cellElem.style.color = highlightColors[i];

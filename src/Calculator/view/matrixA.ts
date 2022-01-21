@@ -58,15 +58,9 @@ function mutateCellStyles(state: State) {
       `;
 
       cellElem.style.color = null;
-
-      let maxColorIndex = Math.min(highlightColors.length-1, state.matrixB.values.numberColumns-1)
-      let colorsSizeOffset = 0;
-      if (highlightColors.length <state.matrixB.values.numberColumns){
-        colorsSizeOffset = state.matrixB.values.numberColumns - highlightColors.length
-      }
-
+      let maxColorIndex = state.matrixB.values.numberColumns-1;
       for (let i=0; i<= maxColorIndex; i++){
-        if (rowOfCell === firstIntersectRow + i +1 + colorsSizeOffset){
+        if (rowOfCell === firstIntersectRow + i +1){
           cellElem.style.color = highlightColors[maxColorIndex-i];
         }
       }

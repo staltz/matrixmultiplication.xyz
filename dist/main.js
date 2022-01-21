@@ -940,13 +940,9 @@ function mutateCellStyles(state) {
             }
             var intersectionTransform = "\n        scale(" + styles_2.default.cellScaleWhenIntersecting + ")\n        translateX(" + -styles_2.default.cellTranslateXWhenIntersecting + "px)\n        translateY(" + styles_2.default.cellTranslateYWhenIntersecting + "px)\n      ";
             cellElem.style.color = null;
-            var maxColorIndex = Math.min(highlightColors.length - 1, state.matrixB.values.numberColumns - 1);
-            var colorsSizeOffset = 0;
-            if (highlightColors.length < state.matrixB.values.numberColumns) {
-                colorsSizeOffset = state.matrixB.values.numberColumns - highlightColors.length;
-            }
+            var maxColorIndex = state.matrixB.values.numberColumns - 1;
             for (var i_1 = 0; i_1 <= maxColorIndex; i_1++) {
-                if (rowOfCell === firstIntersectRow + i_1 + 1 + colorsSizeOffset) {
+                if (rowOfCell === firstIntersectRow + i_1 + 1) {
                     cellElem.style.color = highlightColors[maxColorIndex - i_1];
                 }
             }
@@ -1020,7 +1016,7 @@ function mutateCellStyles(state, transform) {
             }
             var intersectionTransform = "\n          " + rotateZTransform + "\n          scale(" + styles_1.default.cellScaleWhenIntersecting + ")\n          translateX(" + styles_1.default.cellTranslateXWhenIntersecting + "px)\n          translateY(" + -styles_1.default.cellTranslateYWhenIntersecting + "px)\n        ";
             cellElem.style.color = null;
-            var maxColorIndex = Math.min(highlightColors.length - 1, state.matrixB.values.numberColumns - 1);
+            var maxColorIndex = state.matrixB.values.numberColumns - 1;
             for (var i_1 = 0; i_1 <= maxColorIndex; i_1++) {
                 if (firstIntersectCol < colOfCell && colOfCell <= lastIntersectCol && colOfCell === i_1) {
                     cellElem.style.color = highlightColors[i_1];
@@ -1080,7 +1076,7 @@ function mutateCellStyles(state) {
                 cellElem.style.opacity = '0.01';
             }
             else if (rowOfCell + colOfCell === state.step - 2) {
-                var maxColorIndex = Math.min(highlightColors.length - 1, state.matrixB.values.numberColumns - 1);
+                var maxColorIndex = state.matrixB.values.numberColumns - 1;
                 for (var i_1 = 0; i_1 <= maxColorIndex; i_1++) {
                     if (colOfCell == i_1) {
                         cellElem.style.color = highlightColors[i_1];

@@ -45,7 +45,7 @@ function mutateCellStyles(state: State, transform: string) {
           translateY(${-styles.cellTranslateYWhenIntersecting}px)
         `;
       cellElem.style.color = null;
-      let maxColorIndex = Math.min(highlightColors.length-1, state.matrixB.values.numberColumns-1)
+      let maxColorIndex = state.matrixB.values.numberColumns-1;
       for (let i = 0; i <= maxColorIndex; i++){
         if (firstIntersectCol < colOfCell && colOfCell <= lastIntersectCol && colOfCell === i) {
           cellElem.style.color = highlightColors[i];
