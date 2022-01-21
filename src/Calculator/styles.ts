@@ -19,6 +19,19 @@ namespace Styles {
   export const finalResultDuration = 1100; // ms
   export const finalFadeDuration = finalResultDuration * 0.8; // ms
 
+  export const highlightColorsPalliate = [
+    "#4ea5ea",
+    "#856cd2",
+    "#fe5d15",
+    "#e6ad1f",
+    "#31a307",
+    "#56008a",
+    "#f39ac6",
+    "#8bc7fd",
+    "#fd0000",
+    "#99baae",
+  ];
+
   /**
    * Styles for the calculator, the matrices, and their cells.
    */

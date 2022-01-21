@@ -522,6 +522,18 @@ var Styles;
     Styles.cellTranslateYWhenIntersecting = 10; // px
     Styles.finalResultDuration = 1100; // ms
     Styles.finalFadeDuration = Styles.finalResultDuration * 0.8; // ms
+    Styles.highlightColorsPalliate = [
+        "#4ea5ea",
+        "#856cd2",
+        "#fe5d15",
+        "#e6ad1f",
+        "#31a307",
+        "#56008a",
+        "#f39ac6",
+        "#8bc7fd",
+        "#fd0000",
+        "#99baae",
+    ];
     /**
      * Styles for the calculator, the matrices, and their cells.
      */
@@ -747,6 +759,8 @@ exports.default = timers;
 Object.defineProperty(exports, "__esModule", { value: true });
 var dom_1 = require("@cycle/dom");
 var styles_1 = require("../styles");
+var styles_2 = require("../styles");
+var highlightColorsPalliate = styles_2.default.highlightColorsPalliate;
 exports.multiplySign = '\u00D7';
 exports.zeroWidthSpace = '\u200B';
 function renderRowsResizer(id) {
@@ -763,6 +777,14 @@ function renderColsResizer(id) {
     ]);
 }
 exports.renderColsResizer = renderColsResizer;
+function getHighlightColors(minLength) {
+    var highlightColors = highlightColorsPalliate;
+    while (highlightColors.length < minLength) {
+        highlightColors = highlightColors.concat(highlightColorsPalliate);
+    }
+    return highlightColors;
+}
+exports.getHighlightColors = getHighlightColors;
 
 },{"../styles":15,"@cycle/dom":49}],18:[function(require,module,exports){
 "use strict";
@@ -904,6 +926,7 @@ function renderOperatorGrid(state) {
 function mutateCellStyles(state) {
     var lastIntersectRow = state.step - 2;
     var firstIntersectRow = state.step - 2 - state.matrixB.values.numberColumns;
+    var highlightColors = common_1.getHighlightColors(state.matrixB.values.numberColumns);
     return function updateHook(prev, next) {
         var all = next.elm.querySelectorAll('.cell');
         var _loop_1 = function (i, N) {
@@ -915,13 +938,23 @@ function mutateCellStyles(state) {
             else if (state.step > queries_1.lastCombStep(state)) {
                 setTimeout(function () { return cellElem.classList.remove(styles_2.default.animatedCell); }, styles_2.default.nextCombDuration);
             }
+            var intersectionTransform = "\n        scale(" + styles_2.default.cellScaleWhenIntersecting + ")\n        translateX(" + -styles_2.default.cellTranslateXWhenIntersecting + "px)\n        translateY(" + styles_2.default.cellTranslateYWhenIntersecting + "px)\n      ";
+            cellElem.style.color = null;
+            var maxColorIndex = Math.min(highlightColors.length - 1, state.matrixB.values.numberColumns - 1);
+            var colorsSizeOffset = 0;
+            if (highlightColors.length < state.matrixB.values.numberColumns) {
+                colorsSizeOffset = state.matrixB.values.numberColumns - highlightColors.length;
+            }
+            for (var i_1 = 0; i_1 <= maxColorIndex; i_1++) {
+                if (rowOfCell === firstIntersectRow + i_1 + 1 + colorsSizeOffset) {
+                    cellElem.style.color = highlightColors[maxColorIndex - i_1];
+                }
+            }
             if (firstIntersectRow < rowOfCell && rowOfCell <= lastIntersectRow) {
-                cellElem.style.transform = "\n          scale(" + styles_2.default.cellScaleWhenIntersecting + ")\n          translateX(" + -styles_2.default.cellTranslateXWhenIntersecting + "px)\n          translateY(" + styles_2.default.cellTranslateYWhenIntersecting + "px)\n        ";
-                cellElem.style.color = styles_2.default.colorPallete.blue;
+                cellElem.style.transform = intersectionTransform;
             }
             else {
                 cellElem.style.transform = null;
-                cellElem.style.color = null;
             }
         };
         for (var i = 0, N = all.length; i < N; i++) {
@@ -973,6 +1006,7 @@ function mutateCellStyles(state, transform) {
         .pop() // `rotateZ(-${...})`
         .replace('-', '+') // `rotateZ(+${...})`
         .trim();
+    var highlightColors = common_1.getHighlightColors(state.matrixB.values.numberColumns);
     return function updateHook(prev, next) {
         var all = next.elm.querySelectorAll('.cell');
         for (var i = 0, N = all.length; i < N; i++) {
@@ -984,13 +1018,19 @@ function mutateCellStyles(state, transform) {
             else {
                 cellElem.classList.remove(styles_1.default.animatedCell);
             }
+            var intersectionTransform = "\n          " + rotateZTransform + "\n          scale(" + styles_1.default.cellScaleWhenIntersecting + ")\n          translateX(" + styles_1.default.cellTranslateXWhenIntersecting + "px)\n          translateY(" + -styles_1.default.cellTranslateYWhenIntersecting + "px)\n        ";
+            cellElem.style.color = null;
+            var maxColorIndex = Math.min(highlightColors.length - 1, state.matrixB.values.numberColumns - 1);
+            for (var i_1 = 0; i_1 <= maxColorIndex; i_1++) {
+                if (firstIntersectCol < colOfCell && colOfCell <= lastIntersectCol && colOfCell === i_1) {
+                    cellElem.style.color = highlightColors[i_1];
+                }
+            }
             if (firstIntersectCol < colOfCell && colOfCell <= lastIntersectCol) {
-                cellElem.style.transform = "\n          " + rotateZTransform + "\n          scale(" + styles_1.default.cellScaleWhenIntersecting + ")\n          translateX(" + styles_1.default.cellTranslateXWhenIntersecting + "px)\n          translateY(" + -styles_1.default.cellTranslateYWhenIntersecting + "px)\n        ";
-                cellElem.style.color = styles_1.default.colorPallete.blue;
+                cellElem.style.transform = intersectionTransform;
             }
             else {
-                cellElem.style.transform = rotateZTransform;
-                cellElem.style.color = null;
+                cellElem.style.transform = null;
             }
         }
     };
@@ -1020,7 +1060,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var dom_1 = require("@cycle/dom");
 var queries_1 = require("../model/queries");
 var styles_1 = require("../styles");
+var common_1 = require("./common");
 function mutateCellStyles(state) {
+    var highlightColors = common_1.getHighlightColors(state.matrixB.values.numberColumns);
     return function updateHook(prev, next) {
         var all = next.elm.querySelectorAll('.cell');
         for (var i = 0, N = all.length; i < N; i++) {
@@ -1038,7 +1080,12 @@ function mutateCellStyles(state) {
                 cellElem.style.opacity = '0.01';
             }
             else if (rowOfCell + colOfCell === state.step - 2) {
-                cellElem.style.color = styles_1.default.colorPallete.blue;
+                var maxColorIndex = Math.min(highlightColors.length - 1, state.matrixB.values.numberColumns - 1);
+                for (var i_1 = 0; i_1 <= maxColorIndex; i_1++) {
+                    if (colOfCell == i_1) {
+                        cellElem.style.color = highlightColors[i_1];
+                    }
+                }
                 cellElem.style.opacity = '1';
             }
             else {
@@ -1080,7 +1127,7 @@ function maybeRenderMatrixC(matrixC, state) {
 }
 exports.maybeRenderMatrixC = maybeRenderMatrixC;
 
-},{"../model/queries":10,"../styles":15,"@cycle/dom":49}],23:[function(require,module,exports){
+},{"../model/queries":10,"../styles":15,"./common":17,"@cycle/dom":49}],23:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var xstream_1 = require("xstream");
@@ -1715,18 +1762,6 @@ var MatrixValues = /** @class */ (function () {
         mv.numRows = this.numRows;
         mv.numCols = this.numCols;
         mv.values = makeValues(mv.numRows, mv.numCols, value);
-        return mv;
-    };
-    MatrixValues.prototype.transpose = function () {
-        var mv = new MatrixValues();
-        var numRows = mv.numRows = this.numCols;
-        var numCols = mv.numCols = this.numRows;
-        mv.values = makeValues(numRows, numCols);
-        for (var i = 0; i < numRows; i++) {
-            for (var j = 0; j < numCols; j++) {
-                mv.values = mv.values.setIn([i, j], this.get(j, i));
-            }
-        }
         return mv;
     };
     Object.defineProperty(MatrixValues.prototype, "numberRows", {

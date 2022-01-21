@@ -3,7 +3,7 @@ import {State} from '../model/index';
 import {isInCombStep, lastCombStep} from '../model/queries';
 import matrixStyles from '../../Matrix/styles';
 import styles from '../styles';
-import {multiplySign, renderRowsResizer, renderColsResizer} from './common';
+import {multiplySign, renderRowsResizer, renderColsResizer, getHighlightColors} from './common';
 
 function renderOperatorGrid(state: State): VNode | null {
   if (state.step === 0) {
@@ -34,6 +34,7 @@ function renderOperatorGrid(state: State): VNode | null {
 function mutateCellStyles(state: State) {
   const lastIntersectRow = state.step - 2;
   const firstIntersectRow = state.step - 2 - state.matrixB.values.numberColumns;
+  const highlightColors = getHighlightColors(state.matrixB.values.numberColumns);
 
   return function updateHook(prev: VNode, next: VNode) {
     const all = (next.elm as Element).querySelectorAll('.cell');
@@ -50,16 +51,29 @@ function mutateCellStyles(state: State) {
         );
       }
 
-      if (firstIntersectRow < rowOfCell && rowOfCell <= lastIntersectRow) {
-        cellElem.style.transform = `
-          scale(${styles.cellScaleWhenIntersecting})
-          translateX(${-styles.cellTranslateXWhenIntersecting}px)
-          translateY(${styles.cellTranslateYWhenIntersecting}px)
-        `;
-        cellElem.style.color = styles.colorPallete.blue;
+      const intersectionTransform = `
+        scale(${styles.cellScaleWhenIntersecting})
+        translateX(${-styles.cellTranslateXWhenIntersecting}px)
+        translateY(${styles.cellTranslateYWhenIntersecting}px)
+      `;
+
+      cellElem.style.color = null;
+
+      let maxColorIndex = Math.min(highlightColors.length-1, state.matrixB.values.numberColumns-1)
+      let colorsSizeOffset = 0;
+      if (highlightColors.length <state.matrixB.values.numberColumns){
+        colorsSizeOffset = state.matrixB.values.numberColumns - highlightColors.length
+      }
+
+      for (let i=0; i<= maxColorIndex; i++){
+        if (rowOfCell === firstIntersectRow + i +1 + colorsSizeOffset){
+          cellElem.style.color = highlightColors[maxColorIndex-i];
+        }
+      }
+      if (firstIntersectRow < rowOfCell && rowOfCell <= lastIntersectRow){
+        cellElem.style.transform = intersectionTransform;
       } else {
         cellElem.style.transform = null;
-        cellElem.style.color = null;
       }
     }
   }
